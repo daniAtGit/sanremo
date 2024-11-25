@@ -15,7 +15,7 @@
 
                     </div>
                     <div class="col-6 text-end">
-                        <a href="">
+                        <a href="{{route('edizioni.create')}}">
                             <button type="button" class="btn btn-sm btn-outline-primary">
                                 <i class="fa-solid fa-circle-plus"></i> Nuovo
                             </button>
@@ -35,8 +35,9 @@
                     <table class="table table-hover table-bordered border" id="tabella">
                         <thead>
                             <tr>
-                                <th class="bg-light">Numero</th>
+                                <th class="bg-light">N°</th>
                                 <th class="bg-light">Anno</th>
+                                <th class="bg-light">Date</th>
                                 <th class="bg-light">Luogo</th>
                                 <th class="bg-light">Vincitore</th>
                                 <th class="bg-light">Note</th>
@@ -48,6 +49,7 @@
                                 <tr>
                                     <td class="text-center">{{$edizione->numero}}</td>
                                     <td class="text-center">{{$edizione->anno}}</td>
+                                    <td>{{$edizione->data_da}} - {{$edizione->data_a}}</td>
                                     <td>{{$edizione->luogo}}</td>
                                     <td>-</td>
                                     <td class="smart"">{{$edizione->note}}</td>
@@ -129,26 +131,23 @@
                     "columnDefs": [
                         {
                             "targets": 0,
-                            "width": "80px",
+                            "width": "40px",
                             "className": 'dt-center'
                         },
                         {
                             "targets": 1,
                             "width": "80px",
-                            "className": 'dt-center'
                         },
                         {
                             "targets": 2,
-                            "width": "180px",
-                            "className": 'dt-center'
+                            "width": "250px",
                         },
                         {
-                            "targets": 3,
+                            "targets": [3,4],
                             "width": "200px",
-                            "className": 'dt-center'
                         },
                         {
-                            "targets": 5,
+                            "targets": 6,
                             "width": "100px",
                             "className": 'dt-center',
                             'orderable': false

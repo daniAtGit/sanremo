@@ -38,7 +38,7 @@
 
                         <div class="mb-3">
                             <label for="nome" class="form-label">Nome<span class="text-danger">*</span></label>
-                            <input type="text" name="nome" class="form-control" required value="{{$artista->nome}}">
+                            <input type="text" name="nome" class="form-control" value="{{$artista->nome}}" required>
                         </div>
                         <div class="mb-3">
                             <label for="tipo" class="form-label">Tipo<span class="text-danger">*</span></label>

@@ -34,10 +34,12 @@
                 <div class="col-10">
                     <form method="post" action="{{route('artisti.store')}}">
                         @csrf
+
                         <div class="mb-3">
                             <label for="nome" class="form-label">Nome<span class="text-danger">*</span></label>
                             <input type="text" name="nome" class="form-control" required>
                         </div>
+
                         <div class="mb-3">
                             <label for="tipo" class="form-label">Tipo<span class="text-danger">*</span></label>
                             <select name="tipo" id="tipo" class="form-control" required>
@@ -71,15 +73,14 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="nome" class="form-label">Wikipedia</label>
+                            <label for="wiki" class="form-label">Wikipedia</label>
                             <input type="text" name="wiki" class="form-control">
                         </div>
 
                         <div class="mb-3">
                             @foreach(\App\Enums\Social::cases() as $social)
-                                <div class="input-group>
+                                <div class="input-group mt-3">
                                     <span class="input-group-text" id="basic-addon1">{{$social->description()}}</span>
-                                    <label for="social" class="form-label">Wikipedia</label>
                                     <input type="text" name="social[]" class="form-control">
                                 </div>
                           @endforeach

@@ -49,13 +49,17 @@
                                     <td>{{\App\Enums\TipoArtista::from($artista->tipo->value)->description()}}</td>
                                     <td class="small">
                                         @if($artista->tipo->value == 'cantante')
-                                            <i class="fa-solid fa-cake-candles"></i> {{$artista->nascita?->format('d/m/Y')}}
+                                            @if($artista->nascita)
+                                                <i class="fa-solid fa-cake-candles"></i> {{$artista->nascita?->format('d/m/Y')}}
+                                            @endif
                                             @if($artista->morte)
                                                 - <i class="fa-solid fa-skull"></i> {{$artista->morte?->format('d/m/Y')}}
                                             @endif
                                         @endif
                                         @if($artista->tipo->value == 'gruppo')
-                                            <i class="fa-solid fa-play"></i> {{$artista->inizio?->format('d/m/Y')}}
+                                            @if($artista->inizio)
+                                                <i class="fa-solid fa-play"></i> {{$artista->inizio?->format('d/m/Y')}}
+                                            @endif
                                             @if($artista->fine)
                                                 - <i class="fa-solid fa-stop"></i> {{$artista->fine?->format('d/m/Y')}}
                                             @endif
@@ -64,6 +68,8 @@
                                     <td>
                                         @if($artista->wikipedia)
                                             <a href="{{$artista->wikipedia}}" target="_blank" title="Wikipedia"><i class="fa-brands fa-wikipedia-w"></i></a>
+                                        @else
+                                            <i class="fa-brands fa-wikipedia-w text-secondary" title="No Wikipedia"></i>
                                         @endif
                                         <a href="https://www.google.com/search?q={{$artista->nome}}&&sourceid=chrome&ie=UTF-8" target="_blank" title="Google"><i class="fa-brands fa-google"></i></a>
                                         <a href="https://www.youtube.com/results?search_query={{$artista->nome}}" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
@@ -78,7 +84,7 @@
                                             <i class="fa-solid fa-edit"></i>
                                         </a>
 
-                                        @if($artista->canzoni->count())
+                                        @if($artista->canzoni->count() == 0)
                                             <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalElimina{{$i}}">
                                                 <i class="fa-solid fa-trash"></i>
                                             </button>
@@ -156,7 +162,6 @@
                         {
                             "targets": 1,
                             "width": "70px",
-                            "className": 'dt-center'
                         },
                         {
                             "targets": 2,
@@ -172,7 +177,6 @@
                             "className": 'dt-center',
                             'orderable': false
                         },
-                        //{ "orderable": false, "targets": 5 }
                     ],
                     "order": [[0, 'asc']]
                 });

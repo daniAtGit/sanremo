@@ -16,23 +16,23 @@
 {{--                        {{ __('Dashboard') }}--}}
 {{--                    </x-nav-link>--}}
 
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('edizioni.index')" :active="request()->routeIs('edizioni.*')" wire:navigate>
-                            {{ __('Edizioni') }}
-                        </x-nav-link>
-                    </div>
+{{--                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">--}}
+{{--                        <x-nav-link :href="route('edizioni.index')" :active="request()->routeIs('edizioni.*')" wire:navigate>--}}
+{{--                            {{ __('Edizioni') }}--}}
+{{--                        </x-nav-link>--}}
+{{--                    </div>--}}
 
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('artisti.index')" :active="request()->routeIs('artisti.*')" wire:navigate>
-                            {{ __('Artisti') }}
-                        </x-nav-link>
-                    </div>
+{{--                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">--}}
+{{--                        <x-nav-link :href="route('artisti.index')" :active="request()->routeIs('artisti.*')" wire:navigate>--}}
+{{--                            {{ __('Artisti') }}--}}
+{{--                        </x-nav-link>--}}
+{{--                    </div>--}}
 
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('premi.index')" :active="request()->routeIs('premi.*')" wire:navigate>
-                            {{ __('Premi') }}
-                        </x-nav-link>
-                    </div>
+{{--                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">--}}
+{{--                        <x-nav-link :href="route('premi.index')" :active="request()->routeIs('premi.*')" wire:navigate>--}}
+{{--                            {{ __('Premi') }}--}}
+{{--                        </x-nav-link>--}}
+{{--                    </div>--}}
 
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
                         <x-dropdown align="right" width="48">
@@ -53,8 +53,24 @@
 {{--                                    Argomenti--}}
 {{--                                </x-dropdown-link>--}}
 
+                                <x-dropdown-link :href="route('artisti.index')" :active="request()->routeIs('artisti.*')" wire:navigate>
+                                    <i class="fa-solid fa-microphone-lines"></i> Artisti
+                                </x-dropdown-link>
+
+                                <x-dropdown-link :href="route('canzoni.index')" :active="request()->routeIs('canzoni.*')" wire:navigate>
+                                    <i class="fa fa-guitar"></i> Canzoni
+                                </x-dropdown-link>
+
+                                <x-dropdown-link :href="route('edizioni.index')" :active="request()->routeIs('edizioni.*')" wire:navigate>
+                                    <i class="fa fa-calendar-days"></i> Edizioni
+                                </x-dropdown-link>
+
+                                <x-dropdown-link :href="route('premi.index')" :active="request()->routeIs('premi.*')" wire:navigate>
+                                    <i class="fa fa-trophy"></i> Premi
+                                </x-dropdown-link>
+
                                 <x-dropdown-link :href="route('utenti.index')" wire:navigate>
-                                    Utenti
+                                    <i class="fa fa-user-group"></i> Utenti
                                 </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
@@ -118,12 +134,16 @@
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
+{{--            <div class="px-4">--}}
+{{--                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>--}}
+{{--                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>--}}
+{{--            </div>--}}
 
             <div class="mt-3 space-y-1">
+                <x-responsive-nav-link :href="route('artisti.index')">
+                    Artisti
+                </x-responsive-nav-link>
+
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>

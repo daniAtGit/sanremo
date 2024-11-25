@@ -17,11 +17,15 @@ class Edizione extends Model
         'numero',
         'anno',
         'luogo',
-        'note',
+        'data_da',
+        'data_a',
+        'note'
     ];
 
     protected $casts = [
         'luogo' => Luogo::class,
+        'data_da' => 'date',
+        'data_a' => 'date'
     ];
 
     public function canzoni(): HasMany

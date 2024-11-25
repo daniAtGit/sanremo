@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Artista;
+use App\Models\Canzone;
 use App\Models\Edizione;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -19,7 +21,8 @@ class EdizioniController extends Controller
      */
     public function create()
     {
-        //
+        $artisti=Artista::all()->sortByDesc('nome');
+        return view('pages.edizioni.create', compact('artisti'));
     }
 
     /**
@@ -27,7 +30,16 @@ class EdizioniController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Edizione::create([
+            'numero' => $request->numero,
+            'anno' => $request->anno,
+            'data_da' => $request->data_da,
+            'data_a' => $request->data_a,
+            'luogo' => $request->luogo,
+            'note' => $request->note,
+        ]);
+
+        return to_route('edizioni.index');
     }
 
     /**

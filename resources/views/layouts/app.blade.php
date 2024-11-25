@@ -18,6 +18,8 @@
 
             <!-- Page Content -->
             <main>
+                @include('layouts.error.error')
+
                 {{ $slot }}
             </main>
         </div>

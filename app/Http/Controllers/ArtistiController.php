@@ -22,7 +22,13 @@ class ArtistiController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        dd($request->all());
+        $request->validate([
+            'nome' => 'bail|required',
+            'tipo' => 'bail|required',
+        ],[
+            'nome.required' => 'Il campo nome è obbligatorio',
+            'tipo.required' => 'Il campo tipo è obbligatorio',
+        ]);
 
         Artista::create([
             'nome' => $request->input('nome'),
@@ -34,15 +40,15 @@ class ArtistiController extends Controller
             'wikipedia' => $request->input('wiki'),
         ]);
 
-        return redirect()->route('artisti.index');
+        return to_route('artisti.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Artista $artista)
     {
-        //
+        dd($artista);
     }
 
     public function edit(Artista $artista): View
@@ -52,6 +58,14 @@ class ArtistiController extends Controller
 
     public function update(Request $request, Artista $artista): RedirectResponse
     {
+        $request->validate([
+            'nome' => 'bail|required',
+            'tipo' => 'bail|required',
+        ],[
+            'nome.required' => 'Il campo nome è obbligatorio',
+            'tipo.required' => 'Il campo tipo è obbligatorio',
+        ]);
+
         $artista->update([
             'nome' => $request->input('nome'),
             'tipo' => $request->input('tipo'),
@@ -62,12 +76,12 @@ class ArtistiController extends Controller
             'wikipedia' => $request->input('wiki'),
         ]);
 
-        return redirect()->route('artisti.index');
+        return to_route('artisti.index');
     }
 
     public function destroy(Artista $artista): RedirectResponse
     {
         $artista->delete();
-        return redirect()->route('artisti.index');
+        return to_route('artisti.index');
     }
 }

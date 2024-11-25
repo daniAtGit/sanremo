@@ -15,8 +15,10 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('numero');
             $table->string('anno');
+            $table->date('data_da');
+            $table->date('data_a');
             $table->text('luogo');
-            $table->text('note')->comment('avvenimenti');
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }
