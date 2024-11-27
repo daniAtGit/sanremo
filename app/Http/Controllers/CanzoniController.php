@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Canzone;
+use App\Models\Edizione;
 use Illuminate\Http\Request;
 
 class CanzoniController extends Controller
@@ -11,7 +13,8 @@ class CanzoniController extends Controller
      */
     public function index()
     {
-        dd('qui');
+        $canzoni=Canzone::all()->sortBy('titolo');
+        return view('pages.canzoni.index', compact('canzoni'));
     }
 
     /**
@@ -19,7 +22,8 @@ class CanzoniController extends Controller
      */
     public function create()
     {
-        //
+        $edizioni = Edizione::all()->sortByDesc('anno');
+        return view('pages.canzoni.create', compact('edizioni'));
     }
 
     /**
