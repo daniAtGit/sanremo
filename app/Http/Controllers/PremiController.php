@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Premio;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
 class PremiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): View
     {
-        //
+        $premi=Premio::all()->sortBy('anno_istituzione');
+        return view('pages.premi.index', compact('premi'));
     }
 
     /**
