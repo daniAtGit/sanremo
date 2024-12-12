@@ -85,8 +85,13 @@
                         <div class="mb-3">
                             <label for="canzoni" class="form-label">Conduttori</label>
                             <div class="border">
-{{--                                <select id="multiple-checkboxes" multiple="multiple">--}}
-                                <select class="form-multi-select" multiple data-coreui-search="true" multiple>
+{{--                                <select class="form-multi-select" multiple data-coreui-search="true" multiple>--}}
+{{--                                    @foreach($artisti as $artista)--}}
+{{--                                        <option value="{{$artista->id}}">{{$artista->nome}}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+
+                                <select name="conduttori[]" class="form-select" id="multiple-select-field" data-placeholder="Seleziona" multiple>
                                     @foreach($artisti as $artista)
                                         <option value="{{$artista->id}}">{{$artista->nome}}</option>
                                     @endforeach
@@ -141,7 +146,12 @@
                 // $('#multiple-checkboxes').multiselect({
                 //     //includeSelectAllOption: false,
                 // });
-
+                $( '#multiple-select-field' ).select2( {
+                    theme: "bootstrap-5",
+                    width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+                    placeholder: $( this ).data( 'placeholder' ),
+                    closeOnSelect: false,
+                } );
 
             });
         </script>

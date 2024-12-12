@@ -21,7 +21,7 @@ class EdizioniController extends Controller
      */
     public function create()
     {
-        $artisti=Artista::all()->sortByDesc('nome');
+        $artisti=Artista::all()->sortBy('nome');
         return view('pages.edizioni.create', compact('artisti'));
     }
 
@@ -30,7 +30,7 @@ class EdizioniController extends Controller
      */
     public function store(Request $request)
     {
-        Edizione::create([
+        $edizione=Edizione::create([
             'numero' => $request->numero,
             'anno' => $request->anno,
             'data_da' => $request->data_da,
@@ -38,6 +38,8 @@ class EdizioniController extends Controller
             'luogo' => $request->luogo,
             'note' => $request->note,
         ]);
+
+        $edizione->artisti->sync($request->conduttori);
 
         return to_route('edizioni.index');
     }

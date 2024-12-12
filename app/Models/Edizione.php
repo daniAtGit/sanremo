@@ -32,4 +32,9 @@ class Edizione extends Model
     {
         return $this->hasMany(Canzone::class);
     }
+
+    public function artisti(): HasMany
+    {
+        return $this->hasMany(Artisti::class);
+    }
 }
