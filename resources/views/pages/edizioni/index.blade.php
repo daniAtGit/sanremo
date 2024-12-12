@@ -39,6 +39,8 @@
                                 <th class="bg-light">Anno</th>
                                 <th class="bg-light">Date</th>
                                 <th class="bg-light">Luogo</th>
+                                <th class="bg-light">Presentatore</th>
+                                <th class="bg-light">Co-conduttori</th>
                                 <th class="bg-light">Vincitore</th>
                                 <th class="bg-light">Note</th>
                                 <th class="bg-light text-center"></th>
@@ -49,10 +51,20 @@
                                 <tr>
                                     <td class="text-center">{{$edizione->numero}}</td>
                                     <td class="text-center">{{$edizione->anno}}</td>
-                                    <td>{{$edizione->data_da}} - {{$edizione->data_a}}</td>
-                                    <td>{{$edizione->luogo}}</td>
+                                    <td>{{$edizione->data_da->format('d/m/Y')}} - {{$edizione->data_a->format('d/m/Y')}}</td>
+                                    <td>{{\App\Enums\Luogo::from($edizione->luogo->value)->description()}}</td>
+                                    <td>
+                                        @foreach($edizione->conduttori() as $coduttore)
+                                            {{$coduttore->nome}} {{$coduttore->cognome}}<br>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @foreach($edizione->coconduttori() as $cocoduttore)
+                                            {{$cocoduttore->nome}} {{$cocoduttore->cognome}}<br>
+                                        @endforeach
+                                    </td>
                                     <td>-</td>
-                                    <td class="smart"">{{$edizione->note}}</td>
+                                    <td class="smart">{{$edizione->note}}</td>
                                     <td class="text-center">
                                         <a href="{{route('edizioni.show',$edizione)}}" class="btn btn-sm btn-outline-info">
                                             <i class="fa-solid fa-eye"></i>
@@ -131,23 +143,23 @@
                     "columnDefs": [
                         {
                             "targets": 0,
-                            "width": "40px",
+                            "width": "25px",
                             "className": 'dt-center'
                         },
                         {
                             "targets": 1,
-                            "width": "80px",
+                            "width": "40px",
                         },
                         {
                             "targets": 2,
-                            "width": "250px",
+                            "width": "180px",
                         },
                         {
-                            "targets": [3,4],
-                            "width": "200px",
+                            "targets": [3,4,5],
+                            "width": "180px",
                         },
                         {
-                            "targets": 6,
+                            "targets": 7,
                             "width": "100px",
                             "className": 'dt-center',
                             'orderable': false

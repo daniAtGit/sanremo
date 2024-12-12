@@ -11,10 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('edizione_coconduttore', function (Blueprint $table) {
-            $table->uuid('edizione_id');
+        Schema::create('artista_edizione', function (Blueprint $table) {
             $table->uuid('artista_id');
+            $table->uuid('edizione_id');
+            $table->string('ruolo');
+
+            $table->foreign('artista_id')->references('id')->on('artisti')->onDelete('cascade');
+            $table->foreign('edizione_id')->references('id')->on('edizioni')->onDelete('cascade');
         });
+
+
     }
 
     /**
@@ -22,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('edizione_coconduttore');
+        Schema::dropIfExists('artista_edizione');
     }
 };

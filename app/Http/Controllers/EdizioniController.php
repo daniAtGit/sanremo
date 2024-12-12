@@ -3,32 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artista;
-use App\Models\Canzone;
 use App\Models\Edizione;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class EdizioniController extends Controller
 {
     public function index(): View
     {
-        $edizioni=Edizione::all()->sortByDesc('anno')->load('conduttori','cococonduttori','canzoni','canzoni.artisti','canzoni.premi','canzoni.artisti.socials','covers','ospiti');
+        $edizioni=Edizione::all()->sortByDesc('anno');
+        //$edizioni->load('canzoni','canzoni.artisti','canzoni.premi','canzoni.artisti.socials','covers','ospiti');
         return view('pages.edizioni.index', compact('edizioni'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(): View
     {
         $artisti=Artista::all()->sortBy('nome');
         return view('pages.edizioni.create', compact('artisti'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $edizione=Edizione::create([
             'numero' => $request->numero,
@@ -39,8 +34,9 @@ class EdizioniController extends Controller
             'note' => $request->note,
         ]);
 
-        $edizione->artisti->sync($request->conduttori);
+        $edizione->artisti()->attach($request->conduttori, ['ruolo' => 'conduttore']);
 
+        $edizione->artisti()->attach($request->coconduttori, ['ruolo' => 'coconduttore']);
         return to_route('edizioni.index');
     }
 
@@ -55,24 +51,39 @@ class EdizioniController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Edizione $edizione)
     {
-        //
+        $artisti=Artista::all()->sortBy('nome');
+        return view('pages.edizioni.edit', compact('edizione','artisti'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Edizione $edizione): RedirectResponse
     {
-        //
+        $edizione->update([
+            'numero' => $request->numero,
+            'anno' => $request->anno,
+            'data_da' => $request->data_da,
+            'data_a' => $request->data_a,
+            'luogo' => $request->luogo,
+            'note' => $request->note,
+        ]);
+
+        $artisti_array=[];
+        if(!is_null($request->conduttori)) {
+            foreach($request->conduttori as $conduttore) {$artisti_array[$conduttore] = ['ruolo' => 'conduttore'];}
+        }
+
+        if(!is_null($request->coconduttori)) {
+            foreach ($request->coconduttori as $coconduttore) {$artisti_array[$coconduttore] = ['ruolo' => 'coconduttore'];}
+        }
+
+        $edizione->artisti()->sync($artisti_array);
+        return to_route('edizioni.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Edizione $edizione): RedirectResponse
     {
-        //
+        $edizione->delete();
+        return to_route('edizioni.index');
     }
 }

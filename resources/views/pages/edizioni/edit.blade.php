@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Nuova Edizione
+            Modifica Edizione
         </h2>
     </x-slot>
 
@@ -32,27 +32,28 @@
                 <div class="col-1"></div>
 
                 <div class="col-10">
-                    <form method="post" action="{{route('edizioni.store')}}">
+                    <form method="post" action="{{route('edizioni.update',$edizione)}}">
                         @csrf
+                        @method('PATCH')
 
                         <div class="mb-3">
                             <label for="numero" class="form-label">Numero<span class="text-danger">*</span></label>
-                            <input type="number" name="numero" class="form-control" required>
+                            <input type="number" name="numero" class="form-control" value="{{$edizione->numero}}" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="anno" class="form-label">Anno<span class="text-danger">*</span></label>
-                            <input type="number" name="anno" class="form-control" required>
+                            <input type="number" name="anno" class="form-control" value="{{$edizione->anno}}" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="data_da" class="form-label">Data da</label>
-                            <input type="date" name="data_da" class="form-control">
+                            <input type="date" name="data_da" class="form-control" value="{{$edizione->data_da->format('Y-m-d')}}">
                         </div>
 
                         <div class="mb-3">
                             <label for="data_a" class="form-label">Data a</label>
-                            <input type="date" name="data_a" class="form-control">
+                            <input type="date" name="data_a" class="form-control" value="{{$edizione->data_a->format('Y-m-d')}}">
                         </div>
 
                         <div class="mb-3">
@@ -60,7 +61,7 @@
                             <select name="luogo" class="form-control" required>
                                 <option></option>
                                 @foreach(\App\Enums\Luogo::cases() as $luogo)
-                                    <option value="{{$luogo->value}}">{{\App\Enums\Luogo::from($luogo->value)->description()}}</option>
+                                    <option value="{{$luogo->value}}" @selected($luogo == $edizione->luogo)>{{\App\Enums\Luogo::from($luogo->value)->description()}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -87,7 +88,7 @@
                             <div class="border">
                                 <select name="conduttori[]" class="form-select multiple-select-field" data-placeholder="Seleziona" multiple>
                                     @foreach($artisti as $artista)
-                                        <option value="{{$artista->id}}">{{$artista->nome}}</option>
+                                        <option value="{{$artista->id}}" @selected($edizione->conduttori()->pluck('id')->contains($artista->id))>{{$artista->nome}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -98,7 +99,7 @@
                             <div class="border">
                                 <select name="coconduttori[]" class="form-select multiple-select-field" data-placeholder="Seleziona" multiple>
                                     @foreach($artisti as $artista)
-                                        <option value="{{$artista->id}}">{{$artista->nome}}</option>
+                                        <option value="{{$artista->id}}" @selected($edizione->coconduttori()->pluck('id')->contains($artista->id))>{{$artista->nome}}</option>
                                     @endforeach
                                 </select>
                             </div>
