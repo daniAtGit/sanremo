@@ -8,7 +8,8 @@ enum TipoArtista: string
     case GRUPPO = 'gruppo';
     case PRESENTATORE = 'presentatore';
     case PRESENTATRICE = 'presentatrice';
-    case SHOWGIRL = 'shogirl';
+    case SHOWGIRL = 'showgirl';
+    case SHOWMAN = 'showman';
 
     public function description() : string
     {
@@ -17,7 +18,8 @@ enum TipoArtista: string
             self::GRUPPO => 'Gruppo',
             self::PRESENTATORE => 'Presentatore',
             self::PRESENTATRICE => 'Presentatrice',
-            self::SHOWGIRL => 'Show girl',
+            self::SHOWGIRL => 'Showgirl',
+            self::SHOWMAN => 'Showman',
         };
     }
 }

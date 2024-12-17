@@ -43,14 +43,14 @@
                                 <th class="bg-light">Co-conduttori</th>
                                 <th class="bg-light">Vincitore</th>
                                 <th class="bg-light">Note</th>
-                                <th class="bg-light text-center"></th>
+                                <th class="bg-light"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($edizioni as $i => $edizione)
                                 <tr>
-                                    <td class="text-center">{{$edizione->numero}}</td>
-                                    <td class="text-center">{{$edizione->anno}}</td>
+                                    <td>{{$edizione->numero}}</td>
+                                    <td>{{$edizione->anno}}</td>
                                     <td>{{$edizione->data_da->format('d/m/Y')}} - {{$edizione->data_a->format('d/m/Y')}}</td>
                                     <td>{{\App\Enums\Luogo::from($edizione->luogo->value)->description()}}</td>
                                     <td>
@@ -65,7 +65,7 @@
                                     </td>
                                     <td>-</td>
                                     <td class="smart">{{$edizione->note}}</td>
-                                    <td class="text-center">
+                                    <td>
                                         <a href="{{route('edizioni.show',$edizione)}}" class="btn btn-sm btn-outline-info">
                                             <i class="fa-solid fa-eye"></i>
                                         </a>
@@ -159,8 +159,8 @@
                             "width": "180px",
                         },
                         {
-                            "targets": 7,
-                            "width": "100px",
+                            "targets": -1,
+                            "width": "90px",
                             "className": 'dt-center',
                             'orderable': false
                         },

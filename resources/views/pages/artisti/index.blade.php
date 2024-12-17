@@ -39,7 +39,7 @@
                                 <th class="bg-light">Tipo</th>
                                 <th class="bg-light">Date</th>
                                 <th class="bg-light">Socials</th>
-                                <th class="bg-light text-center"></th>
+                                <th class="bg-light"></th>
                             </tr>
                         </thead>
                         <tbody>

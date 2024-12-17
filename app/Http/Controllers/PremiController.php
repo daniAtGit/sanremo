@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Premio;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class PremiController extends Controller
@@ -16,51 +15,42 @@ class PremiController extends Controller
         return view('pages.premi.index', compact('premi'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('pages.premi.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        Premio::create([
+            'nome' => $request['nome'],
+            'descrizione' => $request['descrizione'],
+            'anno_istituzione' => $request['anno']
+        ]);
+
+        return redirect()->route('premi.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Premio $premio): View
     {
-        //
+        return view('pages.premi.edit', compact('premio'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+
+    public function update(Request $request, Premio $premio): RedirectResponse
     {
-        //
+        $premio->update([
+            'nome' => $request['nome'],
+            'descrizione' => $request['descrizione'],
+            'anno_istituzione' => $request['anno']
+        ]);
+
+        return redirect()->route('premi.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Premio $premio): RedirectResponse
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $premio->delete();
+        return redirect()->route('premi.index');
     }
 }

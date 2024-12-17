@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('premi', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nome');
-            $table->text('descrizione');
-            $table->date('anno_istituzione')->nullable();
+            $table->text('descrizione')->nullable();
+            $table->string('anno_istituzione')->nullable();
             $table->timestamps();
         });
     }

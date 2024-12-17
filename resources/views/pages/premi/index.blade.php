@@ -38,22 +38,30 @@
                                 <th class="bg-light">Anno</th>
                                 <th class="bg-light">Nome</th>
                                 <th class="bg-light">Descrizione</th>
-                                <th class="bg-light text-center"></th>
+                                <th class="bg-light">Assegnazioni</th>
+                                <th class="bg-light"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($premi as $i => $premio)
                                 <tr>
-                                    <td class="text-center">{{$premio->anno_istituzione}}</td>
-                                    <td class="text-center">{{$premio->nome}}</td>
-                                    <td class="text-center">{{$premio->descrizione}}</td>
-                                    <td class="text-center">
+                                    <td>{{$premio->anno_istituzione}}</td>
+                                    <td>{{$premio->nome}}</td>
+                                    <td>{{$premio->descrizione}}</td>
+                                    <td>{{$premio->assegnazioni()}}</td>
+                                    <td>
                                         <a href="{{route('premi.edit',$premio)}}" class="btn btn-sm btn-outline-primary">
                                             <i class="fa-solid fa-edit"></i>
                                         </a>
-                                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalElimina{{$i}}">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
+                                        @if($premio->assegnazioni() == 0)
+                                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalElimina{{$i}}">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        @else
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -70,6 +78,7 @@
     @section('modal')
         <!-- Modal Delete -->
         @foreach($premi as $i => $premio)
+
             <div class="modal fade" id="modalElimina{{$i}}" tabindex="-1" aria-labelledby="modalElimina{{$i}}" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -77,7 +86,7 @@
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Cancella edizione</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="{{route('edizioni.destroy',$edizione)}}" method="post">
+                        <form action="{{route('premi.destroy',$premio)}}" method="post">
                             @csrf
                             @method('DELETE')
                             <div class="modal-body">
@@ -127,11 +136,16 @@
                         },
                         {
                             "targets": 1,
-                            "width": "300px",
+                            "width": "500px"
                         },
                         {
                             "targets": 3,
                             "width": "100px",
+                            "className": 'dt-center'
+                        },
+                        {
+                            "targets": -1,
+                            "width": "80px",
                             "className": 'dt-center',
                             'orderable': false
                         },
