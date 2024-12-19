@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('artisti', ArtistiController::class)->parameters(['artisti'=>'artista']);
-    Route::resource('canzoni', CanzoniController::class)->parameters(['canzoni'=>'canzone']);
+    Route::resource('canzoni', CanzoniController::class)->except('show')->parameters(['canzoni'=>'canzone']);
     Route::resource('edizioni', EdizioniController::class)->parameters(['edizioni'=>'edizione']);
     Route::resource('premi', PremiController::class)->except(['show'])->parameters(['premi'=>'premio']);
 

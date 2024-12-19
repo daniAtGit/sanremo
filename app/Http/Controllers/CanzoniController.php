@@ -2,60 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Artista;
 use App\Models\Canzone;
 use App\Models\Edizione;
+use App\Models\Premio;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class CanzoniController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): View
     {
         $canzoni=Canzone::all()->sortBy('titolo');
         return view('pages.canzoni.index', compact('canzoni'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(): View
     {
+        $artisti = Artista::all()->sortBy('nome');
         $edizioni = Edizione::all()->sortByDesc('anno');
-        return view('pages.canzoni.create', compact('edizioni'));
+        $premi = Premio::all()->sortBy('nome');
+        return view('pages.canzoni.create', compact('artisti','edizioni','premi'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $canzone= Canzone::create([
+            'edizione_id' => $request->edizione,
+            'titolo' => $request->titolo,
+            'autori' => $request->autori,
+            'posizione' => $request->posizione,
+            'posizione_eurovision' => $request->posizione_euro,
+        ]);
+
+        $canzone->artisti()->attach($request->artisti);
+        $canzone->premi()->attach($request->premi);
+
+        return redirect()->route('canzoni.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Canzone $canzone): View
     {
-        //
+        $artisti = Artista::all()->sortBy('nome');
+        $edizioni = Edizione::all()->sortByDesc('anno');
+        $premi = Premio::all()->sortBy('nome');
+        return view('pages.canzoni.edit', compact('canzone','artisti','edizioni','premi'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Canzone $canzone): RedirectResponse
     {
-        //
-    }
+        $canzone->update([
+            'edizione_id' => $request->edizione,
+            'titolo' => $request->titolo,
+            'autori' => $request->autori,
+            'posizione' => $request->posizione,
+            'posizione_eurovision' => $request->posizione_euro,
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        $canzone->artisti()->sync($request->artisti);
+        $canzone->premi()->sync($request->premi);
+
+        return redirect()->route('canzoni.index');
     }
 
     /**

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Nuova canzone
+            Modifica canzone
         </h2>
     </x-slot>
 
@@ -32,22 +32,23 @@
                 <div class="col-1"></div>
 
                 <div class="col-10">
-                    <form method="post" action="{{route('canzoni.store')}}">
+                    <form method="post" action="{{route('canzoni.update',$canzone)}}">
                         @csrf
+                        @method('PATCH')
 
                         <div class="mb-3">
                             <label for="edizione" class="form-label">Edizione<span class="text-danger">*</span></label>
                             <select name="edizione" id="edizione" class="form-control" required>
                                 <option></option>
                                 @foreach($edizioni as $edizione)
-                                    <option value="{{$edizione->id}}">{{$edizione->numero}} del {{$edizione->anno}}</option>
+                                    <option value="{{$edizione->id}}" @selected($edizione->id == $canzone->edizione_id)>{{$edizione->numero}} del {{$edizione->anno}}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="mb-3">
                             <label for="titolo" class="form-label">Titolo<span class="text-danger">*</span></label>
-                            <input type="text" name="titolo" class="form-control" required>
+                            <input type="text" name="titolo" class="form-control" required value="{{$canzone->titolo}}">
                         </div>
 
                         <div class="mb-3">
@@ -55,14 +56,14 @@
                             <select name="artisti[]" class="form-select multiple-select-field" data-placeholder="Seleziona" multiple>
                                 <option></option>
                                 @foreach($artisti as $artista)
-                                    <option value="{{$artista->id}}">{{$artista->nome}}</option>
+                                    <option value="{{$artista->id}}" @selected($canzone->artisti->contains($artista->id))>{{$artista->nome}}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="mb-3">
                             <label for="autori" class="form-label">Autori</label>
-                            <input type="text" name="autori" class="form-control">
+                            <input type="text" name="autori" class="form-control" value="{{$canzone->scrittori}}">
                         </div>
 
                         <div class="mb-3">
@@ -70,7 +71,7 @@
                             <select name="posizione" class="form-control" required>
                                 <option></option>
                                 @for($i = 1; $i <= env('POSIZIONI'); $i++)
-                                    <option value="{{$i}}">{{$i}}</option>
+                                    <option value="{{$i}}" @selected($i == $canzone->posizione)>{{$i}}</option>
                                 @endfor
                             </select>
                         </div>
@@ -80,7 +81,7 @@
                             <select name="posizione_euro" class="form-control">
                                 <option></option>
                                 @for($i = 1; $i <= env('POSIZIONI_EUROVISION'); $i++)
-                                    <option value="{{$i}}">{{$i}}</option>
+                                    <option value="{{$i}}" @selected($i == $canzone->posizione_eurovision)>{{$i}}</option>
                                 @endfor
                             </select>
                         </div>
@@ -90,14 +91,9 @@
                             <select name="premi[]" class="form-select multiple-select-field" data-placeholder="Seleziona" multiple>
                                 <option></option>
                                 @foreach($premi as $premio)
-                                    <option value="{{$premio->id}}">{{$premio->nome}}</option>
+                                    <option value="{{$premio->id}}" @selected($canzone->premi->contains($premio->id))>{{$premio->nome}}</option>
                                 @endforeach
                             </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="autori" class="form-label">Video </label>
-                            <input type="text" name="autori" class="form-control">
                         </div>
 
                         <div class="mb-3 text-end">

@@ -14,6 +14,7 @@ class Canzone extends Model
     protected $fillable = [
         'edizione_id',
         'titolo',
+        'scrittori',
         'posizione',
         'posizione_eurovision',
     ];
@@ -22,8 +23,18 @@ class Canzone extends Model
         //
     ];
 
-    public function artista()
+    public function edizione()
+    {
+        return $this->belongsTo(Edizione::class);
+    }
+
+    public function artisti()
     {
         return $this->belongsToMany(Artista::class, 'canzone_artista');
+    }
+
+    public function premi()
+    {
+        return $this->belongsToMany(Premio::class, 'canzone_premio');
     }
 }
