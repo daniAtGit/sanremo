@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('nome');
             $table->text('descrizione')->nullable();
+            $table->string('link')->nullable();
             $table->string('anno_istituzione')->nullable();
             $table->timestamps();
         });

@@ -42,7 +42,6 @@
                                 <th class="bg-light">Presentatore</th>
                                 <th class="bg-light">Co-conduttori</th>
                                 <th class="bg-light">Vincitore</th>
-                                <th class="bg-light">Note</th>
                                 <th class="bg-light"></th>
                             </tr>
                         </thead>
@@ -64,7 +63,6 @@
                                         @endforeach
                                     </td>
                                     <td>-</td>
-                                    <td class="smart">{{$edizione->note}}</td>
                                     <td>
                                         <a href="{{route('edizioni.show',$edizione)}}" class="btn btn-sm btn-outline-info">
                                             <i class="fa-solid fa-eye"></i>
@@ -151,16 +149,12 @@
                             "width": "40px",
                         },
                         {
-                            "targets": 2,
-                            "width": "180px",
-                        },
-                        {
-                            "targets": [3,4,5],
+                            "targets": [2,3,4,5],
                             "width": "180px",
                         },
                         {
                             "targets": -1,
-                            "width": "90px",
+                            "width": "150px",
                             "className": 'dt-center',
                             'orderable': false
                         },

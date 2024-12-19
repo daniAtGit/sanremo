@@ -39,9 +39,8 @@
                             <th class="bg-light">Anno</th>
                             <th class="bg-light">Titolo</th>
                             <th class="bg-light">Artista</th>
-                            <th class="bg-light">Autori</th>
                             <th class="bg-light">Pos.</th>
-                            <th class="bg-light">€pos.</th>
+                            <th class="bg-light">€vision</th>
                             <th class="bg-light"></th>
                         </tr>
                         </thead>
@@ -53,7 +52,6 @@
                                     <td>{{$canzone->edizione->anno}}</td>
                                     <td>{{$canzone->titolo}}</td>
                                     <td>{{$canzone->artisti->pluck('nome')->implode(', ')}}</td>
-                                    <td>{{$canzone->scrittori}}</td>
                                     <td>{{$canzone->posizione}}</td>
                                     <td>{{$canzone->posizione_eurovision}}</td>
                                     <td>
@@ -136,7 +134,7 @@
                             "className": 'dt-center',
                         },
                         {
-                            "targets": [5,6],
+                            "targets": [4,5],
                             "width": "30px",
                             "className": 'dt-center',
                         },

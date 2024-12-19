@@ -33,7 +33,7 @@ class CanzoniController extends Controller
         $canzone= Canzone::create([
             'edizione_id' => $request->edizione,
             'titolo' => $request->titolo,
-            'autori' => $request->autori,
+            'scrittori' => $request->autori,
             'posizione' => $request->posizione,
             'posizione_eurovision' => $request->posizione_euro,
         ]);
@@ -57,7 +57,7 @@ class CanzoniController extends Controller
         $canzone->update([
             'edizione_id' => $request->edizione,
             'titolo' => $request->titolo,
-            'autori' => $request->autori,
+            'scrittori' => $request->autori,
             'posizione' => $request->posizione,
             'posizione_eurovision' => $request->posizione_euro,
         ]);

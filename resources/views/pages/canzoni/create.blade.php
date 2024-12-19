@@ -95,10 +95,10 @@
                             </select>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="autori" class="form-label">Video </label>
-                            <input type="text" name="autori" class="form-control">
-                        </div>
+{{--                        <div class="mb-3">--}}
+{{--                            <label for="autori" class="form-label">Video </label>--}}
+{{--                            <input type="text" name="autori" class="form-control">--}}
+{{--                        </div>--}}
 
                         <div class="mb-3 text-end">
                             <input type="submit" class="btn btn-sm btn-outline-primary" value="Registra">
