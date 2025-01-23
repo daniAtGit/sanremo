@@ -21,4 +21,9 @@ class Social extends Model
     protected $casts = [
         'social' => \App\Enums\Social::class,
     ];
+
+    public function socialable()
+    {
+        return $this->morphTo();
+    }
 }

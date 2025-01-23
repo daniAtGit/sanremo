@@ -96,8 +96,39 @@
                             </select>
                         </div>
 
+                        <div class="mb-3">
+                            <label for="esibizione" class="form-label">Link esibizione</label>
+                            <input type="url" name="sanremo" class="form-control" value="{{$canzone->esibizione}}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="videoclip" class="form-label">Link videoclip</label>
+                            <input type="url" name="videoclip" class="form-control" value="{{$canzone->videoclip}}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="videoclip" class="form-label">Link EuroVision</label>
+                            <input type="url" name="eurovision" class="form-control" value="{{$canzone->eurovision}}">
+                        </div>
+
+                        @foreach($canzone->socials->where('social',\App\Enums\Social::ALTRO) as $i => $altro)
+                            <label for='altri' class="form-label">Altro</label>
+                            <div class="input-group mb-3">
+                                <input type="url" class="form-control" aria-describedby="basic-addon2" value="{{$altro->link}}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-danger" type="button" style="height:41px;" data-bs-toggle="modal" data-bs-target="#modalElimina{{$i}}"><i class="fa fa-trash"></i></button>
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <div class="mb-3">
+                            <input type="button" class="btn btn-sm btn-primary" id="addInput" value="+">
+                        </div>
+
+                        <div class="altri"></div>
+
                         <div class="mb-3 text-end">
-                            <input type="submit" class="btn btn-sm btn-outline-primary" value="Registra">
+                            <input type="submit" class="btn btn-sm btn-outline-primary" value="Modifica">
                         </div>
                     </form>
                 </div>
@@ -107,10 +138,40 @@
         </div>
     </div>
 
+    @section('modal')
+        @foreach($canzone->socials->where('social',\App\Enums\Social::ALTRO) as $i => $altro)
+            <div class="modal fade" id="modalElimina{{$i}}" tabindex="-1" aria-labelledby="modalElimina{{$i}}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Cancella Altro</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="{{route('canzoni.altro.delete', $altro)}}" method="post">
+                            @csrf
+                            @method('GET')
+
+                            <div class="modal-body">
+                                Vuoi davvero eliminare questo link altro: {{$altro->link}}?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Chiudi</button>
+                                <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i> Elimina</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    @stop
+
     @section('scripts')
         <script>
             $(document).ready(function() {
-
+                $('#addInput').click(function() {
+                    //$('.interfacesIx:first').clone().insertAfter('.interfacesIx:last');
+                    $("<div class='mb-3'><label for='altri' class='form-label'>Altro</label><input type='url' name='altri[]' class='form-control' /></div>").appendTo('.altri');
+                });
             });
         </script>
     @stop

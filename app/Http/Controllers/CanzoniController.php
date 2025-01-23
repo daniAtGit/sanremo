@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Social;
 use App\Models\Artista;
 use App\Models\Canzone;
 use App\Models\Edizione;
@@ -36,10 +37,24 @@ class CanzoniController extends Controller
             'autori' => $request->autori,
             'posizione' => $request->posizione,
             'posizione_eurovision' => $request->posizione_euro,
+            'esibizione' => $request->sanremo,
+            'videoclip' => $request->videoclip,
+            'eurovision' => $request->eurovision
         ]);
 
         $canzone->artisti()->attach($request->artisti);
         $canzone->premi()->attach($request->premi);
+
+        if($request->altri) {
+            foreach ($request->altri as $altro) {
+                if (!is_null($altro)) {
+                    $canzone->socials()->create([
+                        'social' => Social::ALTRO,
+                        'link' => $altro
+                    ]);
+                }
+            }
+        }
 
         return redirect()->route('canzoni.index');
     }
@@ -60,10 +75,24 @@ class CanzoniController extends Controller
             'autori' => $request->autori,
             'posizione' => $request->posizione,
             'posizione_eurovision' => $request->posizione_euro,
+            'esibizione' => $request->sanremo,
+            'videoclip' => $request->videoclip,
+            'eurovision' => $request->eurovision
         ]);
 
         $canzone->artisti()->sync($request->artisti);
         $canzone->premi()->sync($request->premi);
+
+        if($request->altri) {
+            foreach ($request->altri as $altro) {
+                if (!is_null($altro)) {
+                    $canzone->socials()->create([
+                        'social' => Social::ALTRO,
+                        'link' => $altro
+                    ]);
+                }
+            }
+        }
 
         return redirect()->route('canzoni.index');
     }
@@ -71,8 +100,19 @@ class CanzoniController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Canzone $canzone)
     {
-        //
+        $canzone->artisti()->detach();
+        $canzone->premi()->detach();
+        $canzone->socials()->where('social',\App\Enums\Social::ALTRO)->delete();
+        $canzone->delete();
+        return redirect()->route('canzoni.index');
+    }
+
+    public function deleteAltro($altro)
+    {
+        $social=\App\Models\Social::find($altro);
+        $social->delete();
+        return redirect()->back();
     }
 }

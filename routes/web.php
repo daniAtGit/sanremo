@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('artisti', ArtistiController::class)->parameters(['artisti'=>'artista']);
     Route::resource('canzoni', CanzoniController::class)->except('show')->parameters(['canzoni'=>'canzone']);
+    Route::get('canzoni/altro/{altro}/delete', [CanzoniController::class, 'deleteAltro'])->name('canzoni.altro.delete');
     Route::resource('edizioni', EdizioniController::class)->parameters(['edizioni'=>'edizione']);
     Route::resource('premi', PremiController::class)->except(['show'])->parameters(['premi'=>'premio']);
 

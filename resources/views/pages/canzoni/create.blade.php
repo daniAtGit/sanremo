@@ -96,9 +96,25 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="autori" class="form-label">Video </label>
-                            <input type="text" name="autori" class="form-control">
+                            <label for="esibizione" class="form-label">Link esibizione</label>
+                            <input type="url" name="sanremo" class="form-control">
                         </div>
+
+                        <div class="mb-3">
+                            <label for="videoclip" class="form-label">Link videoclip</label>
+                            <input type="url" name="videoclip" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="videoclip" class="form-label">Link EuroVision</label>
+                            <input type="url" name="eurovision" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="button" class="btn btn-sm btn-primary" id="addInput" value="+">
+                        </div>
+
+                        <div class="altri"></div>
 
                         <div class="mb-3 text-end">
                             <input type="submit" class="btn btn-sm btn-outline-primary" value="Registra">
@@ -114,7 +130,10 @@
     @section('scripts')
         <script>
             $(document).ready(function() {
-
+                $('#addInput').click(function() {
+                    //$('.interfacesIx:first').clone().insertAfter('.interfacesIx:last');
+                    $("<div class='mb-3'><label for='altri' class='form-label'>Altro</label><input type='url' name='altri[]' class='form-control' /></div>").appendTo('.altri');
+                });
             });
         </script>
     @stop

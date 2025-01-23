@@ -15,9 +15,12 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('edizione_id')->nullable();
             $table->string('titolo');
-            $table->text('scrittori');
+            $table->text('scrittori')->nullable();
             $table->string('posizione');
             $table->string('posizione_eurovision')->nullable();
+            $table->text('esibizione')->nullable();
+            $table->text('videoclip')->nullable();
+            $table->text('eurovision')->nullable();
             $table->timestamps();
 
             $table->foreign('edizione_id')->references('id')->on('edizioni')->onDelete('set null');

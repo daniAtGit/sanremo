@@ -41,13 +41,16 @@
                             <th class="bg-light">Artista</th>
                             <th class="bg-light">Autori</th>
                             <th class="bg-light">Pos.</th>
-                            <th class="bg-light">€pos.</th>
+                            <th class="bg-light">EuroV</th>
+                            <th class="bg-light"><i class="fa fa-video text-primary" title="Esibizione"></i></th>
+                            <th class="bg-light"><i class="fa fa-video text-warning" title="Videoclip"></i></th>
+                            <th class="bg-light"><i class="fa fa-video text-danger" title="Eurovision"></i></th>
+                            <th class="bg-light"><i class="fa fa-video" title="Altro"></i></th>
                             <th class="bg-light"></th>
                         </tr>
                         </thead>
                         <tbody>
                             @foreach($canzoni as $i => $canzone)
-
                                 <tr>
                                     <td>{{$canzone->edizione->numero}}</td>
                                     <td>{{$canzone->edizione->anno}}</td>
@@ -56,6 +59,28 @@
                                     <td>{{$canzone->scrittori}}</td>
                                     <td>{{$canzone->posizione}}</td>
                                     <td>{{$canzone->posizione_eurovision}}</td>
+                                    <td>
+                                        @if($canzone->esibizione)
+                                            <a href="{{$canzone->esibizione}}" target="_blank">
+                                                <i class="fa fa-link"></i>
+                                            </a>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($canzone->videoclip)
+                                            <a href="{{$canzone->videoclip}}" target="_blank">
+                                                <i class="fa fa-link"></i>
+                                            </a>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($canzone->eurovision)
+                                            <a href="{{$canzone->eurovision}}" target="_blank">
+                                                <i class="fa fa-link"></i>
+                                            </a>
+                                        @endif
+                                    </td>
+                                    <td>{{$canzone->socials->where('social',\App\Enums\Social::ALTRO)->count()}}</td>
                                     <td>
                                         <a href="{{route('canzoni.edit',$canzone)}}" class="btn btn-sm btn-outline-primary">
                                             <i class="fa-solid fa-edit"></i>
@@ -91,7 +116,7 @@
                             @csrf
                             @method('DELETE')
                             <div class="modal-body">
-                                Vuoi davvero eliminare la canzone {{$canzone->titolo}} di {{$canzone->artista}}?
+                                Vuoi davvero eliminare la canzone {{$canzone->titolo}} di {{$canzone->artisti->pluck('nome')->implode(', ')}}?
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Chiudi</button>
@@ -136,7 +161,7 @@
                             "className": 'dt-center',
                         },
                         {
-                            "targets": [5,6],
+                            "targets": [5,6,7,8,9,10],
                             "width": "30px",
                             "className": 'dt-center',
                         },

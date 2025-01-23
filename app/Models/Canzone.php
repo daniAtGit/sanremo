@@ -17,6 +17,9 @@ class Canzone extends Model
         'scrittori',
         'posizione',
         'posizione_eurovision',
+        'esibizione',
+        'videoclip',
+        'eurovision'
     ];
 
     protected $casts = [
@@ -36,5 +39,15 @@ class Canzone extends Model
     public function premi()
     {
         return $this->belongsToMany(Premio::class, 'canzone_premio');
+    }
+
+    public function socials()
+    {
+        return $this->morphMany(Social::class, 'socialable');
+    }
+
+    public function scopeAltri()
+    {
+        return $this->socials();
     }
 }
