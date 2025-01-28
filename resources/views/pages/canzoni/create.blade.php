@@ -46,6 +46,15 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="tipo" class="form-label">Tipo<span class="text-danger">*</span></label>
+                            <select name="tipo" id="tipo" class="form-control" required>
+                                @foreach(\App\Enums\TipoCanzone::cases() as $tipo)
+                                    <option value="{{$tipo->value}}">{{$tipo->description()}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="titolo" class="form-label">Titolo<span class="text-danger">*</span></label>
                             <input type="text" name="titolo" class="form-control" required>
                         </div>

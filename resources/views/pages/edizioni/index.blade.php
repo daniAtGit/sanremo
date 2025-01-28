@@ -51,7 +51,7 @@
                                 <tr>
                                     <td>{{$edizione->numero}}</td>
                                     <td>{{$edizione->anno}}</td>
-                                    <td>{{$edizione->data_da->format('d/m/Y')}} - {{$edizione->data_a->format('d/m/Y')}}</td>
+                                    <td>{{$edizione->data_da?->format('d/m/Y')}} - {{$edizione->data_a?->format('d/m/Y')}}</td>
                                     <td>{{\App\Enums\Luogo::from($edizione->luogo->value)->description()}}</td>
                                     <td>
                                         @foreach($edizione->conduttori() as $coduttore)

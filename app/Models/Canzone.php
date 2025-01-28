@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TipoCanzone;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +14,7 @@ class Canzone extends Model
 
     protected $fillable = [
         'edizione_id',
+        'tipo',
         'titolo',
         'scrittori',
         'posizione',
@@ -23,7 +25,7 @@ class Canzone extends Model
     ];
 
     protected $casts = [
-        //
+        'tipo' => TipoCanzone::class
     ];
 
     public function edizione()

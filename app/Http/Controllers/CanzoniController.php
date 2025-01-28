@@ -33,6 +33,7 @@ class CanzoniController extends Controller
     {
         $canzone= Canzone::create([
             'edizione_id' => $request->edizione,
+            'tipo' => $request->tipo,
             'titolo' => $request->titolo,
             'autori' => $request->autori,
             'posizione' => $request->posizione,
@@ -71,6 +72,7 @@ class CanzoniController extends Controller
     {
         $canzone->update([
             'edizione_id' => $request->edizione,
+            'tipo' => $request->tipo,
             'titolo' => $request->titolo,
             'autori' => $request->autori,
             'posizione' => $request->posizione,

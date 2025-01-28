@@ -54,7 +54,10 @@
                                 <tr>
                                     <td>{{$canzone->edizione->numero}}</td>
                                     <td>{{$canzone->edizione->anno}}</td>
-                                    <td>{{$canzone->titolo}}</td>
+                                    <td>
+                                        <span style="display:none;">{{$canzone->titolo}}</span>
+                                        {!! \App\Enums\TipoCanzone::from($canzone->tipo->value)->icon() !!} {{$canzone->titolo}}
+                                    </td>
                                     <td>{{$canzone->artisti->pluck('nome')->implode(', ')}}</td>
                                     <td>{{$canzone->scrittori}}</td>
                                     <td>{{$canzone->posizione}}</td>

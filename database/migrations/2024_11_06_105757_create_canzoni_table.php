@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('canzoni', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('edizione_id')->nullable();
+            $table->uuid('tipo');
             $table->string('titolo');
             $table->text('scrittori')->nullable();
             $table->string('posizione');
