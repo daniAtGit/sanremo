@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('tipo');
             $table->string('titolo');
             $table->text('scrittori')->nullable();
-            $table->string('posizione');
+            $table->string('posizione')->nullable();
             $table->string('posizione_eurovision')->nullable();
             $table->text('esibizione')->nullable();
             $table->text('videoclip')->nullable();
