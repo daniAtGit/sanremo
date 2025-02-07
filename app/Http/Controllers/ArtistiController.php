@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artista;
+use App\Models\TipoArtista;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -11,13 +12,14 @@ class ArtistiController extends Controller
 {
     public function index(): View
     {
-        $artisti=Artista::all()->sortBy('nome');
+        $artisti=Artista::all()->sortBy('nome')->load('tipoArtista');
         return view('pages.artisti.index', compact('artisti'));
     }
 
     public function create(): View
     {
-        return view('pages.artisti.create');
+        $tipiArtisti=TipoArtista::all()->sortBy('tipo');
+        return view('pages.artisti.create', compact('tipiArtisti'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -32,7 +34,7 @@ class ArtistiController extends Controller
 
         Artista::create([
             'nome' => $request->input('nome'),
-            'tipo' => $request->input('tipo'),
+            'tipo_id' => $request->input('tipo'),
             'nascita' => $request->input('nascita'),
             'morte' => $request->input('morte'),
             'inizio' => $request->input('inizio'),
@@ -53,7 +55,9 @@ class ArtistiController extends Controller
 
     public function edit(Artista $artista): View
     {
-        return view('pages.artisti.edit', compact('artista'));
+        $artista=$artista->load('tipoArtista');
+        $tipiArtisti=TipoArtista::all()->sortBy('tipo');
+        return view('pages.artisti.edit', compact('artista','tipiArtisti'));
     }
 
     public function update(Request $request, Artista $artista): RedirectResponse
@@ -68,7 +72,7 @@ class ArtistiController extends Controller
 
         $artista->update([
             'nome' => $request->input('nome'),
-            'tipo' => $request->input('tipo'),
+            'tipo_id' => $request->input('tipo'),
             'nascita' => $request->input('nascita'),
             'morte' => $request->input('morte'),
             'inizio' => $request->input('inizio'),

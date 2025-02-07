@@ -44,8 +44,8 @@
                             <label for="tipo" class="form-label">Tipo<span class="text-danger">*</span></label>
                             <select name="tipo" id="tipo" class="form-control" required>
                                 <option></option>
-                                @foreach(\App\Enums\TipoArtista::cases() as $tipo)
-                                    <option value="{{$tipo->value}}">{{\App\Enums\TipoArtista::from($tipo->value)->description()}}</option>
+                                @foreach($tipiArtisti as $tipo)
+                                    <option value="{{$tipo->id}}">{{$tipo->tipo}}</option>
                                 @endforeach
                             </select>
                         </div>

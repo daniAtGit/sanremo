@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Modifica {{$artista->tipo->value}} : {{$artista->nome}}
+            Modifica {{$artista->tipoArtista->tipo}} : {{$artista->nome}}
         </h2>
     </x-slot>
 
@@ -44,13 +44,13 @@
                             <label for="tipo" class="form-label">Tipo<span class="text-danger">*</span></label>
                             <select name="tipo" id="tipo" class="form-control" required>
                                 <option></option>
-                                @foreach(\App\Enums\TipoArtista::cases() as $tipo)
-                                    <option value="{{$tipo->value}}" @selected($tipo === $artista->tipo)>{{\App\Enums\TipoArtista::from($tipo->value)->description()}}</option>
+                                @foreach($tipiArtisti as $tipo)
+                                    <option value="{{$tipo->id}}" @selected($tipo->id == $artista->tipo_id)>{{$tipo->tipo}}</option>
                                 @endforeach
                             </select>
                         </div>
 
-                        <div id="dateCantante" style="display:{{$artista->tipo->value == 'cantante' ? 'block' : 'none'}};">
+                        <div id="dateCantante" style="display:{{$artista->tipoArtista->tipo == 'Cantante' ? 'block' : 'none'}};">
                             <div class="mb-3">
                                 <label for="nascita" class="form-label">Data nascita</label>
                                 <input type="date" name="nascita" id="nascita" class="form-control" value="{{$artista->nascita?->format('Y-m-d')}}">
@@ -61,7 +61,7 @@
                             </div>
                         </div>
 
-                        <div id="dateGruppo" style="display:{{$artista->tipo->value == 'gruppo' ? 'block' : 'none'}};">
+                        <div id="dateGruppo" style="display:{{$artista->tipoArtista->tipo == 'Gruppo' ? 'block' : 'none'}};">
                             <div class="mb-3">
                                 <label for="inizio" class="form-label">Data inizio</label>
                                 <input type="date" name="inizio" id="inizio" class="form-control" value="{{$artista->inizio?->format('Y-m-d')}}">

@@ -5,6 +5,7 @@ use App\Http\Controllers\CanzoniController;
 use App\Http\Controllers\EdizioniController;
 use App\Http\Controllers\PremiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TipiArtistiController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,10 +22,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::resource('tipiArtisti', TipiArtistiController::class)->except('create','show','edit')->parameters(['tipiArtisti'=>'tipoArtista']);
     Route::resource('artisti', ArtistiController::class)->parameters(['artisti'=>'artista']);
     Route::resource('canzoni', CanzoniController::class)->except('show')->parameters(['canzoni'=>'canzone']);
     Route::get('canzoni/altro/{altro}/delete', [CanzoniController::class, 'deleteAltro'])->name('canzoni.altro.delete');
     Route::resource('edizioni', EdizioniController::class)->parameters(['edizioni'=>'edizione']);
+    Route::get('edizioni/altro/{altro}/delete', [EdizioniController::class, 'deleteAltro'])->name('edizioni.altro.delete');
     Route::resource('premi', PremiController::class)->except(['show'])->parameters(['premi'=>'premio']);
 
     Route::resource('utenti', UsersController::class)->except(['show'])->parameters(['utenti'=>'utente']);

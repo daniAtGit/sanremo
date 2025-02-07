@@ -53,17 +53,9 @@
                                     <td>{{$edizione->anno}}</td>
                                     <td>{{$edizione->data_da?->format('d/m/Y')}} - {{$edizione->data_a?->format('d/m/Y')}}</td>
                                     <td>{{\App\Enums\Luogo::from($edizione->luogo->value)->description()}}</td>
-                                    <td>
-                                        @foreach($edizione->conduttori() as $coduttore)
-                                            {{$coduttore->nome}} {{$coduttore->cognome}}<br>
-                                        @endforeach
-                                    </td>
-                                    <td>
-                                        @foreach($edizione->coconduttori() as $cocoduttore)
-                                            {{$cocoduttore->nome}} {{$cocoduttore->cognome}}<br>
-                                        @endforeach
-                                    </td>
-                                    <td>-</td>
+                                    <td>{{$edizione->conduttori()->pluck('nome')->implode(', ')}}</td>
+                                    <td>{{$edizione->coconduttori()->pluck('nome')->implode(', ')}}</td>
+                                    <td>{{$edizione->canzoni->where('posizione',1)->first()->artisti->pluck('nome')->implode(', ')}}</td>
                                     <td class="smart">{{$edizione->note}}</td>
                                     <td>
                                         <a href="{{route('edizioni.show',$edizione)}}" class="btn btn-sm btn-outline-info">

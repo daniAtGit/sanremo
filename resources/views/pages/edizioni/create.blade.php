@@ -109,6 +109,12 @@
                             <textarea name="note" class="form-control" rows="3"></textarea>
                         </div>
 
+                        <div class="mb-3">
+                            <input type="button" class="btn btn-sm btn-primary" id="addInput" value="Add video">
+                        </div>
+
+                        <div class="altri"></div>
+
                         <div class="mb-3 text-end">
                             <input type="submit" class="btn btn-sm btn-outline-primary" value="Registra">
                         </div>
@@ -119,4 +125,14 @@
             </div>
         </div>
     </div>
+
+    @section('scripts')
+        <script>
+            $(document).ready(function() {
+                $('#addInput').click(function() {
+                    $("<div class='mb-3'><label for='altri' class='form-label'>Link</label><input type='url' name='altri[]' class='form-control' /></div>").appendTo('.altri');
+                });
+            });
+        </script>
+    @stop
 </x-app-layout>

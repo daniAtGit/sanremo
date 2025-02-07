@@ -14,13 +14,15 @@ return new class extends Migration
         Schema::create('artisti', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nome');
-            $table->string('tipo');
+            $table->uuid('tipo_id');
             $table->date('nascita')->nullable();
             $table->date('morte')->nullable();
             $table->date('inizio')->nullable();
             $table->date('fine')->nullable();
             $table->string('wikipedia')->nullable();
             $table->timestamps();
+
+            $table->foreign('tipo_id')->references('id')->on('tipo-artista')->onDelete('cascade');
         });
     }
 

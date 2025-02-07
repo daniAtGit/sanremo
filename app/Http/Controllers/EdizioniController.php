@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Social;
 use App\Models\Artista;
 use App\Models\Edizione;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Drnxloc\LaravelHtmlDom\HtmlDomParser;
 
 class EdizioniController extends Controller
 {
@@ -35,17 +37,28 @@ class EdizioniController extends Controller
         ]);
 
         $edizione->artisti()->attach($request->conduttori, ['ruolo' => 'conduttore']);
-
         $edizione->artisti()->attach($request->coconduttori, ['ruolo' => 'coconduttore']);
+
+        if($request->altri) {
+            foreach ($request->altri as $altro) {
+                if (!is_null($altro)) {
+                    $edizione->socials()->create([
+                        'social' => Social::ALTRO,
+                        'link' => $altro
+                    ]);
+                }
+            }
+        }
+
         return to_route('edizioni.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Edizione $edizione)
     {
-        //
+        return view('pages.edizioni.show', compact('edizione'));
     }
 
     /**
@@ -77,6 +90,17 @@ class EdizioniController extends Controller
             foreach ($request->coconduttori as $coconduttore) {$artisti_array[$coconduttore] = ['ruolo' => 'coconduttore'];}
         }
 
+        if($request->altri) {
+            foreach ($request->altri as $altro) {
+                if (!is_null($altro)) {
+                    $edizione->socials()->create([
+                        'social' => Social::ALTRO,
+                        'link' => $altro
+                    ]);
+                }
+            }
+        }
+
         $edizione->artisti()->sync($artisti_array);
         return to_route('edizioni.index');
     }
@@ -85,5 +109,12 @@ class EdizioniController extends Controller
     {
         $edizione->delete();
         return to_route('edizioni.index');
+    }
+
+    public function deleteAltro($altro)
+    {
+        $social=\App\Models\Social::find($altro);
+        $social->delete();
+        return redirect()->back();
     }
 }

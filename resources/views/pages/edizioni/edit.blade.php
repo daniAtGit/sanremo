@@ -48,12 +48,12 @@
 
                         <div class="mb-3">
                             <label for="data_da" class="form-label">Data da</label>
-                            <input type="date" name="data_da" class="form-control" value="{{$edizione->data_da->format('Y-m-d')}}">
+                            <input type="date" name="data_da" class="form-control" value="{{$edizione->data_da?->format('Y-m-d')}}">
                         </div>
 
                         <div class="mb-3">
                             <label for="data_a" class="form-label">Data a</label>
-                            <input type="date" name="data_a" class="form-control" value="{{$edizione->data_a->format('Y-m-d')}}">
+                            <input type="date" name="data_a" class="form-control" value="{{$edizione->data_a?->format('Y-m-d')}}">
                         </div>
 
                         <div class="mb-3">
@@ -110,6 +110,22 @@
                             <textarea name="note" class="form-control" rows="3"></textarea>
                         </div>
 
+                        @foreach($edizione->socials->where('social',\App\Enums\Social::ALTRO) as $i => $altro)
+                            <label for='altri' class="form-label">Link</label>
+                            <div class="input-group mb-3">
+                                <input type="url" class="form-control" aria-describedby="basic-addon2" value="{{$altro->link}}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-danger" type="button" style="height:41px;" data-bs-toggle="modal" data-bs-target="#modalElimina{{$i}}"><i class="fa fa-trash"></i></button>
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <div class="mb-3">
+                            <input type="button" class="btn btn-sm btn-primary" id="addInput" value="Add video">
+                        </div>
+
+                        <div class="altri"></div>
+
                         <div class="mb-3 text-end">
                             <input type="submit" class="btn btn-sm btn-outline-primary" value="Registra">
                         </div>
@@ -120,4 +136,41 @@
             </div>
         </div>
     </div>
+
+    @section('modal')
+        @foreach($edizione->socials->where('social',\App\Enums\Social::ALTRO) as $i => $altro)
+            <div class="modal fade" id="modalElimina{{$i}}" tabindex="-1" aria-labelledby="modalElimina{{$i}}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Cancella Altro</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="{{route('edizioni.altro.delete', $altro)}}" method="post">
+                            @csrf
+                            @method('GET')
+
+                            <div class="modal-body">
+                                Vuoi davvero eliminare questo link: {{$altro->link}}?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Chiudi</button>
+                                <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i> Elimina</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    @stop
+
+    @section('scripts')
+        <script>
+            $(document).ready(function() {
+                $('#addInput').click(function() {
+                    $("<div class='mb-3'><label for='altri' class='form-label'>Link</label><input type='url' name='altri[]' class='form-control' /></div>").appendTo('.altri');
+                });
+            });
+        </script>
+    @stop
 </x-app-layout>

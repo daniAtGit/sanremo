@@ -76,8 +76,8 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="posizione" class="form-label">Posizione<span class="text-danger">*</span></label>
-                            <select name="posizione" class="form-control" required>
+                            <label for="posizione" class="form-label">Posizione @if($canzone->tipo == 'gara') <span class="text-danger">*</span>@endif</label>
+                            <select name="posizione" class="form-control" @if($canzone->tipo == 'gara') required @endif>
                                 <option></option>
                                 @for($i = 1; $i <= env('POSIZIONI'); $i++)
                                     <option value="{{$i}}" @selected($i == $canzone->posizione)>{{$i}}</option>

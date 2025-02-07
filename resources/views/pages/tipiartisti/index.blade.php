@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Artisti
+            Tipi Artisti
         </h2>
     </x-slot>
 
@@ -11,15 +11,18 @@
 {{--                    <h5 class="card-title">Card title</h5>--}}
 {{--                    <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>--}}
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-9">
 
                     </div>
-                    <div class="col-6 text-end">
-                        <a href="{{route('artisti.create')}}">
-                            <button type="button" class="btn btn-sm btn-outline-primary">
-                                <i class="fa-solid fa-circle-plus"></i> Nuovo
-                            </button>
-                        </a>
+                    <div class="col-3 text-end">
+                        <form method="post" action="{{route('tipiArtisti.store')}}">
+                            @csrf
+
+                            <div class="input-group">
+                                <input type="text" name="tipo" class="form-control" placeholder="Tipo" aria-label="Tipo" aria-describedby="button-addon2" required>
+                                <button class="btn btn-primary" type="submit" id="button-addon2"><i class="fa-solid fa-floppy-disk"></i></button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -35,56 +38,25 @@
                     <table class="table table-hover table-bordered border" id="tabella">
                         <thead>
                             <tr>
-                                <th class="bg-light">Nome</th>
                                 <th class="bg-light">Tipo</th>
-                                <th class="bg-light">Date</th>
-                                <th class="bg-light">Socials</th>
+                                <th class="bg-light">Qta</th>
                                 <th class="bg-light"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($artisti as $i => $artista)
+                            @foreach($tipiArtisti as $i => $tipoArtista)
                                 <tr>
-                                    <td>{{$artista->nome}}</td>
-                                    <td>{{$artista->tipoArtista->tipo}}</td>
-                                    <td class="small">
-                                        @if($artista->tipoArtista->tipo == 'Cantante')
-                                            @if($artista->nascita)
-                                                <i class="fa-solid fa-cake-candles"></i> {{$artista->nascita?->format('d/m/Y')}}
-                                            @endif
-                                            @if($artista->morte)
-                                                - <i class="fa-solid fa-skull"></i> {{$artista->morte?->format('d/m/Y')}}
-                                            @endif
-                                        @endif
-                                        @if($artista->tipoArtista->tipo == 'Gruppo')
-                                            @if($artista->inizio)
-                                                <i class="fa-solid fa-play"></i> {{$artista->inizio?->format('d/m/Y')}}
-                                            @endif
-                                            @if($artista->fine)
-                                                - <i class="fa-solid fa-stop"></i> {{$artista->fine?->format('d/m/Y')}}
-                                            @endif
-                                        @endif
-                                    </td>
+                                    <td>{{$tipoArtista->tipo}}</td>
                                     <td>
-                                        @if($artista->wikipedia)
-                                            <a href="{{$artista->wikipedia}}" target="_blank" title="Wikipedia"><i class="fa-brands fa-wikipedia-w"></i></a>
-                                        @else
-                                            <i class="fa-brands fa-wikipedia-w text-secondary" title="No Wikipedia"></i>
-                                        @endif
-                                        <a href="https://www.google.com/search?q={{$artista->nome}}&&sourceid=chrome&ie=UTF-8" target="_blank" title="Google"><i class="fa-brands fa-google"></i></a>
-                                        <a href="https://www.youtube.com/results?search_query={{$artista->nome}}" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                                        |
-                                        {{--todo: socials--}}
-                                    </td>
-                                    <td>
-                                        <a href="{{route('artisti.show',$artista)}}" class="btn btn-sm btn-outline-info">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </a>
-                                        <a href="{{route('artisti.edit',$artista)}}" class="btn btn-sm btn-outline-primary">
-                                            <i class="fa-solid fa-edit"></i>
-                                        </a>
+                                        {{$tipoArtista->artisti->count()}}
 
-                                        @if($artista->canzoni->count() == 0)
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{$i}}">
+                                            <i class="fa-solid fa-edit"></i>
+                                        </button>
+
+                                        @if($tipoArtista->artisti->count() == 0)
                                             <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalElimina{{$i}}">
                                                 <i class="fa-solid fa-trash"></i>
                                             </button>
@@ -108,7 +80,30 @@
 
     @section('modal')
         <!-- Modal Delete -->
-        @foreach($artisti as $i => $artista)
+        @foreach($tipiArtisti as $i => $tipoArtista)
+            <div class="modal fade" id="modalEdit{{$i}}" tabindex="-1" aria-labelledby="modalEdit{{$i}}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modifica tipo</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="{{route('tipiArtisti.update',$tipoArtista)}}" method="post">
+                            @csrf
+                            @method('PATCH')
+                            <div class="modal-body">
+                                <input type="text" name="tipo" class="form-control" placeholder="Tipo" value="{{$tipoArtista->tipo}}" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Chiudi</button>
+                                <button type="submit" class="btn btn-sm btn-outline-warning"><i class="fa fa-floppy-disk"></i> Modifica</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="modal fade" id="modalElimina{{$i}}" tabindex="-1" aria-labelledby="modalElimina{{$i}}" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -116,11 +111,11 @@
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Cancella edizione</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="{{route('artisti.destroy',$artista)}}" method="post">
+                        <form action="{{route('tipiArtisti.destroy',$tipoArtista)}}" method="post">
                             @csrf
                             @method('DELETE')
                             <div class="modal-body">
-                                Vuoi davvero eliminare l'artista {{$artista->nome}}?
+                                Vuoi davvero eliminare il tipo {{$tipoArtista->tipo}}?
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Chiudi</button>
@@ -161,19 +156,13 @@
                     "columnDefs": [
                         {
                             "targets": 1,
-                            "width": "70px",
+                            "width": "80px",
+                            "className": 'dt-center',
+                            'orderable': false
                         },
                         {
                             "targets": 2,
-                            "width": "200px",
-                        },
-                        {
-                            "targets": 3,
-                            "width": "200px",
-                        },
-                        {
-                            "targets": 4,
-                            "width": "100px",
+                            "width": "120px",
                             "className": 'dt-center',
                             'orderable': false
                         },

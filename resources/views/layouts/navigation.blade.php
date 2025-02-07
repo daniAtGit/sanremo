@@ -69,6 +69,12 @@
                                     <i class="fa fa-trophy"></i> Premi
                                 </x-dropdown-link>
 
+                                <hr>
+
+                                <x-dropdown-link :href="route('tipiArtisti.index')" :active="request()->routeIs('tipiArtisti.*')" wire:navigate>
+                                    <i class="fa-solid fa-sliders"></i> Tipi Artisti
+                                </x-dropdown-link>
+
                                 <x-dropdown-link :href="route('utenti.index')" wire:navigate>
                                     <i class="fa fa-user-group"></i> Utenti
                                 </x-dropdown-link>

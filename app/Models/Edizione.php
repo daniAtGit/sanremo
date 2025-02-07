@@ -49,4 +49,14 @@ class Edizione extends Model
     {
         return $this->artisti()->wherePivot('ruolo','coconduttore')->get();
     }
+
+    public function socials()
+    {
+        return $this->morphMany(Social::class, 'socialable');
+    }
+
+    public function scopeVincitore()
+    {
+        return $this->canzoni;
+    }
 }
