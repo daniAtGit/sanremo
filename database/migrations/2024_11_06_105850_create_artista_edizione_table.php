@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('canzone_edizione', function (Blueprint $table) {
+        Schema::create('artista_edizione', function (Blueprint $table) {
             $table->uuid('artista_id');
             $table->uuid('edizione_id');
             $table->string('ruolo');

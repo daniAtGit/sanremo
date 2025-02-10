@@ -55,7 +55,7 @@
                                     <td>{{\App\Enums\Luogo::from($edizione->luogo->value)->description()}}</td>
                                     <td>{{$edizione->conduttori()->pluck('nome')->implode(', ')}}</td>
                                     <td>{{$edizione->coconduttori()->pluck('nome')->implode(', ')}}</td>
-                                    <td>{{$edizione->canzoni->where('posizione',1)->first()->artisti->pluck('nome')->implode(', ')}}</td>
+                                    <td>{{$edizione->canzoni->where('posizione',1)->first()?->artisti->pluck('nome')->implode(', ')}}</td>
                                     <td class="smart">{{$edizione->note}}</td>
                                     <td>
                                         <a href="{{route('edizioni.show',$edizione)}}" class="btn btn-sm btn-outline-info">
