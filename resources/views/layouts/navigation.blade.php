@@ -57,12 +57,12 @@
                                     <i class="fa fa-calendar-days"></i> Edizioni
                                 </x-dropdown-link>
 
-                                <x-dropdown-link :href="route('artisti.index')" :active="request()->routeIs('artisti.*')" wire:navigate>
-                                    <i class="fa-solid fa-microphone-lines"></i> Artisti
-                                </x-dropdown-link>
-
                                 <x-dropdown-link :href="route('canzoni.index')" :active="request()->routeIs('canzoni.*')" wire:navigate>
                                     <i class="fa fa-guitar"></i> Canzoni
+                                </x-dropdown-link>
+
+                                <x-dropdown-link :href="route('artisti.index')" :active="request()->routeIs('artisti.*')" wire:navigate>
+                                    <i class="fa-solid fa-microphone-lines"></i> Artisti
                                 </x-dropdown-link>
 
                                 <x-dropdown-link :href="route('premi.index')" :active="request()->routeIs('premi.*')" wire:navigate>

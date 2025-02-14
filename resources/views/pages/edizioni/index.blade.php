@@ -41,6 +41,7 @@
                                 <th class="bg-light">Luogo</th>
                                 <th class="bg-light">Presentatore</th>
                                 <th class="bg-light">Co-conduttori</th>
+                                <th class="bg-light">Ospiti</th>
                                 <th class="bg-light">Vincitore</th>
                                 <th class="bg-light">Note</th>
                                 <th class="bg-light"></th>
@@ -55,6 +56,7 @@
                                     <td>{{\App\Enums\Luogo::from($edizione->luogo->value)->description()}}</td>
                                     <td>{{$edizione->conduttori()->pluck('nome')->implode(', ')}}</td>
                                     <td>{{$edizione->coconduttori()->pluck('nome')->implode(', ')}}</td>
+                                    <td>{{$edizione->ospiti()->pluck('nome')->implode(', ')}}</td>
                                     <td>{{$edizione->canzoni->where('posizione',1)->first()?->artisti->pluck('nome')->implode(', ')}}</td>
                                     <td class="smart">{{$edizione->note}}</td>
                                     <td>
@@ -143,11 +145,11 @@
                             "width": "40px",
                         },
                         {
-                            "targets": 2,
-                            "width": "180px",
+                            "targets": 3,
+                            "width": "100px",
                         },
                         {
-                            "targets": [3,4,5],
+                            "targets": [2,4,5,6],
                             "width": "180px",
                         },
                         {

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\TipoCanzone;
+use Cohensive\OEmbed\Facades\OEmbed;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,7 +17,6 @@ class Canzone extends Model
         'edizione_id',
         'tipo',
         'titolo',
-        'scrittori',
         'posizione',
         'posizione_eurovision',
         'esibizione',
@@ -38,6 +38,16 @@ class Canzone extends Model
         return $this->belongsToMany(Artista::class, 'canzone_artista');
     }
 
+    public function autori()
+    {
+        return $this->belongsToMany(Artista::class, 'canzone_autore');
+    }
+
+    public function direttori()
+    {
+        return $this->belongsToMany(Artista::class, 'canzone_direttore');
+    }
+
     public function premi()
     {
         return $this->belongsToMany(Premio::class, 'canzone_premio');
@@ -51,5 +61,23 @@ class Canzone extends Model
     public function scopeAltri()
     {
         return $this->socials();
+    }
+
+    public function getVideoTitle($value)
+    {
+        $embed = OEmbed::get($value);
+        return $embed->data()['title'] ?? '';
+    }
+
+    public function getVideoSmall($value)
+    {
+        $embed = OEmbed::get($value);
+        return $embed->html(['width' => 70]);
+    }
+
+    public function getVideo($value)
+    {
+        $embed = OEmbed::get($value);
+        return $embed->html(['width' => 350]);
     }
 }

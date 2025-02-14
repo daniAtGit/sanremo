@@ -71,12 +71,27 @@
 
                         <div class="mb-3">
                             <label for="autori" class="form-label">Autori</label>
-                            <input type="text" name="autori" class="form-control">
+                            <select name="autori[]" class="form-select multiple-select-field" data-placeholder="Seleziona" multiple>
+                                <option></option>
+                                @foreach($artisti as $artista)
+                                    <option value="{{$artista->id}}">{{$artista->nome}}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="mb-3">
-                            <label for="posizione" class="form-label">Posizione<span class="text-danger" id="simboloRequired">*</span></label>
-                            <select name="posizione" id="posizione" class="form-control" required>
+                            <label for="direttori" class="form-label">Direttori</label>
+                            <select name="direttori[]" class="form-select multiple-select-field" data-placeholder="Seleziona" multiple>
+                                <option></option>
+                                @foreach($artisti as $artista)
+                                    <option value="{{$artista->id}}">{{$artista->nome}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="posizione" class="form-label">Posizione</label>
+                            <select name="posizione" id="posizione" class="form-control">
                                 <option></option>
                                 @for($i = 1; $i <= env('POSIZIONI'); $i++)
                                     <option value="{{$i}}">{{$i}}</option>
@@ -142,16 +157,6 @@
                 $('#addInput').click(function() {
                     //$('.interfacesIx:first').clone().insertAfter('.interfacesIx:last');
                     $("<div class='mb-3'><label for='altri' class='form-label'>Altro</label><input type='url' name='altri[]' class='form-control' /></div>").appendTo('.altri');
-                });
-
-                $('#tipo').on('change', function(){
-                   if($('#tipo').val() == 'cover'){
-                        $('#posizione').prop('required', false);
-                        $('#simboloRequired').hide();
-                     }else{
-                        $('#posizione').prop('required', true);
-                       $('#simboloRequired').show();
-                   }
                 });
             });
         </script>

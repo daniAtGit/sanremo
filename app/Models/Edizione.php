@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enums\Luogo;
-use App\Enums\TipoArtista;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -48,6 +47,11 @@ class Edizione extends Model
     public function coconduttori()
     {
         return $this->artisti()->wherePivot('ruolo','coconduttore')->get();
+    }
+
+    public function ospiti()
+    {
+        return $this->artisti()->wherePivot('ruolo','ospite')->get();
     }
 
     public function socials()

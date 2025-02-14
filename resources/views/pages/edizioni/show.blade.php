@@ -12,50 +12,15 @@
                         <i class="fa-solid fa-arrow-left"></i> Indietro
                     </button>
                 </a>
+
+                <a href="{{route('edizioni.edit',$edizione)}}" class="btn btn-sm btn-outline-warning">
+                    <i class="fa-solid fa-edit"></i> Modifica
+                </a>
             </div>
         </div>
     </x-slot>
 
     <div class="container-fluid border">
-
-
-        <ul class="nav nav-tabs">
-            <li class="active">
-                <a href="#portlet_edit" data-toggle="tab">Info</a>
-            </li>
-            <li>
-                <a href="#portlet_config" data-toggle="tab">Conduttori</a>
-            </li>
-        </ul>
-
-
-        <div class="tab-content">
-            <div class="tab-pane active" id="portlet_edit">
-                a
-            </div>
-            <div class="tab-pane" id="portlet_config">
-                b
-            </div>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         <div class="card mt-4">
             <div class="card-body">
@@ -76,133 +41,44 @@
             </div>
         </div>
 
-        <div class="card mt-4">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-6">
-                        <span class="small text-secondary">Conduttori</span>
-                        <div class="row">
-                            @foreach($edizione->conduttori() as $artista)
-                                <div class="card p-1 m-1" style="width:180px;">
-                                    <img src="{{$artista->getImgArtistaFromGoogle()}}" style="width:180px;">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{\Illuminate\Support\Str::ucfirst($artista->nome)}}</h5>
-{{--                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>--}}
-{{--                                        <a href="#" class="btn btn-primary">Go somewhere</a>--}}
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
+        <div class="card mt-4 py-2">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="home" aria-selected="true">Info</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#classifica" type="button" role="tab" aria-controls="profile" aria-selected="false">Classifica</button>
+                </li>
+                @if($edizione->canzoni->where('tipo',\App\Enums\TipoCanzone::GIOVANI)->count())
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#giovani" type="button" role="tab" aria-controls="contact" aria-selected="false">Giovani</button>
+                    </li>
+                @endif
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#cover" type="button" role="tab" aria-controls="contact" aria-selected="false">Cover</button>
+                </li>
+            </ul>
+
+            <div class="tab-content mt-3" id="myTabContent">
+                <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
+                    @include('pages.edizioni.parziali.info')
+                </div>
+
+                <div class="tab-pane fade" id="classifica" role="tabpanel" aria-labelledby="profile-tab">
+                    @include('pages.edizioni.parziali.classifica')
+                </div>
+
+                @if($edizione->canzoni->where('tipo',\App\Enums\TipoCanzone::GIOVANI)->count())
+                    <div class="tab-pane fade" id="giovani" role="tabpanel" aria-labelledby="contact-tab">
+                        @include('pages.edizioni.parziali.giovani')
                     </div>
-                    <div class="col-6 text-end">
-                        <span class="small text-secondary">Coconduttori</span>
-                        <br>
-                        <div class="row float-end">
-                            @foreach($edizione->coconduttori() as $artista)
-                                <div class="card p-1 m-1" style="width:180px;">
-                                    <img src="{{$artista->getImgArtistaFromGoogle()}}" style="width:180px;">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{\Illuminate\Support\Str::ucfirst($artista->nome)}}</h5>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-{{--                        {{$edizione->coconduttori()->pluck('nome')->implode(', ')}}--}}
-                    </div>
+                @endif
+
+                <div class="tab-pane fade" id="cover" role="tabpanel" aria-labelledby="contact-tab">
+                    @include('pages.edizioni.parziali.cover')
                 </div>
             </div>
         </div>
-
-        <div class="card mt-4">
-            <div class="row mt-3">
-                <div class="col-12">
-                    <p style="width:96%;margin:10px auto;font-size:22px;">Classifica</p>
-                    <table class="table table-hover table-bordered border" style="width:96%;margin:10px auto;">
-                        <thead>
-                            <tr>
-                                <th class="bg-light text-center" style="width:3%;">Pos</th>
-                                <th class="bg-light" style="width:39%">Canzone</th>
-                                <th class="bg-light" style="width:38%">Artisti</th>
-                                <th class="bg-light" style="width:20%">Premio</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($edizione->canzoni->where('tipo',\App\Enums\TipoCanzone::GARA)->sortBy('posizione') as $i => $canzone)
-                                <tr>
-                                    <td class="text-center" @if($canzone->posizione == 1) style="background:#ffff00;" @endif>
-                                        @if($canzone->posizione == 1)
-                                            <i class="fa-solid fa-crown" title="{{$canzone->posizione}}"></i>
-                                        @else
-                                            {{$canzone->posizione}}
-                                        @endif
-                                    </td>
-                                    <td>{{$canzone->titolo}}</td>
-                                    <td>{{$canzone->artisti->pluck('nome')->implode(', ')}}</td>
-                                    <td>{!! $canzone->premi->pluck('nome')->implode('<br>') !!}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="card mt-4">
-            <div class="row mt-3">
-                <div class="col-12">
-                    <p style="width:96%;margin:10px auto;font-size:22px;">Cover</p>
-                    <table class="table table-hover table-bordered border" style="width:96%;margin:10px auto;">
-                        <thead>
-                        <tr>
-                            <th class="bg-light text-center" style="width:3%;">Pos</th>
-                            <th class="bg-light" style="width:39%">Canzone</th>
-                            <th class="bg-light" style="width:58%">Artisti</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($edizione->canzoni->where('tipo',\App\Enums\TipoCanzone::COVER)->sortBy('titolo')->sortBy('posizione') as $i => $canzone)
-                            <tr>
-                                <td class="text-center" @if($canzone->posizione == 1) style="background:#ffff00;" @endif>
-                                    @if($canzone->posizione == 1)
-                                        <i class="fa-solid fa-crown" title="{{$canzone->posizione}}"></i>
-                                    @else
-                                        {{$canzone->posizione}}
-                                    @endif
-                                </td>
-                                <td>{{$canzone->titolo}}</td>
-                                <td>{{$canzone->artisti->pluck('nome')->implode(', ')}}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="card mt-4 mb-4">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-12">
-                        <span class="small text-secondary">Note</span>
-                        <br>
-                        {!! $edizione->note !!}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        @foreach($edizione->socials->where('social',\App\Enums\Social::ALTRO) as $i => $altro)
-            <div class="card p-1 m-1">
-                <div class="card-body">
-                    @php
-                        $youtubeUrl =  \JUri::getInstance('https://www.youtube.com/watch?v=ndmXkyohT1M');
-                        $videoId = $youtubeUrl->getVar('v'); ?>
-
-    <iframe id="ytplayer" type="text/html" width="640" height="390"  src="http://www.youtube.com/embed/<?php echo $videoId; ?>"  frameborder="0"/>
-                    @endphp
-                </div>
-            </div>
-        @endforeach
     </div>
 
     @section('scripts')

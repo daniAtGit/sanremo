@@ -105,6 +105,17 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="canzoni" class="form-label">Ospiti</label>
+                            <div class="border">
+                                <select name="ospiti[]" class="form-select multiple-select-field" data-placeholder="Seleziona" multiple>
+                                    @foreach($artisti as $artista)
+                                        <option value="{{$artista->id}}">{{$artista->nome}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="note" class="form-label">Note</label>
                             <textarea name="note" class="form-control" rows="3"></textarea>
                         </div>

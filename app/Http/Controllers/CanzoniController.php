@@ -36,7 +36,7 @@ class CanzoniController extends Controller
             'tipo' => $request->tipo,
             'titolo' => $request->titolo,
             'autori' => $request->autori,
-            'posizione' => $request->posizione,
+            'posizione' => $request->posizione ?? 99,
             'posizione_eurovision' => $request->posizione_euro,
             'esibizione' => $request->sanremo,
             'videoclip' => $request->videoclip,
@@ -44,6 +44,8 @@ class CanzoniController extends Controller
         ]);
 
         $canzone->artisti()->attach($request->artisti);
+        $canzone->autori()->attach($request->autori);
+        $canzone->direttori()->attach($request->direttori);
         $canzone->premi()->attach($request->premi);
 
         if($request->altri) {
@@ -75,7 +77,7 @@ class CanzoniController extends Controller
             'tipo' => $request->tipo,
             'titolo' => $request->titolo,
             'autori' => $request->autori,
-            'posizione' => $request->posizione,
+            'posizione' => $request->posizione ?? 99,
             'posizione_eurovision' => $request->posizione_euro,
             'esibizione' => $request->sanremo,
             'videoclip' => $request->videoclip,
@@ -83,6 +85,8 @@ class CanzoniController extends Controller
         ]);
 
         $canzone->artisti()->sync($request->artisti);
+        $canzone->autori()->sync($request->autori);
+        $canzone->direttori()->sync($request->direttori);
         $canzone->premi()->sync($request->premi);
 
         if($request->altri) {

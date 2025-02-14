@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cover_artista', function (Blueprint $table) {
-            $table->uuid('cover_id');
+        Schema::create('canzone_autore', function (Blueprint $table) {
+            $table->uuid('canzone_id');
             $table->uuid('artista_id');
         });
     }
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cover_artista');
+        Schema::dropIfExists('canzone_autore');
     }
 };

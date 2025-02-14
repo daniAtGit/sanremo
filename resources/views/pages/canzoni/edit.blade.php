@@ -72,11 +72,26 @@
 
                         <div class="mb-3">
                             <label for="autori" class="form-label">Autori</label>
-                            <input type="text" name="autori" class="form-control" value="{{$canzone->scrittori}}">
+                            <select name="autori[]" class="form-select multiple-select-field" data-placeholder="Seleziona" multiple>
+                                <option></option>
+                                @foreach($artisti as $artista)
+                                    <option value="{{$artista->id}}" @selected($canzone->autori->contains($artista->id))>{{$artista->nome}}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="mb-3">
-                            <label for="posizione" class="form-label">Posizione @if($canzone->tipo == 'gara') <span class="text-danger">*</span>@endif</label>
+                            <label for="autori" class="form-label">Direttori</label>
+                            <select name="direttori[]" class="form-select multiple-select-field" data-placeholder="Seleziona" multiple>
+                                <option></option>
+                                @foreach($artisti as $artista)
+                                    <option value="{{$artista->id}}" @selected($canzone->direttori->contains($artista->id))>{{$artista->nome}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="posizione" class="form-label">Posizione</label>
                             <select name="posizione" class="form-control" @if($canzone->tipo == 'gara') required @endif>
                                 <option></option>
                                 @for($i = 1; $i <= env('POSIZIONI'); $i++)

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Social;
+use App\Enums\TipoCanzone;
 use App\Models\Artista;
 use App\Models\Edizione;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Drnxloc\LaravelHtmlDom\HtmlDomParser;
+use Illuminate\Support\Facades\DB;
 
 class EdizioniController extends Controller
 {
@@ -38,6 +40,7 @@ class EdizioniController extends Controller
 
         $edizione->artisti()->attach($request->conduttori, ['ruolo' => 'conduttore']);
         $edizione->artisti()->attach($request->coconduttori, ['ruolo' => 'coconduttore']);
+        $edizione->artisti()->attach($request->ospiti, ['ruolo' => 'ospite']);
 
         if($request->altri) {
             foreach ($request->altri as $altro) {
@@ -88,6 +91,10 @@ class EdizioniController extends Controller
 
         if(!is_null($request->coconduttori)) {
             foreach ($request->coconduttori as $coconduttore) {$artisti_array[$coconduttore] = ['ruolo' => 'coconduttore'];}
+        }
+
+        if(!is_null($request->ospiti)) {
+            foreach ($request->ospiti as $ospite) {$artisti_array[$ospite] = ['ruolo' => 'ospite'];}
         }
 
         if($request->altri) {

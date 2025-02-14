@@ -40,6 +40,7 @@
                             <th class="bg-light">Titolo</th>
                             <th class="bg-light">Artista</th>
                             <th class="bg-light">Autori</th>
+                            <th class="bg-light">Direttori</th>
                             <th class="bg-light">Pos.</th>
                             <th class="bg-light">EuroV</th>
                             <th class="bg-light"><i class="fa fa-video text-primary" title="Esibizione"></i></th>
@@ -52,15 +53,20 @@
                         <tbody>
                             @foreach($canzoni as $i => $canzone)
                                 <tr>
-                                    <td>{{$canzone->edizione->numero}}</td>
+                                    <td>
+                                        <a href="{{route('edizioni.show', $canzone->edizione)}}" class="btn btn-sm btn-outline-info" title="Vedi edizione">
+                                            {{$canzone->edizione->numero}}
+                                        </a>
+                                    </td>
                                     <td>{{$canzone->edizione->anno}}</td>
                                     <td>
                                         <span style="display:none;">{{$canzone->titolo}}</span>
                                         {!! \App\Enums\TipoCanzone::from($canzone->tipo->value)->icon() !!} {{$canzone->titolo}}
                                     </td>
                                     <td>{{$canzone->artisti->pluck('nome')->implode(', ')}}</td>
-                                    <td>{{$canzone->scrittori}}</td>
-                                    <td>{{$canzone->posizione}}</td>
+                                    <td>{{$canzone->autori->pluck('nome')->implode(', ')}}</td>
+                                    <td>{{$canzone->direttori->pluck('nome')->implode(', ')}}</td>
+                                    <td>{{$canzone->posizione == 99 ? 'NC' : $canzone->posizione}}</td>
                                     <td>{{$canzone->posizione_eurovision}}</td>
                                     <td>
                                         @if($canzone->esibizione)
@@ -164,7 +170,7 @@
                             "className": 'dt-center',
                         },
                         {
-                            "targets": [5,6,7,8,9,10],
+                            "targets": [6,7,8,9,10,11],
                             "width": "30px",
                             "className": 'dt-center',
                         },
