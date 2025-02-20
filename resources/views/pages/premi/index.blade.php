@@ -32,12 +32,14 @@
                 <div class="col-1"></div>
 
                 <div class="col-10">
-                    <table class="table table-hover table-bordered border" id="tabella">
+                    <table class="table table-hover table-striped table-bordered border" id="tabella">
                         <thead>
                             <tr>
                                 <th class="bg-light">Anno</th>
+                                <th class="bg-light">Etichetta</th>
+                                <th class="bg-light">Colore</th>
                                 <th class="bg-light">Nome</th>
-                                <th class="bg-light">Descrizione</th>
+                                <th class="bg-light">Wiki</th>
                                 <th class="bg-light">Assegnazioni</th>
                                 <th class="bg-light"></th>
                             </tr>
@@ -46,14 +48,27 @@
                             @foreach($premi as $i => $premio)
                                 <tr>
                                     <td>{{$premio->anno_istituzione}}</td>
+                                    <td>{{$premio->etichetta}}</td>
+                                    <td>
+                                        <badge class="badge" style="background:{{$premio->colore}};">{{$premio->colore}}</badge>
+
+                                    </td>
                                     <td>{{$premio->nome}}</td>
-                                    <td>{{$premio->descrizione}}</td>
-                                    <td>{{$premio->assegnazioni()}}</td>
+                                    <td>
+                                        @if(!is_null($premio->wikipedia))
+                                            <a href="{{$premio->wikipedia}}" target="_blank">
+                                                <i class="fa-brands fa-wikipedia-w"></i>
+                                            </a>
+                                        @else
+                                            <i class="fa-brands fa-wikipedia-w text-secondary" title="No Wikipedia"></i>
+                                        @endif
+                                    </td>
+                                    <td>{{$premio->canzoni_count}}</td>
                                     <td>
                                         <a href="{{route('premi.edit',$premio)}}" class="btn btn-sm btn-outline-primary">
                                             <i class="fa-solid fa-edit"></i>
                                         </a>
-                                        @if($premio->assegnazioni() == 0)
+                                        @if($premio->canzoni_count == 0)
                                             <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalElimina{{$i}}">
                                                 <i class="fa-solid fa-trash"></i>
                                             </button>
@@ -135,12 +150,12 @@
                             "className": 'dt-center'
                         },
                         {
-                            "targets": 1,
-                            "width": "500px"
+                            "targets": [1,2],
+                            "width": "120px"
                         },
                         {
-                            "targets": 3,
-                            "width": "100px",
+                            "targets": [4,5],
+                            "width": "60px",
                             "className": 'dt-center'
                         },
                         {

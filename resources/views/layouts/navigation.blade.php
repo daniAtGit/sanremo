@@ -16,23 +16,17 @@
 {{--                        {{ __('Dashboard') }}--}}
 {{--                    </x-nav-link>--}}
 
-{{--                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">--}}
-{{--                        <x-nav-link :href="route('edizioni.index')" :active="request()->routeIs('edizioni.*')" wire:navigate>--}}
-{{--                            {{ __('Edizioni') }}--}}
-{{--                        </x-nav-link>--}}
-{{--                    </div>--}}
+                    <x-nav-link :href="route('edizioni.index')" :active="request()->routeIs('edizioni.*')">
+                        <i class="fa fa-calendar-days"></i> Edizioni
+                    </x-nav-link>
 
-{{--                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">--}}
-{{--                        <x-nav-link :href="route('artisti.index')" :active="request()->routeIs('artisti.*')" wire:navigate>--}}
-{{--                            {{ __('Artisti') }}--}}
-{{--                        </x-nav-link>--}}
-{{--                    </div>--}}
+                    <x-nav-link :href="route('canzoni.index')" :active="request()->routeIs('canzoni.*')">
+                        <i class="fa fa-guitar"></i> Canzoni
+                    </x-nav-link>
 
-{{--                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">--}}
-{{--                        <x-nav-link :href="route('premi.index')" :active="request()->routeIs('premi.*')" wire:navigate>--}}
-{{--                            {{ __('Premi') }}--}}
-{{--                        </x-nav-link>--}}
-{{--                    </div>--}}
+                    <x-nav-link :href="route('artisti.index')" :active="request()->routeIs('artisti.*')">
+                        <i class="fa-solid fa-microphone-lines"></i> Artisti
+                    </x-nav-link>
 
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
                         <x-dropdown align="right" width="48">
@@ -49,35 +43,17 @@
                             </x-slot>
 
                             <x-slot name="content">
-{{--                                <x-dropdown-link :href="route('argomenti.index')" wire:navigate>--}}
-{{--                                    Argomenti--}}
-{{--                                </x-dropdown-link>--}}
-
-                                <x-dropdown-link :href="route('edizioni.index')" :active="request()->routeIs('edizioni.*')" wire:navigate>
-                                    <i class="fa fa-calendar-days"></i> Edizioni
-                                </x-dropdown-link>
-
-                                <x-dropdown-link :href="route('canzoni.index')" :active="request()->routeIs('canzoni.*')" wire:navigate>
-                                    <i class="fa fa-guitar"></i> Canzoni
-                                </x-dropdown-link>
-
-                                <x-dropdown-link :href="route('artisti.index')" :active="request()->routeIs('artisti.*')" wire:navigate>
-                                    <i class="fa-solid fa-microphone-lines"></i> Artisti
-                                </x-dropdown-link>
-
                                 <x-dropdown-link :href="route('premi.index')" :active="request()->routeIs('premi.*')" wire:navigate>
                                     <i class="fa fa-trophy"></i> Premi
                                 </x-dropdown-link>
-
-                                <hr>
 
                                 <x-dropdown-link :href="route('tipiArtisti.index')" :active="request()->routeIs('tipiArtisti.*')" wire:navigate>
                                     <i class="fa-solid fa-sliders"></i> Tipi Artisti
                                 </x-dropdown-link>
 
-                                <x-dropdown-link :href="route('utenti.index')" wire:navigate>
-                                    <i class="fa fa-user-group"></i> Utenti
-                                </x-dropdown-link>
+{{--                                <x-dropdown-link :href="route('utenti.index')" wire:navigate>--}}
+{{--                                    <i class="fa fa-user-group"></i> Utenti--}}
+{{--                                </x-dropdown-link>--}}
                             </x-slot>
                         </x-dropdown>
                     </div>

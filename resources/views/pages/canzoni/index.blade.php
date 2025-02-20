@@ -32,15 +32,13 @@
                 <div class="col-1"></div>
 
                 <div class="col-10">
-                    <table class="table table-hover table-bordered border" id="tabella">
+                    <table class="table table-hover table-striped table-bordered border" id="tabella">
                         <thead>
                         <tr>
                             <th class="bg-light">Edizione</th>
                             <th class="bg-light">Anno</th>
                             <th class="bg-light">Titolo</th>
                             <th class="bg-light">Artista</th>
-                            <th class="bg-light">Autori</th>
-                            <th class="bg-light">Direttori</th>
                             <th class="bg-light">Pos.</th>
                             <th class="bg-light">EuroV</th>
                             <th class="bg-light"><i class="fa fa-video text-primary" title="Esibizione"></i></th>
@@ -64,8 +62,6 @@
                                         {!! \App\Enums\TipoCanzone::from($canzone->tipo->value)->icon() !!} {{$canzone->titolo}}
                                     </td>
                                     <td>{{$canzone->artisti->pluck('nome')->implode(', ')}}</td>
-                                    <td>{{$canzone->autori->pluck('nome')->implode(', ')}}</td>
-                                    <td>{{$canzone->direttori->pluck('nome')->implode(', ')}}</td>
                                     <td>{{$canzone->posizione == 99 ? 'NC' : $canzone->posizione}}</td>
                                     <td>{{$canzone->posizione_eurovision}}</td>
                                     <td>
@@ -95,9 +91,15 @@
                                             <i class="fa-solid fa-edit"></i>
                                         </a>
 
-                                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalElimina{{$i}}">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
+                                        @if($canzone->edizione_count == 0)
+                                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalElimina{{$i}}">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        @else
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -118,14 +120,14 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Cancella edizione</h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Cancella canzone</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form action="{{route('canzoni.destroy',$canzone)}}" method="post">
                             @csrf
                             @method('DELETE')
                             <div class="modal-body">
-                                Vuoi davvero eliminare la canzone {{$canzone->titolo}} di {{$canzone->artisti->pluck('nome')->implode(', ')}}?
+                                Vuoi davvero eliminare la canzone "{{$canzone->titolo}}" di "{{$canzone->artisti->pluck('nome')->implode(', ')}}"?
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Chiudi</button>
@@ -170,7 +172,7 @@
                             "className": 'dt-center',
                         },
                         {
-                            "targets": [6,7,8,9,10,11],
+                            "targets": [4,5,6,7,8,9],
                             "width": "30px",
                             "className": 'dt-center',
                         },

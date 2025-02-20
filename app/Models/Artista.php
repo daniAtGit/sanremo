@@ -18,19 +18,17 @@ class Artista extends Model
     protected $fillable = [
         'nome',
         'tipo_id',
-        'nascita',
-        'morte',
-        'inizio',
-        'fine',
         'wikipedia',
     ];
 
     protected $casts = [
-        'nascita' => 'date',
-        'morte' => 'date',
-        'inizio' => 'date',
-        'fine' => 'date',
+        //
     ];
+
+    public function edizioni(): BelongsToMany
+    {
+        return $this->belongsToMany(Edizione::class, 'artista_edizione');
+    }
 
     public function canzoni(): BelongsToMany
     {
@@ -42,9 +40,14 @@ class Artista extends Model
         return $this->belongsTo(\App\Models\TipoArtista::class, 'tipo_id', 'id');
     }
 
-    public function getImgArtistaFromGoogle()
+    public function socials()
     {
-        $file = "https://www.google.com/search?q=".Str::replace(" ","+",$this->nome)."+sanremo&tbm=isch";
+        return $this->morphMany(Social::class, 'socialable');
+    }
+
+    public function getImgArtistaFromGoogle($anno = null)
+    {
+        $file = "https://www.google.com/search?q=".Str::replace(" ","+",$this->nome)."+sanremo+".$anno."&tbm=isch";
         $dom = HtmlDomParser::file_get_html($file);
         $elems = $dom->find('img');
         return $elems[1]->src ?? null;

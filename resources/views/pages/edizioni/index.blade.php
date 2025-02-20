@@ -32,7 +32,7 @@
                 <div class="col-1"></div>
 
                 <div class="col-10">
-                    <table class="table table-hover table-bordered border" id="tabella">
+                    <table class="table table-hover table-striped table-bordered border" id="tabella">
                         <thead>
                             <tr>
                                 <th class="bg-light">N°</th>
@@ -60,6 +60,11 @@
                                     <td>{{$edizione->canzoni->where('posizione',1)->first()?->artisti->pluck('nome')->implode(', ')}}</td>
                                     <td class="smart">{{$edizione->note}}</td>
                                     <td>
+                                        @if($edizione->wikipedia)
+                                            <a href="{{$edizione->wikipedia}}" target="_blank" title="Wikipedia"><i class="fa-brands fa-wikipedia-w px-1"></i></a>
+                                        @else
+                                            <i class="fa-brands fa-wikipedia-w text-secondary px-1" title="No Wikipedia"></i>
+                                        @endif
                                         <a href="{{route('edizioni.show',$edizione)}}" class="btn btn-sm btn-outline-info">
                                             <i class="fa-solid fa-eye"></i>
                                         </a>
@@ -154,7 +159,7 @@
                         },
                         {
                             "targets": -1,
-                            "width": "90px",
+                            "width": "120px",
                             "className": 'dt-center',
                             'orderable': false
                         },

@@ -12,7 +12,7 @@ class ArtistiController extends Controller
 {
     public function index(): View
     {
-        $artisti=Artista::all()->sortBy('nome')->load('tipoArtista');
+        $artisti=Artista::withCount('canzoni')->withCount('edizioni')->get()->sortBy('nome')->load('tipoArtista');
         return view('pages.artisti.index', compact('artisti'));
     }
 
@@ -32,15 +32,21 @@ class ArtistiController extends Controller
             'tipo.required' => 'Il campo tipo è obbligatorio',
         ]);
 
-        Artista::create([
+        $artista = Artista::create([
             'nome' => $request->input('nome'),
             'tipo_id' => $request->input('tipo'),
-            'nascita' => $request->input('nascita'),
-            'morte' => $request->input('morte'),
-            'inizio' => $request->input('inizio'),
-            'fine' => $request->input('fine'),
             'wikipedia' => $request->input('wiki'),
         ]);
+
+        foreach(\App\Enums\Social::cases() as $social)
+        {
+            if($request->socials[$social->value]){
+                $artista->socials()->create([
+                    'social' => $social,
+                    'link' => $request->socials[$social->value]
+                ]);
+            }
+        }
 
         return to_route('artisti.index');
     }
@@ -50,7 +56,7 @@ class ArtistiController extends Controller
      */
     public function show(Artista $artista)
     {
-        dd($artista);
+        return view('pages.artisti.show', compact('artista'));
     }
 
     public function edit(Artista $artista): View
@@ -73,18 +79,26 @@ class ArtistiController extends Controller
         $artista->update([
             'nome' => $request->input('nome'),
             'tipo_id' => $request->input('tipo'),
-            'nascita' => $request->input('nascita'),
-            'morte' => $request->input('morte'),
-            'inizio' => $request->input('inizio'),
-            'fine' => $request->input('fine'),
             'wikipedia' => $request->input('wiki'),
         ]);
+
+        foreach(\App\Enums\Social::cases() as $social)
+        {
+            if($request->socials[$social->value]){
+                $artista->socials()->updateOrCreate([
+                    'social' => $social
+                ],[
+                    'link' => $request->socials[$social->value]
+                ]);
+            }
+        }
 
         return to_route('artisti.index');
     }
 
     public function destroy(Artista $artista): RedirectResponse
     {
+        $artista->socials()->delete();
         $artista->delete();
         return to_route('artisti.index');
     }

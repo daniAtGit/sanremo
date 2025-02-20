@@ -50,28 +50,6 @@
                             </select>
                         </div>
 
-                        <div id="dateCantante" style="display:none;">
-                            <div class="mb-3">
-                                <label for="nascita" class="form-label">Data nascita</label>
-                                <input type="date" name="nascita" id="nascita" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="morte" class="form-label">Data morte</label>
-                                <input type="date" name="morte" id="morte" class="form-control">
-                            </div>
-                        </div>
-
-                        <div id="dateGruppo" style="display:none;">
-                            <div class="mb-3">
-                                <label for="inizio" class="form-label">Data inizio</label>
-                                <input type="date" name="inizio" id="inizio" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="fine" class="form-label">Data fine</label>
-                                <input type="date" name="fine" id="fine" class="form-control">
-                            </div>
-                        </div>
-
                         <div class="mb-3">
                             <label for="wiki" class="form-label">Wikipedia</label>
                             <input type="text" name="wiki" class="form-control">
@@ -81,9 +59,9 @@
                             @foreach(\App\Enums\Social::cases() as $social)
                                 <div class="input-group mt-3">
                                     <span class="input-group-text" id="basic-addon1">{{$social->description()}}</span>
-                                    <input type="text" name="social[]" class="form-control">
+                                    <input type="text" name="socials[{{$social}}]" class="form-control">
                                 </div>
-                          @endforeach
+                            @endforeach
                         </div>
 
                         <div class="mb-3 text-end">
@@ -100,27 +78,7 @@
     @section('scripts')
         <script>
             $(document).ready(function() {
-                $('#tipo').on('change', function(){
-                    $('#dateCantante').hide();
-                    $('#dateGruppo').hide();
-
-                    if($('#tipo').val() == ""){
-                        $('#nascita').val('');
-                        $('#morte').val('');
-                        $('#inizio').val('');
-                        $('#fine').val('');
-                    }
-                    if($('#tipo').val() == "cantante") {
-                        $('#inizio').val('');
-                        $('#fine').val('');
-                        $('#dateCantante').show();
-                    }
-                    if($('#tipo').val() == "gruppo") {
-                        $('#nascita').val('');
-                        $('#morte').val('');
-                        $('#dateGruppo').show();
-                    }
-                });
+                //
             });
         </script>
     @stop

@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TipoArtista;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -13,7 +11,7 @@ class TipiArtistiController extends Controller
 {
     public function index(): View
     {
-        $tipiArtisti=TipoArtista::all()->sortBy('tipo');
+        $tipiArtisti=TipoArtista::withCount('artisti')->get()->sortBy('tipo')->load('artisti');
         return view('pages.tipiartisti.index', compact('tipiArtisti'));
     }
 

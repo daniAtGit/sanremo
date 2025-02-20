@@ -7,9 +7,7 @@ use App\Models\Artista;
 use App\Models\Canzone;
 use App\Models\Edizione;
 use App\Models\Premio;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -17,7 +15,8 @@ class CanzoniController extends Controller
 {
     public function index(): View
     {
-        $canzoni=Canzone::all()->sortBy('titolo');
+        //$canzoni=Canzone::all()->sortBy('titolo')->load('edizione');
+        $canzoni=Canzone::withCount('edizione')->get()->sortBy('titolo')->load('edizione');
         return view('pages.canzoni.index', compact('canzoni'));
     }
 

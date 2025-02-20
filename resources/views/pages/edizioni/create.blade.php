@@ -121,6 +121,11 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="wiki" class="form-label">Wikipedia</label>
+                            <input type="text" name="wiki" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
                             <input type="button" class="btn btn-sm btn-primary" id="addInput" value="Add video">
                         </div>
 

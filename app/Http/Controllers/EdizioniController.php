@@ -3,21 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Social;
-use App\Enums\TipoCanzone;
 use App\Models\Artista;
 use App\Models\Edizione;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Drnxloc\LaravelHtmlDom\HtmlDomParser;
-use Illuminate\Support\Facades\DB;
 
 class EdizioniController extends Controller
 {
     public function index(): View
     {
         $edizioni=Edizione::all()->sortByDesc('anno');
-        //$edizioni->load('canzoni','canzoni.artisti','canzoni.premi','canzoni.artisti.socials','covers','ospiti');
         return view('pages.edizioni.index', compact('edizioni'));
     }
 
@@ -36,6 +32,7 @@ class EdizioniController extends Controller
             'data_a' => $request->data_a,
             'luogo' => $request->luogo,
             'note' => $request->note,
+            'wikipedia' => $request->wiki
         ]);
 
         $edizione->artisti()->attach($request->conduttori, ['ruolo' => 'conduttore']);
@@ -61,7 +58,9 @@ class EdizioniController extends Controller
      */
     public function show(Edizione $edizione)
     {
-        return view('pages.edizioni.show', compact('edizione'));
+        $edizione->load('artisti','socials');
+        $videos = \App\Models\Social::where('socialable_id', $edizione->id)->get()->sortByDesc('created_at');
+        return view('pages.edizioni.show', compact('edizione','videos'));
     }
 
     /**
@@ -82,6 +81,7 @@ class EdizioniController extends Controller
             'data_a' => $request->data_a,
             'luogo' => $request->luogo,
             'note' => $request->note,
+            'wikipedia' => $request->wiki
         ]);
 
         $artisti_array=[];

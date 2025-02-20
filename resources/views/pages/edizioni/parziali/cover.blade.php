@@ -1,9 +1,11 @@
-<table class="table table-hover table-bordered border" style="width:96%;margin:10px auto;">
+<table class="table table-hover table-striped table-bordered border" style="width:96%;margin:10px auto;">
     <thead>
         <tr>
             <th class="bg-light text-center" style="width:3%;">Pos</th>
             <th class="bg-light" style="width:39%">Canzone</th>
             <th class="bg-light" style="width:58%">Artisti</th>
+            <th class="bg-light" style="width:40px;"><i class="fa fa-video text-primary" title="Esibizione"></i></th>
+            <th class="bg-light" style="width:40px;"><i class="fa fa-video text-warning" title="Videoclip"></i></th>
         </tr>
     </thead>
     <tbody>
@@ -18,6 +20,20 @@
             </td>
             <td>{{$canzone->titolo}}</td>
             <td>{{$canzone->artisti->pluck('nome')->implode(', ')}}</td>
+            <td>
+                @if($canzone->esibizione)
+                    <a href="{{$canzone->esibizione}}" target="_blank">
+                        <i class="fa fa-link"></i>
+                    </a>
+                @endif
+            </td>
+            <td>
+                @if($canzone->videoclip)
+                    <a href="{{$canzone->videoclip}}" target="_blank">
+                        <i class="fa fa-link"></i>
+                    </a>
+                @endif
+            </td>
         </tr>
     @endforeach
     </tbody>

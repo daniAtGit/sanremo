@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\Luogo;
+use Cohensive\OEmbed\Facades\OEmbed;
+use Drnxloc\LaravelHtmlDom\HtmlDomParser;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -20,7 +22,8 @@ class Edizione extends Model
         'luogo',
         'data_da',
         'data_a',
-        'note'
+        'note',
+        'wikipedia'
     ];
 
     protected $casts = [
@@ -62,5 +65,13 @@ class Edizione extends Model
     public function scopeVincitore()
     {
         return $this->canzoni;
+    }
+
+    public function getScenografiaFromGoogle($anno = null)
+    {
+        $file = "https://www.google.com/search?q=scenografia+sanremo+".$anno."&tbm=isch";
+        $dom = HtmlDomParser::file_get_html($file);
+        $elems = $dom->find('img');
+        return $elems[1]->src ?? null;
     }
 }

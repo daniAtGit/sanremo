@@ -36,13 +36,23 @@
                         @csrf
 
                         <div class="mb-3">
+                            <label for="etichetta" class="form-label">Etichetta<span class="text-danger">*</span></label>
+                            <input type="text" name="etichetta" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="colore" class="form-label">Colore</label>
+                            <input type="color" name="colore" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
                             <label for="nome" class="form-label">Nome<span class="text-danger">*</span></label>
                             <input type="text" name="nome" class="form-control" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="descrizione" class="form-label">Descrizione</label>
-                            <textarea name="descrizione" class="form-control" rows="3"></textarea>
+                            <label for="wikipedia" class="form-label">Wikipedia</label>
+                            <input type="text" name="wikipedia" class="form-control">
                         </div>
 
                         <div class="mb-3">

@@ -50,31 +50,19 @@
                             </select>
                         </div>
 
-                        <div id="dateCantante" style="display:{{$artista->tipoArtista->tipo == 'Cantante' ? 'block' : 'none'}};">
-                            <div class="mb-3">
-                                <label for="nascita" class="form-label">Data nascita</label>
-                                <input type="date" name="nascita" id="nascita" class="form-control" value="{{$artista->nascita?->format('Y-m-d')}}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="morte" class="form-label">Data morte</label>
-                                <input type="date" name="morte" id="morte" class="form-control" value="{{$artista->morte?->format('Y-m-d')}}">
-                            </div>
-                        </div>
-
-                        <div id="dateGruppo" style="display:{{$artista->tipoArtista->tipo == 'Gruppo' ? 'block' : 'none'}};">
-                            <div class="mb-3">
-                                <label for="inizio" class="form-label">Data inizio</label>
-                                <input type="date" name="inizio" id="inizio" class="form-control" value="{{$artista->inizio?->format('Y-m-d')}}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="fine" class="form-label">Data fine</label>
-                                <input type="date" name="fine" id="fine" class="form-control" value="{{$artista->fine?->format('Y-m-d')}}">
-                            </div>
-                        </div>
-
                         <div class="mb-3">
                             <label for="nome" class="form-label">Wikipedia</label>
                             <input type="text" name="wiki" class="form-control" value="{{$artista->wikipedia}}">
+                        </div>
+
+                        <div class="mb-3">
+
+                            @foreach(\App\Enums\Social::cases() as $social)
+                                <div class="input-group mt-3">
+                                    <span class="input-group-text" id="basic-addon1">{{$social->description()}}</span>
+                                    <input type="text" name="socials[{{$social}}]" class="form-control" value="{{$artista->socials->where('social',$social->value)->first()->link ?? ''}}">
+                                </div>
+                            @endforeach
                         </div>
 
                         <div class="mb-3 text-end">
@@ -91,27 +79,7 @@
     @section('scripts')
         <script>
             $(document).ready(function() {
-                $('#tipo').on('change', function(){
-                    $('#dateCantante').hide();
-                    $('#dateGruppo').hide();
-
-                    if($('#tipo').val() == ""){
-                        $('#nascita').val('');
-                        $('#morte').val('');
-                        $('#inizio').val('');
-                        $('#fine').val('');
-                    }
-                    if($('#tipo').val() == "cantante") {
-                        $('#inizio').val('');
-                        $('#fine').val('');
-                        $('#dateCantante').show();
-                    }
-                    if($('#tipo').val() == "gruppo") {
-                        $('#nascita').val('');
-                        $('#morte').val('');
-                        $('#dateGruppo').show();
-                    }
-                });
+                //
             });
         </script>
     @stop

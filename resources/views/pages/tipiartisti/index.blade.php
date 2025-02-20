@@ -35,7 +35,7 @@
                 <div class="col-1"></div>
 
                 <div class="col-10">
-                    <table class="table table-hover table-bordered border" id="tabella">
+                    <table class="table table-hover table-striped table-bordered border" id="tabella">
                         <thead>
                             <tr>
                                 <th class="bg-light">Tipo</th>
@@ -47,16 +47,13 @@
                             @foreach($tipiArtisti as $i => $tipoArtista)
                                 <tr>
                                     <td>{{$tipoArtista->tipo}}</td>
-                                    <td>
-                                        {{$tipoArtista->artisti->count()}}
-
-                                    </td>
+                                    <td>{{$tipoArtista->artisti_count}}</td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{$i}}">
                                             <i class="fa-solid fa-edit"></i>
                                         </button>
 
-                                        @if($tipoArtista->artisti->count() == 0)
+                                        @if($tipoArtista->artisti_count == 0)
                                             <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalElimina{{$i}}">
                                                 <i class="fa-solid fa-trash"></i>
                                             </button>

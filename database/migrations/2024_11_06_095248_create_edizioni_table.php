@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('data_a')->nullable();
             $table->text('luogo')->nullable();
             $table->text('note')->nullable();
+            $table->string('wikipedia')->nullable();
             $table->timestamps();
         });
     }

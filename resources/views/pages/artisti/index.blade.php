@@ -32,12 +32,11 @@
                 <div class="col-1"></div>
 
                 <div class="col-10">
-                    <table class="table table-hover table-bordered border" id="tabella">
+                    <table class="table table-hover table-striped table-bordered border" id="tabella">
                         <thead>
                             <tr>
                                 <th class="bg-light">Nome</th>
                                 <th class="bg-light">Tipo</th>
-                                <th class="bg-light">Date</th>
                                 <th class="bg-light">Socials</th>
                                 <th class="bg-light"></th>
                             </tr>
@@ -47,34 +46,20 @@
                                 <tr>
                                     <td>{{$artista->nome}}</td>
                                     <td>{{$artista->tipoArtista->tipo}}</td>
-                                    <td class="small">
-                                        @if($artista->tipoArtista->tipo == 'Cantante')
-                                            @if($artista->nascita)
-                                                <i class="fa-solid fa-cake-candles"></i> {{$artista->nascita?->format('d/m/Y')}}
-                                            @endif
-                                            @if($artista->morte)
-                                                - <i class="fa-solid fa-skull"></i> {{$artista->morte?->format('d/m/Y')}}
-                                            @endif
-                                        @endif
-                                        @if($artista->tipoArtista->tipo == 'Gruppo')
-                                            @if($artista->inizio)
-                                                <i class="fa-solid fa-play"></i> {{$artista->inizio?->format('d/m/Y')}}
-                                            @endif
-                                            @if($artista->fine)
-                                                - <i class="fa-solid fa-stop"></i> {{$artista->fine?->format('d/m/Y')}}
-                                            @endif
-                                        @endif
-                                    </td>
                                     <td>
                                         @if($artista->wikipedia)
-                                            <a href="{{$artista->wikipedia}}" target="_blank" title="Wikipedia"><i class="fa-brands fa-wikipedia-w"></i></a>
+                                            <a href="{{$artista->wikipedia}}" target="_blank" title="Wikipedia"><i class="fa-brands fa-wikipedia-w px-1"></i></a>
                                         @else
-                                            <i class="fa-brands fa-wikipedia-w text-secondary" title="No Wikipedia"></i>
+                                            <i class="fa-brands fa-wikipedia-w text-secondary px-1" title="No Wikipedia"></i>
                                         @endif
-                                        <a href="https://www.google.com/search?q={{$artista->nome}}&&sourceid=chrome&ie=UTF-8" target="_blank" title="Google"><i class="fa-brands fa-google"></i></a>
-                                        <a href="https://www.youtube.com/results?search_query={{$artista->nome}}" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                                        <a href="https://www.google.com/search?q={{$artista->nome}}&&sourceid=chrome&ie=UTF-8" target="_blank" title="Google"><i class="fa-brands fa-google px-1"></i></a>
+                                        <a href="https://www.youtube.com/results?search_query={{$artista->nome}}" target="_blank" title="YouTube"><i class="fa-brands fa-youtube px-1"></i></a>
                                         |
-                                        {{--todo: socials--}}
+                                        @foreach($artista->socials as $social)
+                                            <a href="{{$social->link}}" target="_blank" title="{{$social->social->value}}">
+                                                {!! \App\Enums\Social::from($social->social->value)->icon() !!}
+                                            </a>
+                                        @endforeach
                                     </td>
                                     <td>
                                         <a href="{{route('artisti.show',$artista)}}" class="btn btn-sm btn-outline-info">
@@ -84,7 +69,7 @@
                                             <i class="fa-solid fa-edit"></i>
                                         </a>
 
-                                        @if($artista->canzoni->count() == 0)
+                                        @if($artista->canzoni_count == 0 && $artista->edizioni_count == 0)
                                             <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalElimina{{$i}}">
                                                 <i class="fa-solid fa-trash"></i>
                                             </button>
@@ -159,21 +144,17 @@
                         },
                     },
                     "columnDefs": [
+                        // {
+                        //     "targets": 1,
+                        //     "width": "120px",
+                        // },
+                        // {
+                        //     "targets": 2,
+                        //     "width": "300px",
+                        // },
                         {
-                            "targets": 1,
-                            "width": "70px",
-                        },
-                        {
-                            "targets": 2,
-                            "width": "200px",
-                        },
-                        {
-                            "targets": 3,
-                            "width": "200px",
-                        },
-                        {
-                            "targets": 4,
-                            "width": "100px",
+                            "targets": -1,
+                            "width": "120px",
                             "className": 'dt-center',
                             'orderable': false
                         },

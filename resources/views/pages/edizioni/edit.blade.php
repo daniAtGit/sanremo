@@ -66,23 +66,6 @@
                             </select>
                         </div>
 
-{{--                        <div class="mb-3">--}}
-{{--                            <label for="canzoni" class="form-label">Canzoni</label>--}}
-{{--                            <div id="items" class="form-group">--}}
-{{--                                <div>--}}
-{{--                                    <select name="canzoni[]" class="form-control select" required>--}}
-{{--                                        <option>Seleziona...</option>--}}
-{{--                                        @foreach($canzoni as $canzone)--}}
-{{--                                            <option value="{{$canzone->id}}">{{$canzone->titolo}}</option>--}}
-{{--                                        @endforeach--}}
-{{--                                    </select>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-{{--                            <button id="add" class="btn add-more button-yellow uppercase" type="button"><i class="fa fa-plus"></i></button>--}}
-{{--                            <button class="delete btn button-white uppercase">- Remove referral</button>--}}
-{{--                        </div>--}}
-
                         <div class="mb-3">
                             <label for="canzoni" class="form-label">Conduttori</label>
                             <div class="border">
@@ -121,8 +104,13 @@
                             <textarea name="note" class="form-control" rows="3"></textarea>
                         </div>
 
+                        <div class="mb-3">
+                            <label for="wiki" class="form-label">Wikipedia</label>
+                            <input type="text" name="wiki" class="form-control" value="{{$edizione->wikipedia}}">
+                        </div>
+
                         @foreach($edizione->socials->where('social',\App\Enums\Social::ALTRO) as $i => $altro)
-                            <label for='altri' class="form-label">Link</label>
+                            <label for='altri' class="form-label">Video</label>
                             <div class="input-group mb-3">
                                 <input type="url" class="form-control" aria-describedby="basic-addon2" value="{{$altro->link}}">
                                 <div class="input-group-append">
@@ -162,7 +150,7 @@
                             @method('GET')
 
                             <div class="modal-body">
-                                Vuoi davvero eliminare questo link: {{$altro->link}}?
+                                Vuoi davvero eliminare il link video: {{$altro->link}}?
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Chiudi</button>
@@ -179,7 +167,7 @@
         <script>
             $(document).ready(function() {
                 $('#addInput').click(function() {
-                    $("<div class='mb-3'><label for='altri' class='form-label'>Link</label><input type='url' name='altri[]' class='form-control' /></div>").appendTo('.altri');
+                    $("<div class='mb-3'><label for='altri' class='form-label'>Video</label><input type='url' name='altri[]' class='form-control' /></div>").appendTo('.altri');
                 });
             });
         </script>

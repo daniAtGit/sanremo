@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('premi', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('etichetta');
+            $table->string('colore');
             $table->string('nome');
-            $table->text('descrizione')->nullable();
+            $table->text('wikipedia')->nullable();
             $table->string('anno_istituzione')->nullable();
             $table->timestamps();
         });

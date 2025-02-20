@@ -13,10 +13,11 @@ class Premio extends Model
     protected $table="premi";
 
     protected $fillable = [
+        'etichetta',
+        'colore',
         'nome',
-        'descrizione',
-        'anno_istituzione',
-        'posizione_eurovision',
+        'wikipedia',
+        'anno_istituzione'
     ];
 
     public function canzoni(): BelongsToMany

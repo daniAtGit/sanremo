@@ -26,12 +26,12 @@ enum Social: string
     public function icon() : string
     {
         return match ($this) {
-            self::FACEBOOK => '<i class="fa-brands fa-facebook text-primary"></i>',
-            self::INSTAGRAM  => '<i class="fa-brands fa-instagram text-warning"></i>',
-            self::X  => '<i class="fa-brands fa-x-twitter text-info"></i>',
-            self::YOUTUBE  => '<i class="fa-brands fa-youtube text-danger"></i>',
-            self::VIDEO  => '<i class="fa fa-video"></i>',
-            self::ALTRO  => '<i class="fa fa-puzzle-piece"></i>',
+            self::FACEBOOK => '<i class="fa-brands fa-facebook text-primary px-1" title="'.$this->description().'"></i>',
+            self::INSTAGRAM  => '<i class="fa-brands fa-instagram text-warning px-1" title="'.$this->description().'"></i>',
+            self::X  => '<i class="fa-brands fa-x-twitter text-info px-1" title="'.$this->description().'"></i>',
+            self::YOUTUBE  => '<i class="fa-brands fa-youtube text-danger px-1" title="'.$this->description().'"></i>',
+            self::VIDEO  => '<i class="fa fa-video px-1" title="'.$this->description().'"></i>',
+            self::ALTRO  => '<i class="fa fa-puzzle-piece px-1" title="'.$this->description().'"></i>',
         };
     }
 }

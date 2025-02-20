@@ -11,7 +11,7 @@ class PremiController extends Controller
 {
     public function index(): View
     {
-        $premi=Premio::all()->sortBy('anno_istituzione');
+        $premi=Premio::withCount('canzoni')->get()->sortBy('anno_istituzione');
         return view('pages.premi.index', compact('premi'));
     }
 
@@ -23,8 +23,10 @@ class PremiController extends Controller
     public function store(Request $request): RedirectResponse
     {
         Premio::create([
+            'etichetta' => $request['etichetta'],
+            'colore' => $request['colore'],
             'nome' => $request['nome'],
-            'descrizione' => $request['descrizione'],
+            'wikipedia' => $request['wikipedia'],
             'anno_istituzione' => $request['anno']
         ]);
 
@@ -40,8 +42,10 @@ class PremiController extends Controller
     public function update(Request $request, Premio $premio): RedirectResponse
     {
         $premio->update([
+            'etichetta' => $request['etichetta'],
+            'colore' => $request['colore'],
             'nome' => $request['nome'],
-            'descrizione' => $request['descrizione'],
+            'wikipedia' => $request['wikipedia'],
             'anno_istituzione' => $request['anno']
         ]);
 

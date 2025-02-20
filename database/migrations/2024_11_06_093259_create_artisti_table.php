@@ -15,10 +15,6 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('nome');
             $table->uuid('tipo_id');
-            $table->date('nascita')->nullable();
-            $table->date('morte')->nullable();
-            $table->date('inizio')->nullable();
-            $table->date('fine')->nullable();
             $table->string('wikipedia')->nullable();
             $table->timestamps();
 
