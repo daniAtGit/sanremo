@@ -40,7 +40,7 @@
                             <th class="bg-light">Titolo</th>
                             <th class="bg-light">Artista</th>
                             <th class="bg-light">Pos.</th>
-                            <th class="bg-light">EuroV</th>
+                            <th class="bg-light"><i class="fa fa-heart" title="Eurovision"></i></th>
                             <th class="bg-light"><i class="fa fa-video text-primary" title="Esibizione"></i></th>
                             <th class="bg-light"><i class="fa fa-video text-warning" title="Videoclip"></i></th>
                             <th class="bg-light"><i class="fa fa-video text-danger" title="Eurovision"></i></th>
@@ -61,7 +61,12 @@
                                         <span style="display:none;">{{$canzone->titolo}}</span>
                                         {!! \App\Enums\TipoCanzone::from($canzone->tipo->value)->icon() !!} {{$canzone->titolo}}
                                     </td>
-                                    <td>{{$canzone->artisti->pluck('nome')->implode(', ')}}</td>
+                                    <td>
+                                        @foreach($canzone->artisti as $i => $artista)
+                                            @if($i !=0) - @endif
+                                            <a href="{{route('artisti.show',$artista->id)}}">{{$artista->nome}}</a>
+                                        @endforeach
+                                    </td>
                                     <td>{{$canzone->posizione == 99 ? 'NC' : $canzone->posizione}}</td>
                                     <td>{{$canzone->posizione_eurovision}}</td>
                                     <td>

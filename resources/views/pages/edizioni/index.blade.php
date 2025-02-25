@@ -43,7 +43,6 @@
                                 <th class="bg-light">Co-conduttori</th>
                                 <th class="bg-light">Ospiti</th>
                                 <th class="bg-light">Vincitore</th>
-                                <th class="bg-light">Note</th>
                                 <th class="bg-light"></th>
                             </tr>
                         </thead>
@@ -54,11 +53,25 @@
                                     <td>{{$edizione->anno}}</td>
                                     <td>{{$edizione->data_da?->format('d/m/Y')}} - {{$edizione->data_a?->format('d/m/Y')}}</td>
                                     <td>{{\App\Enums\Luogo::from($edizione->luogo->value)->description()}}</td>
-                                    <td>{{$edizione->conduttori()->pluck('nome')->implode(', ')}}</td>
-                                    <td>{{$edizione->coconduttori()->pluck('nome')->implode(', ')}}</td>
-                                    <td>{{$edizione->ospiti()->pluck('nome')->implode(', ')}}</td>
+                                    <td>
+                                        @foreach($edizione->conduttori() as $i => $artista)
+                                            @if($i !=0) - @endif
+                                            <a href="{{route('artisti.show',$artista->id)}}">{{$artista->nome}}</a>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @foreach($edizione->coconduttori() as $i => $artista)
+                                            @if($i !=0) - @endif
+                                            <a href="{{route('artisti.show',$artista->id)}}">{{$artista->nome}}</a>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @foreach($edizione->ospiti() as $i => $artista)
+                                            @if($i !=0) - @endif
+                                            <a href="{{route('artisti.show',$artista->id)}}">{{$artista->nome}}</a>
+                                        @endforeach
+                                    </td>
                                     <td>{{$edizione->canzoni->where('posizione',1)->first()?->artisti->pluck('nome')->implode(', ')}}</td>
-                                    <td class="smart">{{$edizione->note}}</td>
                                     <td>
                                         @if($edizione->wikipedia)
                                             <a href="{{$edizione->wikipedia}}" target="_blank" title="Wikipedia"><i class="fa-brands fa-wikipedia-w px-1"></i></a>

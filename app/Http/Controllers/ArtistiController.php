@@ -61,7 +61,7 @@ class ArtistiController extends Controller
 
     public function edit(Artista $artista): View
     {
-        $artista=$artista->load('tipoArtista');
+        $artista=$artista->load('tipoArtista','edizioni');
         $tipiArtisti=TipoArtista::all()->sortBy('tipo');
         return view('pages.artisti.edit', compact('artista','tipiArtisti'));
     }

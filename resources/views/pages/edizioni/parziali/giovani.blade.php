@@ -10,7 +10,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($edizione->canzoni->where('tipo',\App\Enums\TipoCanzone::GIOVANI)->sortBy('titolo')->sortBy('posizione') as $i => $canzone)
+        @foreach($edizione->canzoni->where('tipo',\App\Enums\TipoCanzone::GIOVANI)->sortBy('titolo')->sortBy('posizione') as $c => $canzone)
             <tr>
                 <td class="text-center" @if($canzone->posizione == 1) style="background:#ffff00;" @endif>
                     @if($canzone->posizione == 1)
@@ -20,7 +20,12 @@
                     @endif
                 </td>
                 <td>{{$canzone->titolo}}</td>
-                <td>{{$canzone->artisti->pluck('nome')->implode(', ')}}</td>
+                <td>
+                    @foreach($canzone->artisti as $i => $artista)
+                        @if($i !=0) - @endif
+                        <a href="{{route('artisti.show',$artista->id)}}">{{$artista->nome}}</a>
+                    @endforeach
+                </td>
                 <td>
                     @if($canzone->esibizione)
                         <a href="{{$canzone->esibizione}}" target="_blank">

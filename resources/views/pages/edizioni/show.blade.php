@@ -7,7 +7,7 @@
                 </h2>
             </div>
             <div class="col-6 text-end">
-                <a href="{{route('edizioni.index')}}">
+                <a href="javascript:history.back();">
                     <button type="button" class="btn btn-sm btn-outline-secondary">
                         <i class="fa-solid fa-arrow-left"></i> Indietro
                     </button>
@@ -28,16 +28,18 @@
 {{--                    <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>--}}
                 <div class="row">
                     <div class="col-6">
-                        <span class="small text-secondary">Luogo</span>
-                        <br>
-                        <div class="card p-1 my-1" style="width:100px;">
+                        <div class="card p-1 my-1" style="width:250px;">
                             <a href="https://www.google.com/search?q=scenografia+sanremo+{{$edizione->anno}}&tbm=isch" target="_blank">
-                                <img src="{{$edizione->getScenografiaFromGoogle($edizione->anno)}}" style="width:100px;">
+                                <img loading="lazy" src="{{$edizione->getScenografiaFromGoogle('scenografia', $edizione->anno)}}" style="width:250px;">
                             </a>
                         </div>
-                        {{\App\Enums\Luogo::from($edizione->luogo->value)->description() ?? ''}}
                     </div>
+
                     <div class="col-6 text-end">
+                        <span class="small text-secondary">Luogo</span>
+                        <br>
+                        {{\App\Enums\Luogo::from($edizione->luogo->value)->description() ?? ''}}
+                        <br>
                         <span class="small text-secondary">Dal-al</span>
                         <br>
                         {{$edizione->data_da?->format('d M')}} - {{$edizione->data_a?->format('d M')}}
@@ -58,11 +60,6 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="home" aria-selected="true">Info</button>
                 </li>
-                @if($edizione->ospiti()->count())
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#video" type="button" role="tab" aria-controls="home" aria-selected="true">Video</button>
-                    </li>
-                @endif
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#classifica" type="button" role="tab" aria-controls="profile" aria-selected="false">Classifica</button>
                 </li>
@@ -76,15 +73,16 @@
                         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#giovani" type="button" role="tab" aria-controls="contact" aria-selected="false">Giovani</button>
                     </li>
                 @endif
+                @if($edizione->ospiti()->count())
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#video" type="button" role="tab" aria-controls="home" aria-selected="true">Video</button>
+                    </li>
+                @endif
             </ul>
 
             <div class="tab-content mt-3" id="myTabContent">
                 <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
                     @include('pages.edizioni.parziali.info')
-                </div>
-
-                <div class="tab-pane fade show" id="video" role="tabpanel" aria-labelledby="home-tab">
-                    @include('pages.edizioni.parziali.video')
                 </div>
 
                 <div class="tab-pane fade" id="classifica" role="tabpanel" aria-labelledby="profile-tab">
@@ -102,8 +100,9 @@
                         @include('pages.edizioni.parziali.giovani')
                     </div>
                 @endif
-
-
+                <div class="tab-pane fade show" id="video" role="tabpanel" aria-labelledby="home-tab">
+                    @include('pages.edizioni.parziali.video')
+                </div>
             </div>
         </div>
     </div>

@@ -22,8 +22,17 @@
 <!-- FontAwesome dani -->
 <script src="https://kit.fontawesome.com/c93d9f2851.js" crossorigin="anonymous"></script>
 
-<link rel="apple-touch-icon" sizes="76x76" href="{{asset('images/brain.png')}}">
-<link rel="icon" type="image/png" href="{{asset('images/brain.png')}}">
+@php
+    use Drnxloc\LaravelHtmlDom\HtmlDomParser;
+
+    $file = "https://www.google.com/search?q=S&tbm=isch";
+    $dom = HtmlDomParser::file_get_html($file);
+    $elems = $dom->find('img');
+    $favicon = $elems[1]->src;
+@endphp
+
+<link rel="apple-touch-icon" sizes="76x76" href="{{$favicon}}">
+<link rel="icon" type="image/png" href="{{$favicon}}">
 
 <!-- Scripts -->
 @vite(['resources/css/app.css', 'resources/js/app.js'])

@@ -44,17 +44,17 @@ class Edizione extends Model
 
     public function conduttori()
     {
-        return $this->artisti()->wherePivot('ruolo','conduttore')->get();
+        return $this->artisti()->wherePivot('ruolo','conduttore')->orderBy('nome')->get();
     }
 
     public function coconduttori()
     {
-        return $this->artisti()->wherePivot('ruolo','coconduttore')->get();
+        return $this->artisti()->wherePivot('ruolo','coconduttore')->orderBy('nome')->get();
     }
 
     public function ospiti()
     {
-        return $this->artisti()->wherePivot('ruolo','ospite')->get();
+        return $this->artisti()->wherePivot('ruolo','ospite')->orderBy('nome')->get();
     }
 
     public function socials()
@@ -67,9 +67,9 @@ class Edizione extends Model
         return $this->canzoni;
     }
 
-    public function getScenografiaFromGoogle($anno = null)
+    public function getScenografiaFromGoogle($cosa = null, $anno = null)
     {
-        $file = "https://www.google.com/search?q=scenografia+sanremo+".$anno."&tbm=isch";
+        $file = "https://www.google.com/search?q=sanremo+".$cosa."+".$anno."&tbm=isch";
         $dom = HtmlDomParser::file_get_html($file);
         $elems = $dom->find('img');
         return $elems[1]->src ?? null;
