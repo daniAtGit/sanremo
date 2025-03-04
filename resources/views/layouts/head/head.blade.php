@@ -31,8 +31,7 @@
     $favicon = $elems[1]->src;
 @endphp
 
-<link rel="apple-touch-icon" sizes="76x76" href="{{$favicon}}">
-<link rel="icon" type="image/png" href="{{$favicon}}">
+@laravelPWA
 
 <!-- Scripts -->
 @vite(['resources/css/app.css', 'resources/js/app.js'])
