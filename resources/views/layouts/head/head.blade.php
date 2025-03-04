@@ -5,8 +5,8 @@
 <title>{{ config('app.name', 'Laravel') }}</title>
 
 <!-- Favicon -->
-<link rel="apple-touch-icon" sizes="76x76" href="{{asset('images/brain.png')}}">
-<link rel="icon" type="image/png" href="{{asset('images/brain.png')}}">
+<link rel="apple-touch-icon" sizes="76x76" href="{{asset('images/sanremo.png')}}">
+<link rel="icon" type="image/png" href="{{asset('images/sanremo.png')}}">
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.bunny.net">

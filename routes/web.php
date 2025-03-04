@@ -11,11 +11,10 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-Route::get('/', [WelcomeController::class, 'index'])->name('/');
-Route::post('/', [WelcomeController::class, 'index'])->name('changeEdizione');
+Route::get('/', fn() => to_route('welcome'));
+
+Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
+Route::post('/welcome', [WelcomeController::class, 'index'])->name('changeEdizione');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
