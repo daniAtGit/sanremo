@@ -8,15 +8,14 @@ use App\Http\Controllers\PremiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TipiArtistiController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-//Route::get('/dashboard', function () {
-//    return view('dashboard');
-//})->middleware(['auth', 'verified'])->name('dashboard');
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+Route::get('/', [WelcomeController::class, 'index'])->name('/');
+Route::post('/', [WelcomeController::class, 'index'])->name('changeEdizione');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

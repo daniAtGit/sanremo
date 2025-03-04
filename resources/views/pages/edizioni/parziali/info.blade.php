@@ -16,9 +16,13 @@
         <div class="row">
             @foreach($edizione->conduttori() as $c => $artista)
                 <div class="card p-1 m-1" style="width:150px;">
-                    <a href="{{route('artisti.show', $artista->id)}}">
+                    @auth
+                        <a href="{{route('artisti.show', $artista->id)}}">
+                    @endauth
                         <img loading="lazy" src="{{$artista->getImgArtistaFromGoogle('sanremo', $edizione->anno)}}" style="width:180px;">
-                    </a>
+                    @auth
+                        </a>
+                    @endauth
                     <div class="card-body">
                         <h5 class="card-title">{{\Illuminate\Support\Str::ucfirst($artista->nome)}}</h5>
                     </div>
@@ -33,9 +37,13 @@
         <div class="row">
             @foreach($edizione->coconduttori() as $artista)
                 <div class="card p-1 m-1" style="width:150px;">
-                    <a href="{{route('artisti.show', $artista->id)}}">
+                    @auth
+                        <a href="{{route('artisti.show', $artista->id)}}">
+                    @endauth
                         <img loading="lazy" src="{{$artista->getImgArtistaFromGoogle('sanremo', $edizione->anno)}}" style="width:180px;">
-                    </a>
+                    @auth
+                        </a>
+                    @endauth
                     <div class="card-body">
                         <h4 class="card-title">{{\Illuminate\Support\Str::ucfirst($artista->nome)}}</h4>
                     </div>
@@ -53,9 +61,13 @@
         <div class="row">
             @foreach($edizione->ospiti() as $artista)
                 <div class="card p-1 m-1" style="width:150px;">
-                    <a href="{{route('artisti.show', $artista->id)}}">
+                    @auth
+                        <a href="{{route('artisti.show', $artista->id)}}">
+                    @endauth
                         <img loading="lazy" src="{{$artista->getImgArtistaFromGoogle('sanremo', $edizione->anno)}}" style="width:180px;">
-                    </a>
+                    @auth
+                        </a>
+                    @endauth
                     <div class="card-body">
                         <h4 class="card-title">{{\Illuminate\Support\Str::ucfirst($artista->nome)}}</h4>
                     </div>
