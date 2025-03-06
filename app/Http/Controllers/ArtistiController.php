@@ -90,9 +90,10 @@ class ArtistiController extends Controller
                 ],[
                     'link' => $request->socials[$social->value]
                 ]);
+            }else{
+                $artista->socials()->where('social', $social)->first()?->delete();
             }
         }
-
         return to_route('artisti.index');
     }
 

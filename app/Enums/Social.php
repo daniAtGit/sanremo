@@ -8,6 +8,7 @@ enum Social: string
     case INSTAGRAM = 'instagram';
     case X = 'x';
     case YOUTUBE = 'youtube';
+    case SPOTIFY = 'spotify';
     case VIDEO = 'video';
     case ALTRO = 'altro';
 
@@ -18,6 +19,7 @@ enum Social: string
             self::INSTAGRAM  => 'Instagram',
             self::X  => 'X',
             self::YOUTUBE  => 'Youtube',
+            self::SPOTIFY  => 'Spotify',
             self::VIDEO  => 'Video',
             self::ALTRO  => 'Altro',
         };
@@ -30,6 +32,7 @@ enum Social: string
             self::INSTAGRAM  => '<i class="fa-brands fa-instagram text-warning px-1" title="'.$this->description().'"></i>',
             self::X  => '<i class="fa-brands fa-x-twitter text-info px-1" title="'.$this->description().'"></i>',
             self::YOUTUBE  => '<i class="fa-brands fa-youtube text-danger px-1" title="'.$this->description().'"></i>',
+            self::SPOTIFY  => '<i class="fa-brands fa-spotify text-success px-1" title="'.$this->description().'"></i>',
             self::VIDEO  => '<i class="fa fa-video px-1" title="'.$this->description().'"></i>',
             self::ALTRO  => '<i class="fa fa-puzzle-piece px-1" title="'.$this->description().'"></i>',
         };
