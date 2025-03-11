@@ -107,10 +107,73 @@
         </div>
     </div>
 
+    @section('modal')
+        <!-- Modal foto -->
+        <div class="modal fade" id="modalFoto" tabindex="-1" aria-labelledby="modalFoto" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel"><span id="modalFotoNome"></span></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="modalFotoUrl">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    @stop
+
     @section('scripts')
         <script>
             $(document).ready(function() {
+                $.ajax({
+                    type: 'post',
+                    url: '{{ route('edizione.getVideo') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "edizione_id": '{{$edizione->id}}'
+                    },
+                    success: function (data) {
+                        $.each(data, function (key, video) {
+                            $('#edizioneVideos').append("" +
+                                "<div class='flex'>" +
+                                    "<div class='card m-2'>" +
+                                        "<div class='card-body col' style='max-width:400px;'>" +
+                                            video.url +
+                                            "<span class='card-title bg-light p-2' style='font-size:12px;'>"+video.title+"</span>" +
 
+                                        "</div>" +
+                                    "</div>" +
+                                "</div>");
+                        });
+                    }
+                });
+
+
+                $('.fotoFromGoole').on('click', function(){
+                    $('#modalFotoNome').empty().append('Caricamento in corso...');
+                    $('#modalFotoUrl').empty();
+
+                    var id = this.getAttribute('alt');
+                    $.ajax({
+                        type: 'post',
+                        url: '{{ route('artista.getFoto') }}',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "artista_id": id,
+                            "anno": '{{$edizione->anno}}'
+                        },
+                        success: function (data) {
+                            $('#modalFotoNome').empty().append(data.nome);
+
+                            var image = document.createElement("img");
+                            var imageParent = document.getElementById("modalFotoUrl");
+                            image.src = data.foto;
+                            imageParent.appendChild(image);
+                        }
+                    });
+                })
             });
         </script>
     @stop

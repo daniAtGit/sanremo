@@ -103,4 +103,11 @@ class ArtistiController extends Controller
         $artista->delete();
         return to_route('artisti.index');
     }
+
+    public function getFotoArtista(Request $request)
+    {
+        $artista=Artista::find($request->artista_id);
+        $foto=$artista->getImgArtistaFromGoogle('sanremo', $request->anno);
+        return ['nome' => $artista->nome, 'foto' => $foto];
+    }
 }

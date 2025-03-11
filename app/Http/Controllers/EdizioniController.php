@@ -124,4 +124,18 @@ class EdizioniController extends Controller
         $social->delete();
         return redirect()->back();
     }
+
+    public function getVideo(Request $request)
+    {
+        $videos = \App\Models\Social::where('socialable_id', $request->edizione_id)->get()->sortByDesc('created_at');
+
+        $allVideo = [];
+        foreach ($videos as $video) {
+            $title = $video->getVideoTitle($video->link);
+            $url = $video->getVideo($video->link);
+            $allVideo[] = ['title' => $title, 'url' => $url];
+        }
+
+        return $allVideo;
+    }
 }
