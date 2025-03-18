@@ -4,6 +4,7 @@
             <th class="bg-light text-center" style="width:1%;">Pos</th>
             <th class="bg-light">Canzone</th>
             <th class="bg-light">Artisti</th>
+            <th class="bg-light">Autori</th>
             <th class="bg-light">Premi</th>
             <th class="bg-light" style="width:40px;"><i class="fa fa-video text-primary" title="Esibizione"></i></th>
             <th class="bg-light" style="width:40px;"><i class="fa fa-video text-warning" title="Videoclip"></i></th>
@@ -29,6 +30,7 @@
                         <a href="{{route('artisti.show',$artista->id)}}">{{$artista->nome}}</a>
                     @endforeach
                 </td>
+                <td>{{$canzone->autori}}</td>
                 <td>
                     @foreach($canzone->premi as $premio)
                         <badge class="badge" style="background:{{$premio->colore}}" title="{{$premio->nome}}">{{$premio->etichetta}}</badge>

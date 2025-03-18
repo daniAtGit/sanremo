@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('canzone_autore', function (Blueprint $table) {
-            $table->uuid('canzone_id');
-            $table->uuid('artista_id');
+        Schema::table('canzoni', function (Blueprint $table) {
+            $table->string('autori')->nullable()->after('titolo');
         });
     }
 
@@ -22,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('canzone_autore');
+        Schema::table('canzoni', function (Blueprint $table) {
+            $table->dropColumn('autori');
+        });
     }
 };

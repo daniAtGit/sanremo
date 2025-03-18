@@ -72,12 +72,7 @@
 
                         <div class="mb-3">
                             <label for="autori" class="form-label">Autori</label>
-                            <select name="autori[]" class="form-select multiple-select-field" data-placeholder="Seleziona" multiple>
-                                <option></option>
-                                @foreach($artisti as $artista)
-                                    <option value="{{$artista->id}}" @selected($canzone->autori->contains($artista->id))>{{$artista->nome}}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" name="autori" class="form-control" value="{{$canzone->autori}}">
                         </div>
 
                         <div class="mb-3">

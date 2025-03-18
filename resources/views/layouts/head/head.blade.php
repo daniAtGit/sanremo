@@ -22,6 +22,8 @@
 <!-- FontAwesome dani -->
 <script src="https://kit.fontawesome.com/c93d9f2851.js" crossorigin="anonymous"></script>
 
+{{--@laravelPWA--}}
+
 @php
     use Drnxloc\LaravelHtmlDom\HtmlDomParser;
 
@@ -31,7 +33,7 @@
     $favicon = $elems[1]->src;
 @endphp
 
-@laravelPWA
+
 
 <!-- Scripts -->
 @vite(['resources/css/app.css', 'resources/js/app.js'])

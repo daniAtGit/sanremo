@@ -36,7 +36,7 @@
                         <thead>
                             <tr>
                                 <th class="bg-light">N°</th>
-                                <th class="bg-light">Anno</th>
+                                <th class="bg-light">Wiki</th>
                                 <th class="bg-light">Date</th>
                                 <th class="bg-light">Luogo</th>
                                 <th class="bg-light">Presentatore</th>
@@ -49,9 +49,26 @@
                         <tbody>
                             @foreach($edizioni as $i => $edizione)
                                 <tr>
-                                    <td>{{$edizione->numero}}</td>
-                                    <td>{{$edizione->anno}}</td>
-                                    <td>{{$edizione->data_da?->format('d/m/Y')}} - {{$edizione->data_a?->format('d/m/Y')}}</td>
+                                    <td>
+                                        <a href="{{route('edizioni.show', $edizione)}}" class="btn btn-sm btn-outline-info">
+                                            {{$edizione->numero}}
+                                        </a>
+
+                                    </td>
+                                    <td>
+                                        @if($edizione->wikipedia)
+                                            <a href="{{$edizione->wikipedia}}" target="_blank" title="Wikipedia"><i class="fa-brands fa-wikipedia-w px-1"></i></a>
+                                        @else
+                                            <i class="fa-brands fa-wikipedia-w text-secondary px-1" title="No Wikipedia"></i>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($edizione->data_da)
+                                            {{$edizione->data_da?->format('d/m/Y')}} - {{$edizione->data_a?->format('d/m/Y')}}
+                                        @else
+                                            {{$edizione->anno}}
+                                        @endif
+                                    </td>
                                     <td>{{\App\Enums\Luogo::from($edizione->luogo->value)->description()}}</td>
                                     <td>
                                         @foreach($edizione->conduttori() as $i => $artista)
@@ -73,14 +90,14 @@
                                     </td>
                                     <td>{{$edizione->canzoni->where('posizione',1)->first()?->artisti->pluck('nome')->implode(', ')}}</td>
                                     <td>
-                                        @if($edizione->wikipedia)
-                                            <a href="{{$edizione->wikipedia}}" target="_blank" title="Wikipedia"><i class="fa-brands fa-wikipedia-w px-1"></i></a>
-                                        @else
-                                            <i class="fa-brands fa-wikipedia-w text-secondary px-1" title="No Wikipedia"></i>
-                                        @endif
-                                        <a href="{{route('edizioni.show',$edizione)}}" class="btn btn-sm btn-outline-info">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </a>
+{{--                                        @if($edizione->wikipedia)--}}
+{{--                                            <a href="{{$edizione->wikipedia}}" target="_blank" title="Wikipedia"><i class="fa-brands fa-wikipedia-w px-1"></i></a>--}}
+{{--                                        @else--}}
+{{--                                            <i class="fa-brands fa-wikipedia-w text-secondary px-1" title="No Wikipedia"></i>--}}
+{{--                                        @endif--}}
+{{--                                        <a href="{{route('edizioni.show',$edizione)}}" class="btn btn-sm btn-outline-info">--}}
+{{--                                            <i class="fa-solid fa-eye"></i>--}}
+{{--                                        </a>--}}
                                         <a href="{{route('edizioni.edit',$edizione)}}" class="btn btn-sm btn-outline-primary">
                                             <i class="fa-solid fa-edit"></i>
                                         </a>

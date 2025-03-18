@@ -17,6 +17,7 @@ class Canzone extends Model
         'edizione_id',
         'tipo',
         'titolo',
+        'autori',
         'posizione',
         'posizione_eurovision',
         'esibizione',
@@ -36,11 +37,6 @@ class Canzone extends Model
     public function artisti()
     {
         return $this->belongsToMany(Artista::class, 'canzone_artista');
-    }
-
-    public function autori()
-    {
-        return $this->belongsToMany(Artista::class, 'canzone_autore');
     }
 
     public function direttori()

@@ -15,7 +15,6 @@ class CanzoniController extends Controller
 {
     public function index(): View
     {
-        //$canzoni=Canzone::all()->sortBy('titolo')->load('edizione');
         $canzoni=Canzone::withCount('edizione')->get()->sortBy('titolo')->load('edizione');
         return view('pages.canzoni.index', compact('canzoni'));
     }
@@ -43,7 +42,6 @@ class CanzoniController extends Controller
         ]);
 
         $canzone->artisti()->attach($request->artisti);
-        $canzone->autori()->attach($request->autori);
         $canzone->direttori()->attach($request->direttori);
         $canzone->premi()->attach($request->premi);
 
@@ -84,7 +82,6 @@ class CanzoniController extends Controller
         ]);
 
         $canzone->artisti()->sync($request->artisti);
-        $canzone->autori()->sync($request->autori);
         $canzone->direttori()->sync($request->direttori);
         $canzone->premi()->sync($request->premi);
 

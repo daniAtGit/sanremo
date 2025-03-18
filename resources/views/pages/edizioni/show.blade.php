@@ -73,11 +73,11 @@
                         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#giovani" type="button" role="tab" aria-controls="contact" aria-selected="false">Giovani</button>
                     </li>
                 @endif
-                @if($edizione->ospiti()->count())
+{{--                @if($edizione->ospiti()->count())--}}
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#video" type="button" role="tab" aria-controls="home" aria-selected="true">Video</button>
                     </li>
-                @endif
+{{--                @endif--}}
             </ul>
 
             <div class="tab-content mt-3" id="myTabContent">

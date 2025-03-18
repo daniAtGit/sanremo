@@ -12,12 +12,16 @@
 {{--                    <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>--}}
                 <div class="row">
                     <div class="col-6">
-
-                    </div>
-                    <div class="col-6 text-end">
                         <a href="{{route('edizioni.index')}}">
                             <button type="button" class="btn btn-sm btn-outline-secondary">
                                 <i class="fa-solid fa-arrow-left"></i> Indietro
+                            </button>
+                        </a>
+                    </div>
+                    <div class="col-6 text-end">
+                        <a href="{{route('edizioni.show', $edizione)}}">
+                            <button type="button" class="btn btn-sm btn-outline-warning">
+                                <i class="fa fa-eye"></i> Vedi
                             </button>
                         </a>
                     </div>
