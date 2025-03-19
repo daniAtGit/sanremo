@@ -15,7 +15,9 @@ class DashboardController extends Controller
         $canzoni = Canzone::count();
         $artisti = Artista::count();
         $lastEdition = Edizione::latest('numero')->first()->load('canzoni','canzoni.artisti','artisti');
+        $garaTop5 = $lastEdition->canzoni->where('tipo',\App\Enums\TipoCanzone::GARA)->sortBy('posizione')->take(5);
+        $coverTop5 = $lastEdition->canzoni->where('tipo',\App\Enums\TipoCanzone::COVER)->sortBy('posizione')->take(5);
 
-        return view('dashboard', compact('edizioni','canzoni','artisti','lastEdition'));
+        return view('dashboard', compact('edizioni','canzoni','artisti','lastEdition','garaTop5','coverTop5'));
     }
 }

@@ -1,9 +1,9 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+{{--    <x-slot name="header">--}}
+{{--        <h2 class="font-semibold text-xl text-gray-800 leading-tight">--}}
+{{--            {{ __('Dashboard') }}--}}
+{{--        </h2>--}}
+{{--    </x-slot>--}}
 
     <div class="py-10">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -52,7 +52,7 @@
                         <thead>
                             <tr>
                                 <th class="bg-light">N°</th>
-                                <th class="bg-light">Anno</th>
+                                <th class="bg-light">Wiki</th>
                                 <th class="bg-light">Date</th>
                                 <th class="bg-light">Luogo</th>
                                 <th class="bg-light">Presentatore</th>
@@ -67,8 +67,20 @@
                                         {{$lastEdition->numero}}
                                     </a>
                                 </td>
-                                <td>{{$lastEdition->anno}}</td>
-                                <td>{{$lastEdition->data_da?->format('d/m/Y')}} - {{$lastEdition->data_a?->format('d/m/Y')}}</td>
+                                <td>
+                                    @if($lastEdition->wikipedia)
+                                        <a href="{{$lastEdition->wikipedia}}" target="_blank" title="Wikipedia"><i class="fa-brands fa-wikipedia-w px-1"></i></a>
+                                    @else
+                                        <i class="fa-brands fa-wikipedia-w text-secondary px-1" title="No Wikipedia"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($lastEdition->data_da)
+                                        {{$lastEdition->data_da?->format('d/m/Y')}} - {{$lastEdition->data_a?->format('d/m/Y')}}
+                                    @else
+                                        {{$lastEdition->anno}}
+                                    @endif
+                                </td>
                                 <td>{{\App\Enums\Luogo::from($lastEdition->luogo->value)->description()}}</td>
                                 <td>
                                     @foreach($lastEdition->conduttori() as $i => $artista)
@@ -108,7 +120,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($lastEdition->canzoni->where('tipo',\App\Enums\TipoCanzone::GARA)->sortBy('posizione') as $c => $canzone)
+                            @foreach($garaTop5 as $canzone)
                                 <tr>
                                     <td class="text-center" @if($canzone->posizione == 1) style="background:#ffff00;" @endif>
                                         @if($canzone->posizione == 1)
@@ -159,10 +171,6 @@
                                     </td>
                                     <td>{{$canzone->posizione_eurovision}}</td>
                                 </tr>
-
-                                @if($c == 4)
-                                    @break
-                                @endif
                             @endforeach
                         </tbody>
                     </table>
@@ -179,7 +187,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($lastEdition->canzoni->where('tipo',\App\Enums\TipoCanzone::COVER)->sortBy('titolo')->sortBy('posizione') as $c => $canzone)
+                            @foreach($coverTop5 as $canzone)
                                 <tr>
                                     <td class="text-center" @if($canzone->posizione == 1) style="background:#ffff00;" @endif>
                                         @if($canzone->posizione == 1)
@@ -210,10 +218,6 @@
                                         @endif
                                     </td>
                                 </tr>
-
-                                @if($c == 4)
-                                    @break
-                                @endif
                             @endforeach
                         </tbody>
                     </table>

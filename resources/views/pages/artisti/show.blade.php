@@ -33,19 +33,6 @@
                             <div class="row">
                                 <div class="col-sm card p-2 m-1">
                                     <img src="{{$artista->getImgArtistaFromGoogle($artista->tipoArtista->tipo)}}" style="max-width:200px;">
-                                    <div class="card-footer small">
-                                        @if($artista->wikipedia)
-                                            <a href="{{$artista->wikipedia}}" target="_blank" title="Wikipedia"><i class="fa-brands fa-wikipedia-w px-1"></i></a>
-                                        @else
-                                            <i class="fa-brands fa-wikipedia-w text-secondary px-1" title="No Wikipedia"></i>
-                                        @endif
-
-                                        @foreach($artista->socials as $social)
-                                            <a href="{{$social->link}}" target="_blank" title="{{$social->social->value}}">
-                                                {!! \App\Enums\Social::from($social->social->value)->icon() !!}
-                                            </a>
-                                        @endforeach
-                                    </div>
                                 </div>
 
                                 @if($artista->isCantante())
@@ -67,7 +54,7 @@
                                         <p class="h1 mt-4">{{$artista->getTerziPosto()}}</p>
                                     </div>
                                     <div class="col-sm card text-center p-2 m-1">
-                                        <i class="fa fa-2x fa-heart text-danger" title="Eurovision"></i>
+                                        <i class="fa fa-2x fa-heart text-primary" title="Eurovision"></i>
                                         <p class="h1 mt-4">{{$artista->getEurovision()}}</p>
                                     </div>
                                     <div class="col-sm card text-center p-2 m-1">
@@ -76,11 +63,39 @@
                                     </div>
                                 @endif
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="col-2"></div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-2"></div>
+
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="container">
+                            <label for="">Social</label>
+                            <br>
+                            @if($artista->wikipedia)
+                                <a href="{{$artista->wikipedia}}" target="_blank" title="Wikipedia"><i class="fa-brands fa-wikipedia-w px-1"></i></a>
+                            @else
+                                <i class="fa-brands fa-wikipedia-w text-secondary px-1" title="No Wikipedia"></i>
+                            @endif
+
+                            @foreach($artista->socials as $social)
+                                <a href="{{$social->link}}" target="_blank" title="{{$social->social->value}}">
+                                    {!! \App\Enums\Social::from($social->social->value)->icon() !!}
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-2"></div>
         </div>
 
@@ -155,13 +170,13 @@
                                     <th class="bg-light">Titolo</th>
                                     <th class="bg-light">Premi</th>
                                     <th class="bg-light" style="width:40px;"><i class="fa fa-video text-primary" title="Esibizione"></i></th>
-                                    <th class="bg-light" style="width:40px;"><i class="fa fa-video text-warning" title="Videoclip"></i></th>
-                                    <th class="bg-light" style="width:40px;"><i class="fa fa-video text-danger" title="Eurovision"></i></th>
+                                    <th class="bg-light" style="width:40px;"><i class="fa fa-video text-danger" title="Videoclip"></i></th>
+                                    <th class="bg-light" style="width:40px;"><i class="fa fa-heart text-primary" title="Eurovision"></i></th>
                                     <th class="bg-light" style="min-width:40px;"><i class="fa fa-video" title="Altro"></i></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($artista->canzoni->sortByDesc('created_at')->sortByDesc('tipo') as $canzone)
+                                    @foreach($artista->canzoni->sortByDesc('tipo')->sortByDesc('edizione.anno') as $canzone)
                                         <tr>
                                             <td class="text-center">
                                                 <a href="{{route('edizioni.show', $canzone->edizione)}}" class="btn btn-sm btn-outline-info" title="Vedi edizione">
@@ -227,7 +242,6 @@
                 <div class="col-2"></div>
             </div>
         @endif
-
     </div>
 
     @section('scripts')

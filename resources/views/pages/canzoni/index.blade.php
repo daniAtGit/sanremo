@@ -39,11 +39,11 @@
                             <th class="bg-light">Anno</th>
                             <th class="bg-light">Titolo</th>
                             <th class="bg-light">Artista</th>
-                            <th class="bg-light">Pos.</th>
-                            <th class="bg-light"><i class="fa fa-heart" title="Eurovision"></i></th>
+                            <th class="bg-light" title="Posizione">Pos.</th>
+                            <th class="bg-light">P<i class="fa fa-heart text-primary" title="Posizione Eurovision"></i></th>
                             <th class="bg-light"><i class="fa fa-video text-primary" title="Esibizione"></i></th>
-                            <th class="bg-light"><i class="fa fa-video text-warning" title="Videoclip"></i></th>
-                            <th class="bg-light"><i class="fa fa-video text-danger" title="Eurovision"></i></th>
+                            <th class="bg-light"><i class="fa fa-video text-danger" title="Videoclip"></i></th>
+                            <th class="bg-light"><i class="fa fa-heart text-primary" title="Video Eurovision"></i></th>
                             <th class="bg-light"><i class="fa fa-video" title="Altro"></i></th>
                             <th class="bg-light"></th>
                         </tr>
@@ -90,7 +90,14 @@
                                             </a>
                                         @endif
                                     </td>
-                                    <td>{{$canzone->socials->where('social',\App\Enums\Social::ALTRO)->count()}}</td>
+                                    <td>
+{{--                                        {{$canzone->socials->where('social',\App\Enums\Social::ALTRO)->count()}}--}}
+                                        @foreach($canzone->socials->where('social',\App\Enums\Social::ALTRO) as $altro)
+                                            <a href="{{$altro->link}}" target="_blank">
+                                                <i class="fa fa-link"></i>
+                                            </a>
+                                        @endforeach
+                                    </td>
                                     <td>
                                         <a href="{{route('canzoni.edit',$canzone)}}" class="btn btn-sm btn-outline-primary">
                                             <i class="fa-solid fa-edit"></i>

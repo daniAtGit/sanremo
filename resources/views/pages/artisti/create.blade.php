@@ -58,7 +58,7 @@
                         <div class="mb-3">
                             @foreach(\App\Enums\Social::cases() as $social)
                                 <div class="input-group mt-3">
-                                    <span class="input-group-text" id="basic-addon1">{{$social->description()}}</span>
+                                    <span class="input-group-text" id="basic-addon1" title="{{$social->description()}}">{!! $social->icon() !!}</span>
                                     <input type="text" name="socials[{{$social}}]" class="form-control">
                                 </div>
                             @endforeach
