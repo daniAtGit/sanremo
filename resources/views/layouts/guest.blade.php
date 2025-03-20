@@ -7,9 +7,15 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        <!-- Favicon -->
+        <link rel="apple-touch-icon" sizes="76x76" href="{{asset('images/sanremo.png')}}">
+        <link rel="icon" type="image/png" href="{{asset('images/sanremo.png')}}">
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+        @laravelPWA
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])

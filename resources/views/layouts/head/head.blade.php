@@ -22,7 +22,7 @@
 <!-- FontAwesome dani -->
 <script src="https://kit.fontawesome.com/c93d9f2851.js" crossorigin="anonymous"></script>
 
-{{--@laravelPWA--}}
+@laravelPWA
 
 @php
     use Drnxloc\LaravelHtmlDom\HtmlDomParser;

@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => to_route('login'));
 
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
 //Route::get('/', fn() => to_route('welcome'));
 //Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
 //Route::post('/welcome', [WelcomeController::class, 'index'])->name('changeEdizione');
