@@ -31,15 +31,16 @@ class Social extends Model
     public function getVideoTitle($value)
     {
         $embed = OEmbed::get($value);
-        return $embed->data()['title'] ?? '';
+        return $embed
+            ? $embed->data()['title'] ?? ''
+            : 'no titolo';
     }
 
     public function getVideo($value)
     {
         $embed = OEmbed::get($value);
-        //if($embed){
-            //return $embed->html(['width' => $embed->data()['width']]) ?? '';
-            return $embed->html(['width' => 350]) ?? '';
-        //}
+        return $embed
+            ? $embed->html(['width' => 350])
+            : '';
     }
 }

@@ -81,26 +81,26 @@
             </ul>
 
             <div class="tab-content mt-3" id="myTabContent">
-                <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
                     @include('pages.edizioni.parziali.info')
                 </div>
 
-                <div class="tab-pane fade" id="classifica" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="tab-pane fade" id="classifica" role="tabpanel" aria-labelledby="classifica-tab">
                     @include('pages.edizioni.parziali.classifica')
                 </div>
 
                 @if($edizione->canzoni->where('tipo',\App\Enums\TipoCanzone::COVER)->count())
-                    <div class="tab-pane fade" id="cover" role="tabpanel" aria-labelledby="contact-tab">
+                    <div class="tab-pane fade" id="cover" role="tabpanel" aria-labelledby="cover-tab">
                         @include('pages.edizioni.parziali.cover')
                     </div>
                 @endif
 
                 @if($edizione->canzoni->where('tipo',\App\Enums\TipoCanzone::GIOVANI)->count())
-                    <div class="tab-pane fade" id="giovani" role="tabpanel" aria-labelledby="contact-tab">
+                    <div class="tab-pane fade" id="giovani" role="tabpanel" aria-labelledby="giovani-tab">
                         @include('pages.edizioni.parziali.giovani')
                     </div>
                 @endif
-                <div class="tab-pane fade show" id="video" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-tab">
                     @include('pages.edizioni.parziali.video')
                 </div>
             </div>

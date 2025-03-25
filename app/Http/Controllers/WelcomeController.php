@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\TipoCanzone;
 use App\Models\Edizione;
+use App\Models\Social;
 use Illuminate\Http\Request;
 
 class WelcomeController extends Controller
@@ -19,10 +20,10 @@ class WelcomeController extends Controller
         $gara = $edizione->canzoni->where('tipo',TipoCanzone::GARA)->sortBy('posizione');
         $cover = $edizione->canzoni->where('tipo',TipoCanzone::COVER)->sortBy('posizione');
         $giovani = $edizione->canzoni->where('tipo',TipoCanzone::GIOVANI)->sortBy('posizione');
-        $videos = \App\Models\Social::where('socialable_id', $edizione->id)->get()->sortByDesc('created_at');
+        $videos = Social::where('socialable_id', $edizione->id)->get()->sortByDesc('created_at');
 
         $edizioni = Edizione::all();
 
-        return view('welcome', compact('edizioni','edizione','gara','cover','giovani','videos'));
+        return view('welcome.index', compact('edizioni','edizione','gara','cover','giovani','videos'));
     }
 }
