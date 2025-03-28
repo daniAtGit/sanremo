@@ -183,13 +183,13 @@
 
                                 @if($edizione->canzoni->where('tipo',\App\Enums\TipoCanzone::COVER)->count())
                                     <div class="tab-pane fade" id="cover" role="tabpanel" aria-labelledby="cover-tab">
-                                        cover
+                                        @include('welcome.parziali.cover')
                                     </div>
                                 @endif
 
                                 @if($edizione->canzoni->where('tipo',\App\Enums\TipoCanzone::GIOVANI)->count())
                                     <div class="tab-pane fade" id="giovani" role="tabpanel" aria-labelledby="giovani-tab">
-                                        giovani
+                                        @include('welcome.parziali.giovani')
                                     </div>
                                 @endif
                                 <div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-tab">
