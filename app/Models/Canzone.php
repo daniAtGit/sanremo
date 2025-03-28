@@ -22,7 +22,8 @@ class Canzone extends Model
         'posizione_eurovision',
         'esibizione',
         'videoclip',
-        'eurovision'
+        'eurovision',
+        'spotify'
     ];
 
     protected $casts = [

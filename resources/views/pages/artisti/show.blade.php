@@ -167,11 +167,13 @@
                                     <th class="bg-light text-center" style="width:60px;">Anno</th>
                                     <th class="bg-light" style="width:60px;">Tipo</th>
                                     <th class="bg-light" style="width:60px;">Pos.</th>
+                                    <th class="bg-light text-center" style="width:1%;"><i class="fa fa-heart text-primary" title="Pos. Eurovision"></i></th>
                                     <th class="bg-light">Titolo</th>
                                     <th class="bg-light">Premi</th>
-                                    <th class="bg-light" style="width:40px;"><i class="fa fa-video text-primary" title="Esibizione"></i></th>
-                                    <th class="bg-light" style="width:40px;"><i class="fa fa-video text-danger" title="Videoclip"></i></th>
-                                    <th class="bg-light" style="width:40px;"><i class="fa fa-heart text-primary" title="Eurovision"></i></th>
+                                    <th class="bg-light" style="width:40px;"><i class="fa-brands fa-spotify text-success" title="Spotify"></i></th>
+                                    <th class="bg-light" style="width:40px;"><i class="fa fa-video text-info" title="Esibizione"></i></th>
+                                    <th class="bg-light" style="width:40px;"><i class="fa fa-video text-warning" title="Videoclip"></i></th>
+                                    <th class="bg-light" style="width:40px;"><i class="fa fa-video text-primary" title="Eurovision"></i></th>
                                     <th class="bg-light" style="min-width:40px;"><i class="fa fa-video" title="Altro"></i></th>
                                 </tr>
                                 </thead>
@@ -192,6 +194,7 @@
                                                     {{$canzone->posizione == 99 ? 'NC' : $canzone->posizione}}
                                                 @endif
                                             </td>
+                                            <td>{{$canzone->posizione_eurovision}}</td>
                                             <td>
                                                 {{$canzone->titolo}}
                                                 @if($canzone->tipo == \App\Enums\TipoCanzone::COVER)
@@ -202,6 +205,13 @@
                                                 @foreach($canzone->premi as $premio)
                                                     <badge class="badge" style="background:{{$premio->colore}}" title="{{$premio->nome}}">{{$premio->etichetta}}</badge>
                                                 @endforeach
+                                            </td>
+                                            <td>
+                                                @if($canzone->spotify)
+                                                    <a href="{{$canzone->spotify}}" target="_blank">
+                                                        <i class="fa fa-link"></i>
+                                                    </a>
+                                                @endif
                                             </td>
                                             <td>
                                                 @if($canzone->esibizione)

@@ -40,10 +40,11 @@
                             <th class="bg-light">Titolo</th>
                             <th class="bg-light">Artista</th>
                             <th class="bg-light" title="Posizione">Pos.</th>
-                            <th class="bg-light">P<i class="fa fa-heart text-primary" title="Posizione Eurovision"></i></th>
-                            <th class="bg-light"><i class="fa fa-video text-primary" title="Esibizione"></i></th>
-                            <th class="bg-light"><i class="fa fa-video text-danger" title="Videoclip"></i></th>
-                            <th class="bg-light"><i class="fa fa-heart text-primary" title="Video Eurovision"></i></th>
+                            <th class="bg-light"><i class="fa fa-heart text-primary" title="Pos. Eurovision"></i></th>
+                            <th class="bg-light"><i class="fa-brands fa-spotify text-success" title="Spotify"></i></th>
+                            <th class="bg-light"><i class="fa fa-video text-info" title="Esibizione"></i></th>
+                            <th class="bg-light"><i class="fa fa-video text-warning" title="Videoclip"></i></th>
+                            <th class="bg-light"><i class="fa fa-video text-primary" title="Video Eurovision"></i></th>
                             <th class="bg-light"><i class="fa fa-video" title="Altro"></i></th>
                             <th class="bg-light"></th>
                         </tr>
@@ -69,6 +70,13 @@
                                     </td>
                                     <td>{{$canzone->posizione == 99 ? 'NC' : $canzone->posizione}}</td>
                                     <td>{{$canzone->posizione_eurovision}}</td>
+                                    <td>
+                                        @if($canzone->spotify)
+                                            <a href="{{$canzone->spotify}}" target="_blank">
+                                                <i class="fa fa-link"></i>
+                                            </a>
+                                        @endif
+                                    </td>
                                     <td>
                                         @if($canzone->esibizione)
                                             <a href="{{$canzone->esibizione}}" target="_blank">

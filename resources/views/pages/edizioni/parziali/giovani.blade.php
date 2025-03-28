@@ -4,9 +4,11 @@
             <th class="bg-light text-center" style="width:3%;">Pos</th>
             <th class="bg-light" style="width:40%">Canzone</th>
             <th class="bg-light" style="width:40%">Artisti</th>
-            <th class="bg-light" style="width:40px;"><i class="fa fa-video text-primary" title="Esibizione"></i></th>
-            <th class="bg-light" style="width:40px;"><i class="fa fa-video text-warning" title="Videoclip"></i></th>
             <th class="bg-light" style="width:17%">Premi</th>
+            <th class="bg-light" style="width:40px;"><i class="fa-brands fa-spotify text-success" title="Spotify"></i></th>
+            <th class="bg-light" style="width:40px;"><i class="fa fa-video text-info" title="Esibizione"></i></th>
+            <th class="bg-light" style="width:40px;"><i class="fa fa-video text-warning" title="Videoclip"></i></th>
+            <th class="bg-light" style="min-width:40px;"><i class="fa fa-video" title="Altro"></i></th>
         </tr>
     </thead>
     <tbody>
@@ -27,6 +29,18 @@
                     @endforeach
                 </td>
                 <td>
+                    @foreach($canzone->premi as $premio)
+                        <badge class="badge" style="background:{{$premio->colore}}" title="{{$premio->nome}}">{{$premio->etichetta}}</badge>
+                    @endforeach
+                </td>
+                <td>
+                    @if($canzone->spotify)
+                        <a href="{{$canzone->spotify}}" target="_blank">
+                            <i class="fa fa-link"></i>
+                        </a>
+                    @endif
+                </td>
+                <td>
                     @if($canzone->esibizione)
                         <a href="{{$canzone->esibizione}}" target="_blank">
                             <i class="fa fa-link"></i>
@@ -41,8 +55,10 @@
                     @endif
                 </td>
                 <td>
-                    @foreach($canzone->premi as $premio)
-                        <badge class="badge" style="background:{{$premio->colore}}" title="{{$premio->nome}}">{{$premio->etichetta}}</badge>
+                    @foreach($canzone->socials->where('social',\App\Enums\Social::ALTRO) as $social)
+                        <a href="{{$social->link}}" target="_blank">
+                            <i class="fa fa-link"></i>
+                        </a>
                     @endforeach
                 </td>
             </tr>

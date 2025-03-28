@@ -115,29 +115,45 @@
                             </select>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="esibizione" class="form-label">Link esibizione</label>
+                        <label class="form-label">Links</label>
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa-brands fa-sm fa-spotify text-success px-1" title="Spotify"></i></span>
+                            <input type="text" name="spotify" class="form-control" value="{{$canzone->spotify}}">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon2"><img src="{{asset('images/sanremo.png')}}" title="Link esibizione" style="width:25px;"></span>
                             <input type="url" name="sanremo" class="form-control" value="{{$canzone->esibizione}}">
                         </div>
 
-                        <div class="mb-3">
-                            <label for="videoclip" class="form-label">Link videoclip</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon3"><i class="fa-brands fa-sm fa-youtube text-danger px-1" title="Link videoclip"></i></span>
                             <input type="url" name="videoclip" class="form-control" value="{{$canzone->videoclip}}">
                         </div>
 
-                        <div class="mb-3">
-                            <label for="videoclip" class="form-label">Link EuroVision</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon4"><i class="fa fa-sm fa-heart text-primary px-1" title="Link Eurovision"></i></span>
                             <input type="url" name="eurovision" class="form-control" value="{{$canzone->eurovision}}">
                         </div>
 
                         @foreach($canzone->socials->where('social',\App\Enums\Social::ALTRO) as $i => $altro)
-                            <label for='altri' class="form-label">Altro</label>
+{{--                            <label for='altri' class="form-label">Altro</label>--}}
+{{--                            <div class="input-group mb-3">--}}
+{{--                                <input type="url" class="form-control" aria-describedby="basic-addon2" value="{{$altro->link}}">--}}
+{{--                                <div class="input-group-append">--}}
+{{--                                    <button class="btn btn-danger" type="button" style="height:41px;" data-bs-toggle="modal" data-bs-target="#modalElimina{{$i}}"><i class="fa fa-trash"></i></button>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
                             <div class="input-group mb-3">
-                                <input type="url" class="form-control" aria-describedby="basic-addon2" value="{{$altro->link}}">
-                                <div class="input-group-append">
-                                    <button class="btn btn-danger" type="button" style="height:41px;" data-bs-toggle="modal" data-bs-target="#modalElimina{{$i}}"><i class="fa fa-trash"></i></button>
-                                </div>
+                                <span class="input-group-text" id="basic-addon"><i class="fa-brands fa-sm fa-youtube px-1" title="Altro"></i></span>
+                                <input type="url" class="form-control" value="{{$altro->link}}">
+                                <span class="input-group-text" id="basic-addon">
+                                    <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalElimina{{$i}}"><i class="fa fa-trash"></i></button>
+                                </span>
                             </div>
+
                         @endforeach
 
                         <div class="mb-3">
@@ -188,8 +204,8 @@
         <script>
             $(document).ready(function() {
                 $('#addInput').click(function() {
-                    //$('.interfacesIx:first').clone().insertAfter('.interfacesIx:last');
-                    $("<div class='mb-3'><label for='altri' class='form-label'>Altro</label><input type='url' name='altri[]' class='form-control' /></div>").appendTo('.altri');
+                    //$("<div class='mb-3'><label for='altri' class='form-label'>Altro</label><input type='url' name='altri[]' class='form-control' /></div>").appendTo('.altri');
+                    $("<div class='input-group mb-3'><span class='input-group-text'><i class='fa-brands fa-sm fa-youtube px-1' title='Altro'></i></span><input type='url' name='altri[]' class='form-control'></div>").appendTo('.altri');
                 });
             });
         </script>

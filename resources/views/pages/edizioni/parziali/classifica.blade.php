@@ -2,15 +2,16 @@
     <thead>
         <tr>
             <th class="bg-light text-center" style="width:1%;">Pos</th>
+            <th class="bg-light text-center" style="width:1%;"><i class="fa fa-heart text-primary" title="Pos. Eurovision"></i></th>
             <th class="bg-light">Canzone</th>
             <th class="bg-light">Artisti</th>
             <th class="bg-light">Autori</th>
             <th class="bg-light">Premi</th>
-            <th class="bg-light" style="width:40px;"><i class="fa fa-video text-primary" title="Esibizione"></i></th>
+            <th class="bg-light" style="width:40px;"><i class="fa-brands fa-spotify text-success" title="Spotify"></i></th>
+            <th class="bg-light" style="width:40px;"><i class="fa fa-video text-info" title="Esibizione"></i></th>
             <th class="bg-light" style="width:40px;"><i class="fa fa-video text-warning" title="Videoclip"></i></th>
-            <th class="bg-light" style="width:40px;"><i class="fa fa-video text-danger" title="Eurovision"></i></th>
+            <th class="bg-light" style="width:40px;"><i class="fa fa-video text-primary" title="Eurovision"></i></th>
             <th class="bg-light" style="min-width:40px;"><i class="fa fa-video" title="Altro"></i></th>
-            <th class="bg-light text-center" style="width:1%;"><i class="fa fa-heart text-primary" title="Eurovision"></i></th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +24,7 @@
                         {{$canzone->posizione == 99 ? 'NC' : $canzone->posizione}}
                     @endif
                 </td>
+                <td>{{$canzone->posizione_eurovision}}</td>
                 <td>{{$canzone->titolo}}</td>
                 <td>
                     @foreach($canzone->artisti as $i => $artista)
@@ -35,6 +37,13 @@
                     @foreach($canzone->premi as $premio)
                         <badge class="badge" style="background:{{$premio->colore}}" title="{{$premio->nome}}">{{$premio->etichetta}}</badge>
                     @endforeach
+                </td>
+                <td>
+                    @if($canzone->spotify)
+                        <a href="{{$canzone->spotify}}" target="_blank">
+                            <i class="fa fa-link"></i>
+                        </a>
+                    @endif
                 </td>
                 <td>
                     @if($canzone->esibizione)
@@ -64,7 +73,6 @@
                         </a>
                     @endforeach
                 </td>
-                <td>{{$canzone->posizione_eurovision}}</td>
             </tr>
         @endforeach
     </tbody>

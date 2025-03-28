@@ -38,7 +38,8 @@ class CanzoniController extends Controller
             'posizione_eurovision' => $request->posizione_euro,
             'esibizione' => $request->sanremo,
             'videoclip' => $request->videoclip,
-            'eurovision' => $request->eurovision
+            'eurovision' => $request->eurovision,
+            'spotify' => $request->spotify
         ]);
 
         $canzone->artisti()->attach($request->artisti);
@@ -78,7 +79,8 @@ class CanzoniController extends Controller
             'posizione_eurovision' => $request->posizione_euro,
             'esibizione' => $request->sanremo,
             'videoclip' => $request->videoclip,
-            'eurovision' => $request->eurovision
+            'eurovision' => $request->eurovision,
+            'spotify' => $request->spotify
         ]);
 
         $canzone->artisti()->sync($request->artisti);
