@@ -43,16 +43,16 @@
                         @if (Route::has('login'))
                             <nav class="-mx-3 flex flex-1 justify-end">
 
-                                <form method="post" action="{{route('changeEdizione')}}" id="frm">
-                                    @csrf
-                                    <div class="text-right px-3">
-                                        <select name="edizione" id="edizione">
-                                            @foreach($edizioni->sortByDesc('anno') as $ediz)
-                                                <option value="{{$ediz->id}}" @selected($ediz->id == $edizione->id)>{{$ediz->numero}} del {{$ediz->anno}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </form>
+{{--                                <form method="post" action="{{route('changeEdizione')}}" id="frm">--}}
+{{--                                    @csrf--}}
+{{--                                    <div class="text-right px-3">--}}
+{{--                                        <select name="edizione" id="edizione">--}}
+{{--                                            @foreach($edizioni->sortByDesc('anno') as $ediz)--}}
+{{--                                                <option value="{{$ediz->id}}" @selected($ediz->id == $edizione->id)>{{$ediz->numero}} del {{$ediz->anno}}</option>--}}
+{{--                                            @endforeach--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
+{{--                                </form>--}}
 
                                 @auth
                                     <a
@@ -84,6 +84,21 @@
 
                     <main class="mt-6">
 
+{{--                        <div class="card mt-4">--}}
+                            <div class="card-body text-end">
+                                <form method="post" action="{{route('changeEdizione')}}" id="frm">
+                                    @csrf
+                                    <div class="text-right px-3">
+                                        <select name="edizione" id="edizione">
+                                            @foreach($edizioni->sortByDesc('anno') as $ediz)
+                                                <option value="{{$ediz->id}}" @selected($ediz->id == $edizione->id)>{{$ediz->numero}} del {{$ediz->anno}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+{{--                        </div>--}}
+
                         <div class="card mt-4">
                             <div class="card-body">
                                 <div class="row">
@@ -98,27 +113,27 @@
                                         @endif
                                     </div>
                                 </div>
-                                    <a href="https://www.google.com/search?q=scenografia+sanremo+{{$edizione->anno}}&tbm=isch" target="_blank">
+                                <a href="https://www.google.com/search?q=scenografia+sanremo+{{$edizione->anno}}&tbm=isch" target="_blank">
 {{--                                        <img loading="lazy" src="{{$edizione->getScenografiaFromGoogle('scenografia', $edizione->anno)}}" style="width:100%;">--}}
-                                        <div id="divScenografia">Caricamento...</div>
-                                    </a>
+                                    <div id="divScenografia">Caricamento...</div>
+                                </a>
 
-                                    <div class="row">
-                                        <div class="col-6">
-                                            @if($edizione->data_da)
-                                                {{$edizione->data_da?->format('d/m')}} - {{$edizione->data_a?->format('d/m')}}
-                                            @else
-                                                {{$edizione->anno}}
-                                            @endif
-                                        </div>
-                                        <div class="col-6 text-end">
-                                            @if($edizione->wikipedia)
-                                                <a href="{{$edizione->wikipedia}}" target="_blank"><i class="fa-brands fa-wikipedia-w"></i></a>
-                                            @else
-                                                <i class="fa-brands fa-wikipedia-w text-secondary" title="No Wikipedia"></i>
-                                            @endif
-                                        </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        @if($edizione->data_da)
+                                            {{$edizione->data_da?->format('d/m')}} - {{$edizione->data_a?->format('d/m')}}
+                                        @else
+                                            {{$edizione->anno}}
+                                        @endif
                                     </div>
+                                    <div class="col-6 text-end">
+                                        @if($edizione->wikipedia)
+                                            <a href="{{$edizione->wikipedia}}" target="_blank"><i class="fa-brands fa-wikipedia-w"></i></a>
+                                        @else
+                                            <i class="fa-brands fa-wikipedia-w text-secondary" title="No Wikipedia"></i>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
