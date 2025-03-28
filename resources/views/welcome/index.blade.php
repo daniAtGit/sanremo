@@ -178,7 +178,7 @@
                                 </div>
 
                                 <div class="tab-pane fade" id="classifica" role="tabpanel" aria-labelledby="classifica-tab">
-                                    classifica
+                                    @include('welcome.parziali.classifica')
                                 </div>
 
                                 @if($edizione->canzoni->where('tipo',\App\Enums\TipoCanzone::COVER)->count())
