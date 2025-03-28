@@ -38,7 +38,7 @@
 
                     <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
                         <div class="flex lg:justify-center lg:col-start-2">
-{{--                            <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />--}}
+                            <div id="divLogo">Caricamento...</div>
                         </div>
                         @if (Route::has('login'))
                             <nav class="-mx-3 flex flex-1 justify-end">
@@ -100,6 +100,7 @@
                                 </div>
                                     <a href="https://www.google.com/search?q=scenografia+sanremo+{{$edizione->anno}}&tbm=isch" target="_blank">
 {{--                                        <img loading="lazy" src="{{$edizione->getScenografiaFromGoogle('scenografia', $edizione->anno)}}" style="width:100%;">--}}
+                                        <div id="divScenografia">Caricamento...</div>
                                     </a>
 
                                     <div class="row">
@@ -192,7 +193,6 @@
             </div>
         </div>
 
-
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -200,6 +200,39 @@
             $(document).ready(function() {
                 $('#edizione').on('change', function() {
                     $('#frm').submit();
+                });
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ route('welcome.getLogo') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                    },
+                    success: function (url) {
+                        $('#divLogo').empty();
+
+                        var image = document.createElement("img");
+                        var imageParent = document.getElementById("divLogo");
+                        image.src = url;
+                        imageParent.appendChild(image);
+                    }
+                });
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ route('welcome.getScenografia') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "anno": {{$edizione->anno}}
+                    },
+                    success: function (url) {
+                        $('#divScenografia').empty();
+
+                        var image = document.createElement("img");
+                        var imageParent = document.getElementById("divScenografia");
+                        image.src = url;
+                        imageParent.appendChild(image);
+                    }
                 });
             });
         </script>

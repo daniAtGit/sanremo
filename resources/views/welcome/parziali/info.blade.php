@@ -28,7 +28,9 @@
                     </div>
 
                     <div class="col-5 text-end">
-                        <i class="fa fa-sm fa-camera fotoFromGoole" role="button" title="Foto" data-bs-toggle="modal" data-bs-target="#modalFoto" alt="{{$artista->id}}"></i>
+                        <a href="https://www.google.com/search?q={{$artista->nome}}+sanremo+{{$edizione->anno}}&tbm=isch" target="_blank">
+                            <i class="fa fa-sm fa-camera" title="Foto"></i>
+                        </a>
                         @if($artista->wikipedia)
                             <a href="{{$artista->wikipedia}}" target="_blank" title="Wikipedia"><i class="fa-brands fa-sm fa-wikipedia-w px-1"></i></a>
                         @else
@@ -62,7 +64,9 @@
                     </div>
 
                     <div class="col-5 text-end">
-                        <i class="fa fa-sm fa-camera fotoFromGoole" role="button" title="Foto" data-bs-toggle="modal" data-bs-target="#modalFoto" alt="{{$artista->id}}"></i>
+                        <a href="https://www.google.com/search?q={{$artista->nome}}+sanremo+{{$edizione->anno}}&tbm=isch" target="_blank">
+                            <i class="fa fa-sm fa-camera" title="Foto"></i>
+                        </a>
                         @if($artista->wikipedia)
                             <a href="{{$artista->wikipedia}}" target="_blank" title="Wikipedia"><i class="fa-brands fa-sm fa-wikipedia-w px-1"></i></a>
                         @else
@@ -96,7 +100,9 @@
                     </div>
 
                     <div class="col-5 text-end">
-                        <i class="fa fa-sm fa-camera fotoFromGoole" role="button" title="Foto" data-bs-toggle="modal" data-bs-target="#modalFoto" alt="{{$artista->id}}"></i>
+                        <a href="https://www.google.com/search?q={{$artista->nome}}+sanremo+{{$edizione->anno}}&tbm=isch" target="_blank">
+                            <i class="fa fa-sm fa-camera" title="Foto"></i>
+                        </a>
                         @if($artista->wikipedia)
                             <a href="{{$artista->wikipedia}}" target="_blank" title="Wikipedia"><i class="fa-brands fa-sm fa-wikipedia-w px-1"></i></a>
                         @else
