@@ -44,4 +44,30 @@ class WelcomeController extends Controller
         $elems = $dom->find('img');
         return $elems[1]->src;
     }
+
+    public function getVideos(Request $request)
+    {
+        $videos = Social::where('socialable_id', $request->edizione_id)->get()->sortByDesc('created_at');
+
+        $allVideo = [];
+        foreach ($videos as $video) {
+            $tipo = 'video';
+            $title = $video->getVideoTitle($video->link);
+            $url = $video->getVideo($video->link);
+
+            if(empty($url)){
+                $tipo = 'link';
+                $title = $video->link;
+                $url = $video->link;
+            }
+
+            $allVideo[] = [
+                'title' => $title,
+                'url' => $url,
+                'tipo' => $tipo
+            ];
+        }
+
+        return $allVideo;
+    }
 }

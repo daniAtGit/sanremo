@@ -23,6 +23,7 @@ Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
 Route::post('/welcome', [WelcomeController::class, 'index'])->name('changeEdizione');
 Route::post('welcome/get-logo', [WelcomeController::class, 'getLogo'])->name('welcome.getLogo');
 Route::post('welcome/get-scenografia', [WelcomeController::class, 'getScenografia'])->name('welcome.getScenografia');
+Route::post('welcome/get-videos', [WelcomeController::class, 'getVideos'])->name('welcome.getVideos');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

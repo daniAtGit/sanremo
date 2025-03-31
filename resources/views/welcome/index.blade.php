@@ -193,7 +193,7 @@
                                     </div>
                                 @endif
                                 <div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-tab">
-                                    video
+                                    @include('welcome.parziali.video')
                                 </div>
                             </div>
                         </div>
@@ -247,6 +247,36 @@
                         var imageParent = document.getElementById("divScenografia");
                         image.src = url;
                         imageParent.appendChild(image);
+                    }
+                });
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ route('welcome.getVideos') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "edizione_id": '{{$edizione->id}}'
+                    },
+                    success: function (data) {
+                        $.each(data, function (key, video) {
+                            var res = "<div class='flex'>" +
+                                "<div class='card m-2'>" +
+                                "<div class='card-body col' style='max-width:400px;'>";
+
+                                if(video.tipo === 'video') {
+                                    res += video.url;
+                                    res += "<span class='card-title bg-light p-2' style='font-size:12px;'>" + video.title + "</span>";
+                                }else{
+                                    res += "<a href='"+video.url+"' target='_blank'><div style='width:350px;height:197px;'><i class='fa fa-link'></i> "+video.title+"</div></a>";
+                                    res += "<span class='card-title bg-light p-2' style='font-size:12px;'>Altro...</span>";
+                                }
+
+                                res +="</div>" +
+                                "</div>" +
+                                "</div>";
+
+                            $('#edizioneVideos').append(res);
+                        });
                     }
                 });
             });

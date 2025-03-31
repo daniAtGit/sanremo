@@ -131,9 +131,21 @@ class EdizioniController extends Controller
 
         $allVideo = [];
         foreach ($videos as $video) {
+            $tipo = 'video';
             $title = $video->getVideoTitle($video->link);
             $url = $video->getVideo($video->link);
-            $allVideo[] = ['title' => $title, 'url' => $url];
+
+            if(empty($url)){
+                $tipo = 'link';
+                $title = $video->link;
+                $url = $video->link;
+            }
+
+            $allVideo[] = [
+                'title' => $title,
+                'url' => $url,
+                'tipo' => $tipo
+            ];
         }
 
         return $allVideo;
