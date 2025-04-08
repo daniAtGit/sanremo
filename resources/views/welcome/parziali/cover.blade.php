@@ -24,7 +24,7 @@
                     <small>
                         @foreach($canzone->artisti as $i => $artista)
                             @if($i !=0) - @endif
-                            <a href="{{route('artisti.show',$artista->id)}}">{{$artista->nome}}</a>
+                            <a href="{{route('welcome.artista.show',$artista)}}">{{$artista->nome}}</a>
                         @endforeach
                     </small>
 

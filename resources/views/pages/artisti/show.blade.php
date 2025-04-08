@@ -32,7 +32,11 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-sm card p-2 m-1">
-                                    <img src="{{$artista->getImgArtistaFromGoogle($artista->tipoArtista->tipo)}}" style="max-width:200px;">
+                                    @if($artista->wikipedia)
+                                        <img src="{{$artista->getImgArtistaFromWiki()}}" class="my-2">
+                                    @else
+                                        <img src="{{$artista->getImgArtistaFromGoogle($artista->tipoArtista->tipo)}}" class="my-2">
+                                    @endif
                                 </div>
 
                                 @if($artista->isCantante())
@@ -162,20 +166,20 @@
                         <div class="card-body">
                             <table class="table table-hover table-striped table-bordered border" style="width:96%;margin:10px auto;">
                                 <thead>
-                                <tr>
-                                    <th class="bg-light text-center" style="width:60px;">Ed.</th>
-                                    <th class="bg-light text-center" style="width:60px;">Anno</th>
-                                    <th class="bg-light" style="width:60px;">Tipo</th>
-                                    <th class="bg-light" style="width:60px;">Pos.</th>
-                                    <th class="bg-light text-center" style="width:1%;"><i class="fa fa-heart text-primary" title="Pos. Eurovision"></i></th>
-                                    <th class="bg-light">Titolo</th>
-                                    <th class="bg-light">Premi</th>
-                                    <th class="bg-light" style="width:40px;"><i class="fa-brands fa-spotify text-success" title="Spotify"></i></th>
-                                    <th class="bg-light" style="width:40px;"><i class="fa fa-video text-info" title="Esibizione"></i></th>
-                                    <th class="bg-light" style="width:40px;"><i class="fa fa-video text-warning" title="Videoclip"></i></th>
-                                    <th class="bg-light" style="width:40px;"><i class="fa fa-video text-primary" title="Eurovision"></i></th>
-                                    <th class="bg-light" style="min-width:40px;"><i class="fa fa-video" title="Altro"></i></th>
-                                </tr>
+                                    <tr>
+                                        <th class="bg-light text-center" style="width:60px;">Ed.</th>
+                                        <th class="bg-light text-center" style="width:60px;">Anno</th>
+                                        <th class="bg-light" style="width:60px;">Tipo</th>
+                                        <th class="bg-light" style="width:60px;">Pos.</th>
+                                        <th class="bg-light text-center" style="width:1%;"><i class="fa fa-heart text-primary" title="Pos. Eurovision"></i></th>
+                                        <th class="bg-light">Titolo</th>
+                                        <th class="bg-light">Premi</th>
+                                        <th class="bg-light" style="width:40px;"><i class="fa-brands fa-spotify text-success" title="Spotify"></i></th>
+                                        <th class="bg-light" style="width:40px;"><i class="fa fa-video text-info" title="Esibizione"></i></th>
+                                        <th class="bg-light" style="width:40px;"><i class="fa fa-video text-warning" title="Videoclip"></i></th>
+                                        <th class="bg-light" style="width:40px;"><i class="fa fa-video text-primary" title="Eurovision"></i></th>
+                                        <th class="bg-light" style="min-width:40px;"><i class="fa fa-video" title="Altro"></i></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($artista->canzoni->sortByDesc('tipo')->sortByDesc('edizione.anno') as $canzone)

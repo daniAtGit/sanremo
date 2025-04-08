@@ -51,7 +51,15 @@ class Artista extends Model
         $file = "https://www.google.com/search?q=".Str::replace(" ","+",$this->nome)."+".$cosa."+".$anno."&tbm=isch";
         $dom = HtmlDomParser::file_get_html($file);
         $elems = $dom->find('img');
-        return $elems[2]->src ?? null;
+        return $elems[env('INDICE_FOTO_FROM_GOOGLE',2)]->src ?? null;
+    }
+
+    public function getImgArtistaFromWiki($cosa = null, $anno = null)
+    {
+        $file = $this->wikipedia;
+        $dom = HtmlDomParser::file_get_html($file);
+        $elems = $dom->find('img');
+        return $elems[env('INDICE_FOTO_FROM_WIKI', 3)]->src ?? null;
     }
 
     public function isCantante()

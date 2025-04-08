@@ -25,6 +25,8 @@ Route::post('welcome/get-logo', [WelcomeController::class, 'getLogo'])->name('we
 Route::post('welcome/get-scenografia', [WelcomeController::class, 'getScenografia'])->name('welcome.getScenografia');
 Route::post('welcome/get-videos', [WelcomeController::class, 'getVideos'])->name('welcome.getVideos');
 
+Route::get('/welcome/artista/{id}', [WelcomeController::class, 'artistaShow'])->name('welcome.artista.show');
+
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

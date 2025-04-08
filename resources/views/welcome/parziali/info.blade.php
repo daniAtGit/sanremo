@@ -18,13 +18,9 @@
             @foreach($edizione->conduttori() as $c => $artista)
                 <div class="row m-1 p-1 border" style="border-left:5px solid #2563eb !important;">
                     <div class="col-7">
-                        @auth
-                            <a href="{{route('artisti.show', $artista->id)}}">
-                        @endauth
+                        <a href="{{route('welcome.artista.show',$artista)}}">
                             {{\Illuminate\Support\Str::ucfirst($artista->nome)}}
-                        @auth
-                            </a>
-                        @endauth
+                        </a>
                     </div>
 
                     <div class="col-5 text-end">
@@ -54,13 +50,9 @@
             @foreach($edizione->coconduttori() as $c => $artista)
                 <div class="row m-1 p-1 border" style="border-left:5px solid #ffc107 !important;">
                     <div class="col-7">
-                        @auth
-                            <a href="{{route('artisti.show', $artista->id)}}">
-                                @endauth
-                                {{\Illuminate\Support\Str::ucfirst($artista->nome)}}
-                                @auth
-                            </a>
-                        @endauth
+                        <a href="{{route('welcome.artista.show',$artista)}}">
+                            {{\Illuminate\Support\Str::ucfirst($artista->nome)}}
+                        </a>
                     </div>
 
                     <div class="col-5 text-end">
@@ -90,13 +82,9 @@
             @foreach($edizione->ospiti() as $c => $artista)
                 <div class="row m-1 p-1 border" style="border-left:5px solid #dc3545 !important;">
                     <div class="col-7">
-                        @auth
-                            <a href="{{route('artisti.show', $artista->id)}}">
-                                @endauth
-                                {{\Illuminate\Support\Str::ucfirst($artista->nome)}}
-                                @auth
-                            </a>
-                        @endauth
+                        <a href="{{route('welcome.artista.show',$artista)}}">
+                            {{\Illuminate\Support\Str::ucfirst($artista->nome)}}
+                        </a>
                     </div>
 
                     <div class="col-5 text-end">

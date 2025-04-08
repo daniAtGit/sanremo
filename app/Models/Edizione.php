@@ -72,6 +72,6 @@ class Edizione extends Model
         $file = "https://www.google.com/search?q=sanremo+".$cosa."+".$anno."&tbm=isch";
         $dom = HtmlDomParser::file_get_html($file);
         $elems = $dom->find('img');
-        return $elems[1]->src ?? null;
+        return $elems[env('INDICE_FOTO_SCENOGRAFIA',1)]->src ?? null;
     }
 }

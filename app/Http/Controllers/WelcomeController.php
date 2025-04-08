@@ -34,7 +34,7 @@ class WelcomeController extends Controller
         $file = "https://www.google.com/search?q=logo+sanremo+".today()->format('Y')."&tbm=isch";
         $dom = HtmlDomParser::file_get_html($file);
         $elems = $dom->find('img');
-        return $elems[1]->src;
+        return $elems[env('INDICE_LOGO',1)]->src;
     }
 
     public function getScenografia(Request $request)
@@ -42,7 +42,7 @@ class WelcomeController extends Controller
         $file = "https://www.google.com/search?q=sanremo+scenografia+".$request->anno."&tbm=isch";
         $dom = HtmlDomParser::file_get_html($file);
         $elems = $dom->find('img');
-        return $elems[1]->src;
+        return $elems[env('INDICE_FOTO_SCENOGRAFIA',1)]->src;
     }
 
     public function getVideos(Request $request)
@@ -69,5 +69,116 @@ class WelcomeController extends Controller
         }
 
         return $allVideo;
+    }
+
+    public function artistaShow($id)
+    {
+        $artista = Artista::find($id)->load('canzoni','canzoni.edizione','canzoni.edizione.artisti');
+
+        $conduzioni = $artista->edizioni->where('pivot.ruolo','conduttore');
+        $coconduzioni = $artista->edizioni->where('pivot.ruolo','coconduttore');
+        $ospitate = $artista->edizioni->where('pivot.ruolo','ospite');
+
+        $gare = $artista->canzoni->where('tipo',TipoCanzone::GARA);
+        $covers = $artista->canzoni->where('tipo',TipoCanzone::COVER);
+        $euro = $artista->canzoni->where('tipo',TipoCanzone::GARA)->whereNotNull('posizione_eurovision');
+
+        $eventi=[];
+
+        foreach($conduzioni as $conduzione){
+            $eventi[] = [
+                'indice' => 0,
+                'anno' => $conduzione->anno,
+                'ruolo' => 'Conduttore',
+                'edizione' => $conduzione->numero,
+                'edizione_id' => $conduzione->id,
+                'pos' => null,
+                'spotify' => null,
+                'esibizione' => null,
+                'videoclip' => null,
+                'eurovision' => null
+            ];
+        }
+
+        foreach($coconduzioni as $coconduzione){
+            $eventi[] = [
+                'indice' => 0,
+                'anno' => $coconduzione->anno,
+                'ruolo' => 'Coconduttore',
+                'edizione' => $coconduzione->numero,
+                'edizione_id' => $coconduzione->id,
+                'pos' => null,
+                'spotify' => null,
+                'esibizione' => null,
+                'videoclip' => null,
+                'eurovision' => null
+            ];
+        }
+
+        foreach($ospitate as $ospitata){
+            $eventi[] = [
+                'indice' => 0,
+                'anno' => $ospitata->anno,
+                'ruolo' => 'Ospite',
+                'edizione' => $ospitata->numero,
+                'edizione_id' => $ospitata->id,
+                'pos' => null,
+                'spotify' => null,
+                'esibizione' => null,
+                'videoclip' => null,
+                'eurovision' => null
+            ];
+        }
+
+        foreach($gare as $gara){
+            $eventi[] = [
+                'indice' => 1,
+                'anno' => $gara->edizione?->anno,
+                'ruolo' => 'Gara',
+                'edizione' => $gara->edizione->numero,
+                'edizione_id' => $gara->edizione->id,
+                'pos' => $gara->posizione,
+                'spotify' => $gara->spotify,
+                'esibizione' => $gara->esibizione,
+                'videoclip' => $gara->videoclip,
+                'eurovision' => $gara->eurovision
+            ];
+        }
+
+        foreach($covers as $cover){
+            $eventi[] = [
+                'indice' => 2,
+                'anno' => $cover->edizione?->anno,
+                'ruolo' => 'Cover',
+                'edizione' => $cover->edizione->numero,
+                'edizione_id' => $cover->edizione->id,
+                'pos' => $cover->posizione,
+                'spotify' => $cover->spotify,
+                'esibizione' => $cover->esibizione,
+                'videoclip' => $cover->videoclip,
+                'eurovision' => $cover->eurovision
+            ];
+        }
+
+        foreach($euro as $e){
+            $eventi[] = [
+                'indice' => 3,
+                'anno' => $e->edizione?->anno,
+                'ruolo' => 'Eurovision',
+                'edizione' => $e->edizione->numero,
+                'edizione_id' => $e->edizione->id,
+                'pos' => $e->posizione_eurovision,
+                'spotify' => null,
+                'esibizione' => $e->esibizione,
+                'videoclip' => $e->videoclip,
+                'eurovision' => $e->eurovision
+            ];
+        }
+
+        usort($eventi, function($a, $b) {
+            return $b['anno'] <=> $a['anno'] ?: $a['indice'] <=> $b['indice'];
+        });
+
+        return view('welcome.artista', compact('artista','eventi'));
     }
 }

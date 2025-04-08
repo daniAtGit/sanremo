@@ -43,16 +43,6 @@
                         @if (Route::has('login'))
                             <nav class="-mx-3 flex flex-1 justify-end">
 
-{{--                                <form method="post" action="{{route('changeEdizione')}}" id="frm">--}}
-{{--                                    @csrf--}}
-{{--                                    <div class="text-right px-3">--}}
-{{--                                        <select name="edizione" id="edizione">--}}
-{{--                                            @foreach($edizioni->sortByDesc('anno') as $ediz)--}}
-{{--                                                <option value="{{$ediz->id}}" @selected($ediz->id == $edizione->id)>{{$ediz->numero}} del {{$ediz->anno}}</option>--}}
-{{--                                            @endforeach--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </form>--}}
 
                                 @auth
                                     <a
@@ -84,117 +74,145 @@
 
                     <main class="mt-6">
 
-                        <div class="card-body text-end">
-                            <form method="post" action="{{route('changeEdizione')}}" id="frm">
-                                @csrf
-                                <div class="text-right px-3">
-                                    <select name="edizione" id="edizione">
-                                        @foreach($edizioni->sortByDesc('anno') as $ediz)
-                                            <option value="{{$ediz->id}}" @selected($ediz->id == $edizione->id)>{{$ediz->numero}} del {{$ediz->anno}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </form>
+                        <div class="card-body text-end mb-2">
+                            <a href="{{url()->previous()}}">
+                                <button class="btn btn-sm btn-outline-secondary">< Indietro</button>
+                            </a>
                         </div>
 
-                        <div class="card mt-4">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-6">
-                                        {{\App\Enums\Luogo::from($edizione->luogo->value)->description() ?? ''}}
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        @if($edizione->data_da)
-                                            {{$edizione->data_da?->format('Y')}}
-                                        @else
-                                            {{$edizione->anno}}
-                                        @endif
-                                    </div>
-                                </div>
-                                <a href="https://www.google.com/search?q=scenografia+sanremo+{{$edizione->anno}}&tbm=isch" target="_blank">
-{{--                                        <img loading="lazy" src="{{$edizione->getScenografiaFromGoogle('scenografia', $edizione->anno)}}" style="width:100%;">--}}
-                                    <div id="divScenografia">Caricamento...</div>
-                                </a>
+{{--                        @if($artista->isCantante())--}}
+{{--                            <div class="container">--}}
+{{--                                <div class="flex flex-wrap justify-end">--}}
+{{--                                    <div class="col-1 col-sm card text-center p-2 m-1">--}}
+{{--                                        <i class="fa fa-calendar-days" title="Edizioni"></i>--}}
+{{--                                        <p>{{$artista->getPartecipazioni()}}</p>--}}
+{{--                                    </div>--}}
 
-                                <div class="row">
-                                    <div class="col-6">
-                                        @if($edizione->data_da)
-                                            {{$edizione->data_da?->format('d/m')}} - {{$edizione->data_a?->format('d/m')}}
-                                        @else
-                                            {{$edizione->anno}}
-                                        @endif
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        @if($edizione->wikipedia)
-                                            <a href="{{$edizione->wikipedia}}" target="_blank"><i class="fa-brands fa-wikipedia-w"></i></a>
-                                        @else
-                                            <i class="fa-brands fa-wikipedia-w text-secondary" title="No Wikipedia"></i>
-                                        @endif
-                                    </div>
+{{--                                    <div class="col-1 col-sm card text-center p-2 m-1">--}}
+{{--                                        <i class="fa fa-trophy text-warning" title="Vittorie"></i>--}}
+{{--                                        <p>{{$artista->getVittorie()}}</p>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-1 col-sm card text-center p-2 m-1">--}}
+{{--                                        <i class="fa fa-2"></i>--}}
+{{--                                        <p>{{$artista->getSecondiPosto()}}</p>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-1 col-sm card text-center p-2 m-1">--}}
+{{--                                        <i class="fa fa-3"></i>--}}
+{{--                                        <p>{{$artista->getTerziPosto()}}</p>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-1 col-sm card text-center p-2 m-1">--}}
+{{--                                        <i class="fa fa-award text-info" title="Premi"></i>--}}
+{{--                                        <p>{{$artista->getPremi()}}</p>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-1 col-sm card text-center p-2 m-1">--}}
+{{--                                        <i class="fa fa-heart text-primary" title="Eurovision"></i>--}}
+{{--                                        <p>{{$artista->getEurovision()}}</p>--}}
+{{--                                    </div>--}}
+
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        @endif--}}
+
+                        <div class="card mt-2">
+                            <div class="row">
+                                <div class="col-3">
+                                    <img src="{{$artista->getImgArtistaFromGoogle($artista->tipoArtista->tipo)}}" class="my-2">
+                                </div>
+                                <div class="col-9">
+                                    <p class="h2 pt-2">{{$artista->nome}}</p>
+
+                                    @if($artista->wikipedia)
+                                        <a href="{{$artista->wikipedia}}" target="_blank" title="Wikipedia"><i class="fa-brands fa-wikipedia-w px-1"></i></a>
+                                    @else
+                                        <i class="fa-brands fa-wikipedia-w text-secondary px-1" title="No Wikipedia"></i>
+                                    @endif
+
+                                    @foreach($artista->socials as $social)
+                                        <a href="{{$social->link}}" target="_blank" title="{{$social->social->value}}">
+                                            {!! \App\Enums\Social::from($social->social->value)->icon() !!}
+                                        </a>
+                                    @endforeach
+
+                                    @if($artista->isCantante())
+                                        <div class="border-top mt-2 pt-2">
+                                            <i class="fa fa-calendar-days" title="Edizioni"></i> {{$artista->getPartecipazioni()}}
+                                            | <i class="fa fa-trophy text-warning" title="Vincite"></i> {{$artista->getVittorie()}}
+                                            | <i class="fa fa-2"></i> {{$artista->getSecondiPosto()}}
+                                            | <i class="fa fa-3"></i> {{$artista->getTerziPosto()}}
+                                            | <i class="fa fa-award text-info" title="Premi"></i> {{$artista->getPremi()}}
+                                            | <i class="fa fa-heart text-primary" title="Eurovision"></i> {{$artista->getEurovision()}}
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card mt-4 py-2">
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="home" aria-selected="true">
-                                        <i class="fa fa-info-circle"></i>
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#classifica" type="button" role="tab" aria-controls="profile" aria-selected="false">
-                                        <i class="fa fa-microphone-lines"></i>
-                                    </button>
-                                </li>
-                                @if($cover->count())
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#cover" type="button" role="tab" aria-controls="contact" aria-selected="false">
-                                            <i class="fa fa-radio"></i>
-                                        </button>
-                                    </li>
-                                @endif
-                                @if($giovani->count())
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#giovani" type="button" role="tab" aria-controls="contact" aria-selected="false">
-                                            <i class="fa fa-children"></i>
-                                        </button>
-                                    </li>
-                                @endif
-                                @if($videos->count())
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#video" type="button" role="tab" aria-controls="home" aria-selected="true">
-                                            <i class="fa fa-youtube"></i>
-                                        </button>
-                                    </li>
-                                @endif
-                            </ul>
-
-                            <div class="tab-content mt-3" id="myTabContent">
-                                <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
-                                    @include('welcome.parziali.info')
-                                </div>
-
-                                <div class="tab-pane fade" id="classifica" role="tabpanel" aria-labelledby="classifica-tab">
-                                    @include('welcome.parziali.classifica')
-                                </div>
-
-                                @if($edizione->canzoni->where('tipo',\App\Enums\TipoCanzone::COVER)->count())
-                                    <div class="tab-pane fade" id="cover" role="tabpanel" aria-labelledby="cover-tab">
-                                        @include('welcome.parziali.cover')
-                                    </div>
-                                @endif
-
-                                @if($edizione->canzoni->where('tipo',\App\Enums\TipoCanzone::GIOVANI)->count())
-                                    <div class="tab-pane fade" id="giovani" role="tabpanel" aria-labelledby="giovani-tab">
-                                        @include('welcome.parziali.giovani')
-                                    </div>
-                                @endif
-                                <div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-tab">
-                                    @include('welcome.parziali.video')
-                                </div>
-                            </div>
+                        <div class="card mt-2">
+                            <table class="table table-hover table-striped table-bordered border" style="width:96%;margin:10px auto;">
+                                <thead>
+                                    <tr>
+                                        <th>Anno</th>
+                                        <th>Ed.</th>
+                                        <th>Ruolo</th>
+                                        <th>Pos.</th>
+                                        <th class="bg-light" style="width:40px;"><i class="fa-brands fa-spotify text-success" title="Spotify"></i></th>
+                                        <th class="bg-light" style="width:40px;"><i class="fa fa-video text-info" title="Esibizione"></i></th>
+                                        <th class="bg-light" style="width:40px;"><i class="fa fa-video text-warning" title="Videoclip"></i></th>
+                                        <th class="bg-light" style="width:40px;"><i class="fa fa-video text-primary" title="Eurovision"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($eventi as $evento)
+                                        <tr>
+                                            <td>{{$evento['anno']}}</td>
+                                            <td>
+                                                <form method="post" action="{{route('changeEdizione')}}">
+                                                    @csrf
+                                                    <input type="hidden" name="edizione" value="{{$evento['edizione_id']}}">
+                                                    <input type="submit" class="btn btn-sm btn-outline-info" value="{{$evento['edizione']}}">
+                                                </form>
+                                            </td>
+                                            <td>{{$evento['ruolo']}}</td>
+                                            <td>
+                                                @if($evento['pos'] == 1)
+                                                    <i class="fa-solid fa-trophy text-warning" title="{{$evento['pos']}}"></i>
+                                                @else
+                                                    {{$evento['pos'] == 99 ? 'NC' : $evento['pos']}}
+                                                @endif
+                                            <td>
+                                                @if($evento['spotify'])
+                                                    <a href="{{$evento['spotify']}}" target="_blank">
+                                                        <i class="fa fa-link"></i>
+                                                    </a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($evento['esibizione'])
+                                                    <a href="{{$evento['esibizione']}}" target="_blank">
+                                                        <i class="fa fa-link"></i>
+                                                    </a>
+                                                @endif
+                                            </td><td>
+                                                @if($evento['videoclip'])
+                                                    <a href="{{$evento['videoclip']}}" target="_blank">
+                                                        <i class="fa fa-link"></i>
+                                                    </a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($evento['eurovision'])
+                                                    <a href="{{$evento['eurovision']}}" target="_blank">
+                                                        <i class="fa fa-link"></i>
+                                                    </a>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
+
+
 
                     </main>
 
@@ -211,10 +229,6 @@
         <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
         <script>
             $(document).ready(function() {
-                $('#edizione').on('change', function() {
-                    $('#frm').submit();
-                });
-
                 $.ajax({
                     type: 'post',
                     url: '{{ route('welcome.getLogo') }}',
@@ -228,53 +242,6 @@
                         var imageParent = document.getElementById("divLogo");
                         image.src = url;
                         imageParent.appendChild(image);
-                    }
-                });
-
-                $.ajax({
-                    type: 'post',
-                    url: '{{ route('welcome.getScenografia') }}',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "anno": {{$edizione->anno}}
-                    },
-                    success: function (url) {
-                        $('#divScenografia').empty();
-
-                        var image = document.createElement("img");
-                        var imageParent = document.getElementById("divScenografia");
-                        image.src = url;
-                        imageParent.appendChild(image);
-                    }
-                });
-
-                $.ajax({
-                    type: 'post',
-                    url: '{{ route('welcome.getVideos') }}',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "edizione_id": '{{$edizione->id}}'
-                    },
-                    success: function (data) {
-                        $.each(data, function (key, video) {
-                            var res = "<div class='flex'>" +
-                                "<div class='card m-2'>" +
-                                "<div class='card-body col' style='max-width:400px;'>";
-
-                                if(video.tipo === 'video') {
-                                    res += video.url;
-                                    res += "<span class='card-title bg-light p-2' style='font-size:12px;'>" + video.title + "</span>";
-                                }else{
-                                    res += "<a href='"+video.url+"' target='_blank'><div style='width:350px;height:197px;'><i class='fa fa-link'></i> "+video.title+"</div></a>";
-                                    res += "<span class='card-title bg-light p-2' style='font-size:12px;'>Altro...</span>";
-                                }
-
-                                res +="</div>" +
-                                "</div>" +
-                                "</div>";
-
-                            $('#edizioneVideos').append(res);
-                        });
                     }
                 });
             });

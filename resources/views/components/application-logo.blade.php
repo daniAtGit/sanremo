@@ -8,7 +8,7 @@
     $file = "https://www.google.com/search?q=logo+sanremo+".today()->format('Y')."&tbm=isch";
     $dom = HtmlDomParser::file_get_html($file);
     $elems = $dom->find('img');
-    $logo = $elems[1]->src;
+    $logo = $elems[env('INDICE_LOGO',1)]->src;
 
     echo "<img src='$logo' style='width:100px;'>";
 @endphp

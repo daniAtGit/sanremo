@@ -30,7 +30,7 @@
     $file = "https://www.google.com/search?q=S&tbm=isch";
     $dom = HtmlDomParser::file_get_html($file);
     $elems = $dom->find('img');
-    $favicon = $elems[1]->src;
+    $favicon = $elems[env('INDICE_FAVICON',1)]->src;
 @endphp
 
 

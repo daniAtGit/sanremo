@@ -53,7 +53,6 @@
                                         <a href="{{route('edizioni.show', $edizione)}}" class="btn btn-sm btn-outline-info">
                                             {{$edizione->numero}}
                                         </a>
-
                                     </td>
                                     <td>
                                         @if($edizione->wikipedia)
