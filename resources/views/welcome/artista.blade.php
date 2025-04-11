@@ -7,7 +7,9 @@
 
                     <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
                         <div class="flex lg:justify-center lg:col-start-2">
-                            <div id="divLogo">Caricamento...</div>
+                            <a href="{{url('/')}}">
+                                <div id="divLogo">Caricamento...</div>
+                            </a>
                         </div>
 
                         @include('layouts.guest-header')
