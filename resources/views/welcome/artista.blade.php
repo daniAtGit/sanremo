@@ -16,20 +16,28 @@
                     </header>
 
                     <main class="mt-6">
-                        <div class="card-body text-end mb-2">
-                            <a href="{{url()->previous()}}">
-                                <button class="btn btn-sm btn-outline-secondary">< Indietro</button>
-                            </a>
-                        </div>
 
-                        <div class="card mt-2">
+                        <div class="card mb-2">
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-3 ml-3">
                                     <img src="{{$artista->getImgArtistaFromGoogle($artista->tipoArtista->tipo)}}" class="my-2">
                                 </div>
-                                <div class="col-9">
-                                    <p class="h2 pt-2">{{$artista->nome}}</p>
+                                <div class="col-5">
+                                    <p class="h3 pt-2">{{$artista->nome}}</p>
+                                </div>
+                                <div class="col-3 text-end mt-2">
+{{--                                    <a href="{{url()->previous()}}">--}}
+{{--                                        <button class="btn btn-sm btn-outline-secondary">--}}
+{{--                                            <i class="fa fa-backward"></i>--}}
+{{--                                        </button>--}}
+{{--                                    </a>--}}
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="card mb-2">
+                            <div class="row">
+                                <div class="col-12">
                                     @if($artista->wikipedia)
                                         <a href="{{$artista->wikipedia}}" target="_blank" title="Wikipedia"><i class="fa-brands fa-wikipedia-w px-1"></i></a>
                                     @else
@@ -41,8 +49,14 @@
                                             {!! \App\Enums\Social::from($social->social->value)->icon() !!}
                                         </a>
                                     @endforeach
+                                </div>
+                            </div>
+                        </div>
 
-                                    @if($artista->isCantante())
+                        @if($artista->isCantante())
+                            <div class="card mb-2">
+                                <div class="row">
+                                    <div class="col-12 ml-1">
                                         <div class="border-top mt-2 pt-2">
                                             <i class="fa fa-calendar-days" title="Edizioni"></i> {{$artista->getPartecipazioni()}}
                                             | <i class="fa fa-trophy text-warning" title="Vincite"></i> {{$artista->getVittorie()}}
@@ -51,70 +65,84 @@
                                             | <i class="fa fa-award text-info" title="Premi"></i> {{$artista->getPremi()}}
                                             | <i class="fa fa-heart text-primary" title="Eurovision"></i> {{$artista->getEurovision()}}
                                         </div>
-                                    @endif
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
+
 
                         <div class="card mt-2">
-                            <table class="table table-hover table-striped table-bordered border" style="width:96%;margin:10px auto;">
+
+                            <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Anno</th>
-                                        <th>Ed.</th>
-                                        <th>Ruolo</th>
-                                        <th>Pos.</th>
-                                        <th class="bg-light" style="width:40px;"><i class="fa-brands fa-spotify text-success" title="Spotify"></i></th>
-                                        <th class="bg-light" style="width:40px;"><i class="fa fa-video text-info" title="Esibizione"></i></th>
-                                        <th class="bg-light" style="width:40px;"><i class="fa fa-video text-warning" title="Videoclip"></i></th>
-                                        <th class="bg-light" style="width:40px;"><i class="fa fa-video text-primary" title="Eurovision"></i></th>
+                                        <th class="bg-light text-center" style="width:30px;">Ed.</th>
+                                        <th class="bg-light">Ruolo</th>
+                                        @if($artista->isCantante())
+                                            <th class="bg-light text-center" style="width:50px;">Pos.</th>
+                                            <th class="bg-light text-center" style="width:40px;"><i class="fa-brands fa-spotify text-success" title="Spotify"></i></th>
+                                            <th class="bg-light text-center" style="width:40px;"><i class="fa fa-video text-info" title="Esibizione/Eurovision"></i></th>
+                                            <th class="bg-light text-center" style="width:40px;"><i class="fa fa-video text-warning" title="Videoclip"></i></th>
+                                            <th class="bg-light text-center" style="width:40px;"><i class="fa fa-video" title="Altro"></i></th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($eventi as $evento)
                                         <tr>
-                                            <td>{{$evento['anno']}}</td>
-                                            <td>
+                                            <td class="text-center">
+
                                                 <form method="post" action="{{route('changeEdizione')}}">
                                                     @csrf
                                                     <input type="hidden" name="edizione" value="{{$evento['edizione_id']}}">
                                                     <input type="submit" class="btn btn-sm btn-outline-info" value="{{$evento['edizione']}}">
                                                 </form>
+
                                             </td>
-                                            <td>{{$evento['ruolo']}}</td>
-                                            <td>
-                                                @if($evento['pos'] == 1)
-                                                    <i class="fa-solid fa-trophy text-warning" title="{{$evento['pos']}}"></i>
-                                                @else
-                                                    {{$evento['pos'] == 99 ? 'NC' : $evento['pos']}}
-                                                @endif
-                                            <td>
-                                                @if($evento['spotify'])
-                                                    <a href="{{$evento['spotify']}}" target="_blank">
-                                                        <i class="fa fa-link"></i>
-                                                    </a>
-                                                @endif
+                                            <td style="font-size:10px;">
+                                                {{$evento['ruolo']}}
+                                                <p class="text-info">{{$evento['anno']}}</p>
                                             </td>
-                                            <td>
-                                                @if($evento['esibizione'])
-                                                    <a href="{{$evento['esibizione']}}" target="_blank">
-                                                        <i class="fa fa-link"></i>
-                                                    </a>
-                                                @endif
-                                            </td><td>
-                                                @if($evento['videoclip'])
-                                                    <a href="{{$evento['videoclip']}}" target="_blank">
-                                                        <i class="fa fa-link"></i>
-                                                    </a>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if($evento['eurovision'])
-                                                    <a href="{{$evento['eurovision']}}" target="_blank">
-                                                        <i class="fa fa-link"></i>
-                                                    </a>
-                                                @endif
-                                            </td>
+                                            @if($artista->isCantante())
+                                                <td class="text-center" @if($evento['ruolo'] == 'Eurovision') style="background:url('https://image.flaticon.com/icons/svg/60/60993.svg') no-repeat;" @endif>
+                                                    @if($evento['pos'] == 1)
+                                                        <i class="fa fa-trophy text-warning" title="{{$evento['pos']}}"></i>
+                                                    @else
+                                                        {{$evento['pos'] == 99 ? 'NC' : $evento['pos']}}
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">
+                                                    @if($evento['spotify'])
+                                                        <a href="{{$evento['spotify']}}" target="_blank">
+                                                            <i class="fa fa-sm fa-link"></i>
+                                                        </a>
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">
+                                                    @if($evento['esibizione'])
+                                                        <a href="{{$evento['esibizione']}}" target="_blank">
+                                                            <i class="fa fa-sm fa-link"></i>
+                                                        </a>
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">
+                                                    @if($evento['videoclip'])
+                                                        <a href="{{$evento['videoclip']}}" target="_blank">
+                                                            <i class="fa fa-sm fa-link"></i>
+                                                        </a>
+                                                    @endif
+                                                </td>
+                                                <td class="">
+                                                    <div class="flex">
+                                                        @foreach($evento['altro'] as $altro)
+                                                            <a href="{{$altro->link}}" target="_blank">
+                                                                <i class="fa fa-sm fa-link"></i>
+                                                            </a>
+                                                        @endforeach
+                                                    </div>
+
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>

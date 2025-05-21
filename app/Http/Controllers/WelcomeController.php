@@ -131,6 +131,12 @@ class WelcomeController extends Controller
         }
 
         foreach($gare as $gara){
+            $altro=[];
+
+            foreach($gara->socials->where('social',\App\Enums\Social::ALTRO) as $alt){
+                $altro[] = $alt;
+            }
+
             $eventi[] = [
                 'indice' => 1,
                 'anno' => $gara->edizione?->anno,
@@ -141,11 +147,17 @@ class WelcomeController extends Controller
                 'spotify' => $gara->spotify,
                 'esibizione' => $gara->esibizione,
                 'videoclip' => $gara->videoclip,
-                'eurovision' => $gara->eurovision
+                'altro' => $altro
             ];
         }
 
         foreach($covers as $cover){
+            $altro=[];
+
+            foreach($cover->socials->where('social',\App\Enums\Social::ALTRO) as $alt){
+                $altro[] = $alt;
+            }
+
             $eventi[] = [
                 'indice' => 2,
                 'anno' => $cover->edizione?->anno,
@@ -156,7 +168,7 @@ class WelcomeController extends Controller
                 'spotify' => $cover->spotify,
                 'esibizione' => $cover->esibizione,
                 'videoclip' => $cover->videoclip,
-                'eurovision' => $cover->eurovision
+                'altro' => $altro
             ];
         }
 
@@ -169,9 +181,9 @@ class WelcomeController extends Controller
                 'edizione_id' => $e->edizione->id,
                 'pos' => $e->posizione_eurovision,
                 'spotify' => null,
-                'esibizione' => $e->esibizione,
-                'videoclip' => $e->videoclip,
-                'eurovision' => $e->eurovision
+                'esibizione' => $e->eurovision,
+                'videoclip' => null,
+                'altro' => []
             ];
         }
 
