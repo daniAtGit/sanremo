@@ -104,7 +104,7 @@
                                                 <p class="text-info">{{$evento['anno']}}</p>
                                             </td>
                                             @if($artista->isCantante())
-                                                <td class="text-center" @if($evento['ruolo'] == 'Eurovision') style="background:url('https://image.flaticon.com/icons/svg/60/60993.svg') no-repeat;" @endif>
+                                                <td class="text-center" @if($evento['ruolo'] == 'Eurovision') style="background:url({{asset('images/eurovision.png')}}) no-repeat;" @endif>
                                                     @if($evento['pos'] == 1)
                                                         <i class="fa fa-trophy text-warning" title="{{$evento['pos']}}"></i>
                                                     @else
