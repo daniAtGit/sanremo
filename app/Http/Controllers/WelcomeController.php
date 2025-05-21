@@ -96,7 +96,7 @@ class WelcomeController extends Controller
                 'spotify' => null,
                 'esibizione' => null,
                 'videoclip' => null,
-                'eurovision' => null
+                'altro' => []
             ];
         }
 
@@ -111,7 +111,7 @@ class WelcomeController extends Controller
                 'spotify' => null,
                 'esibizione' => null,
                 'videoclip' => null,
-                'eurovision' => null
+                'altro' => []
             ];
         }
 
@@ -126,7 +126,7 @@ class WelcomeController extends Controller
                 'spotify' => null,
                 'esibizione' => null,
                 'videoclip' => null,
-                'eurovision' => null
+                'altro' => []
             ];
         }
 
