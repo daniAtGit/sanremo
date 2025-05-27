@@ -105,10 +105,16 @@
                                             </td>
                                             @if($artista->isCantante())
                                                 <td class="text-center" @if($evento['ruolo'] == 'Eurovision') style="background:url({{asset('images/eurovision.png')}}) no-repeat;" @endif>
-                                                    @if($evento['pos'] == 1)
-                                                        <i class="fa fa-trophy text-warning" title="{{$evento['pos']}}"></i>
-                                                    @else
-                                                        {{$evento['pos'] == 99 ? 'NC' : $evento['pos']}}
+                                                    @if($evento['ruolo'] == 'Eurovision')
+                                                        <a href="https://it.wikipedia.org/wiki/Eurovision_Song_Contest_{{$evento['anno']}}" target="_blank">
+                                                    @endif
+                                                        @if($evento['pos'] == 1)
+                                                            <i class="fa fa-trophy text-warning" title="{{$evento['pos']}}"></i>
+                                                        @else
+                                                            {{$evento['pos'] == 99 ? 'NC' : $evento['pos']}}
+                                                        @endif
+                                                    @if($evento['ruolo'] == 'Eurovision')
+                                                        </a>
                                                     @endif
                                                 </td>
                                                 <td class="text-center">

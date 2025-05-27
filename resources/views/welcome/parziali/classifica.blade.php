@@ -18,9 +18,14 @@
                         {{$canzone->posizione == 99 ? 'NC' : $canzone->posizione}}
                     @endif
                 </td>
-                <td>{{$canzone->posizione_eurovision}}</td>
+                <td @if($canzone->posizione_eurovision) style="background:url({{asset('images/eurovision.png')}}) no-repeat;" @endif>
+                    @if($canzone->posizione_eurovision)
+                        <a href="https://it.wikipedia.org/wiki/Eurovision_Song_Contest_{{$edizione->anno}}" target="_blank" title="Pos. Eurovision">
+                            {{$canzone->posizione_eurovision}}
+                        </a>
+                    @endif
+                </td>
                 <td>
-
                     <b>{{$canzone->titolo}}</b>
 
                     <br>
