@@ -22,11 +22,11 @@
             </td>
             <td class="text-center" style="width:30px;">
                 <span style="font-size:10px;">Last</span>
-                @if($artista->isCantante())
+                @if($artista->getPartecipazioni() > 0)
                     <form method="post" action="{{route('changeEdizione')}}">
                         @csrf
-                        <input type="hidden" name="edizione" value="{{$artista->getUltimaEdizione()->id}}">
-                        <input type="submit" class="btn btn-sm btn-outline-info" value="{{$artista->getUltimaEdizione()->numero}}" title="{{$artista->getUltimaEdizione()->anno}}">
+                        <input type="hidden" name="edizione" value="{{$artista->getUltimaEdizione()?->id}}">
+                        <input type="submit" class="btn btn-sm btn-outline-info" value="{{$artista->getUltimaEdizione()?->numero}}" title="{{$artista->getUltimaEdizione()?->anno}}">
                     </form>
                 @endif
             </td>

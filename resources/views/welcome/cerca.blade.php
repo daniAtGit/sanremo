@@ -38,7 +38,7 @@
                                             <select name="edizione" id="edizione">
                                                 <option value=""></option>
                                                 @foreach($edizioni->sortByDesc('anno') as $ediz)
-                                                    <option value="{{$ediz->id}}">{{$ediz->numero}} del {{$ediz->anno}}</option>
+                                                    <option value="{{$ediz->id}}">{{$ediz->numero}} - {{$ediz->anno}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
