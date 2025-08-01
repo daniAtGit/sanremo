@@ -15,17 +15,31 @@
                     </header>
 
                     <main class="mt-6">
-                        <div class="card-body text-end">
-                            <form method="post" action="{{route('changeEdizione')}}" id="frm">
-                                @csrf
-                                <div class="text-right px-3">
-                                    <select name="edizione" id="edizione">
-                                        @foreach($edizioni->sortByDesc('anno') as $ediz)
-                                            <option value="{{$ediz->id}}" @selected($ediz->id == $edizione->id)>{{$ediz->numero}} del {{$ediz->anno}}</option>
-                                        @endforeach
-                                    </select>
+
+                        <div class="container text-center">
+                            <div class="row">
+                                <div class="col">
+                                    <form method="post" action="{{route('cerca')}}">
+                                        @csrf
+                                        <div class="input-group">
+                                            <input type="text" name="stringa" class="form-control" minlength="3" placeholder="" aria-describedby="button-addon2" required>
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary fa fa-search"></button>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
+                                <div class="col text-end">
+                                    <form method="post" action="{{route('changeEdizione')}}" id="frm">
+                                        @csrf
+                                        <div class="text-right px-3">
+                                            <select name="edizione" id="edizione">
+                                                @foreach($edizioni->sortByDesc('anno') as $ediz)
+                                                    <option value="{{$ediz->id}}" @selected($ediz->id == $edizione->id)>{{$ediz->numero}} del {{$ediz->anno}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="card mt-4">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\TipoCanzone;
 use App\Models\Artista;
+use App\Models\Canzone;
 use App\Models\Edizione;
 use App\Models\Social;
 use Drnxloc\LaravelHtmlDom\HtmlDomParser;
@@ -27,6 +28,15 @@ class WelcomeController extends Controller
         $edizioni = Edizione::all();
 
         return view('welcome.index', compact('edizioni','edizione','gara','cover','giovani','videos'));
+    }
+
+    public function cerca(Request $request)
+    {
+        $artisti = Artista::where('nome', 'like', '%'.$request->stringa.'%')->get();
+        $canzoni = Canzone::where('titolo', 'like', '%'.$request->stringa.'%')->get();
+        $edizioniS = Edizione::where('anno', 'like', '%'.$request->stringa.'%')->orWhere('note', 'like', '%'.$request->stringa.'%')->get();
+        $edizioni = Edizione::all();
+        return view('welcome.cerca', compact('artisti','canzoni','edizioniS','edizioni'));
     }
 
     public function getLogo()

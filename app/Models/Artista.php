@@ -111,4 +111,9 @@ class Artista extends Model
     {
         return $this->canzoni->pluck('premi')->collapse()->count();
     }
+
+    public function getUltimaEdizione()
+    {
+        return $this->canzoni->where('tipo',TipoCanzone::GARA)->pluck('edizione')->sortByDesc('anno')->first();
+    }
 }

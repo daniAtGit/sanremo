@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Luogo;
+use App\Enums\TipoCanzone;
 use Cohensive\OEmbed\Facades\OEmbed;
 use Drnxloc\LaravelHtmlDom\HtmlDomParser;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -73,5 +74,20 @@ class Edizione extends Model
         $dom = HtmlDomParser::file_get_html($file);
         $elems = $dom->find('img');
         return $elems[env('INDICE_FOTO_SCENOGRAFIA',1)]->src ?? null;
+    }
+
+    public function getTitoloCanzoneVincente()
+    {
+        return $this->canzoni->where('posizione',1)->where('tipo', TipoCanzone::GARA)->pluck('titolo')->implode(', ') ?? null;
+    }
+
+    public function getTitoloCanzoneSeconda()
+    {
+        return $this->canzoni->where('posizione',2)->where('tipo', TipoCanzone::GARA)->pluck('titolo')->implode(', ') ?? null;
+    }
+
+    public function getTitoloCanzoneTerza()
+    {
+        return $this->canzoni->where('posizione',3)->where('tipo', TipoCanzone::GARA)->pluck('titolo')->implode(', ') ?? null;
     }
 }

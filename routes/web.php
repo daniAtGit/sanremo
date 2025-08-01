@@ -20,7 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn() => to_route('welcome'));
 Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
 
-Route::post('/welcome', [WelcomeController::class, 'index'])->name('changeEdizione');
+Route::post('/welcome-cambia-edizione', [WelcomeController::class, 'index'])->name('changeEdizione');
+Route::post('/welcome-cerca', [WelcomeController::class, 'cerca'])->name('cerca');
 Route::post('welcome/get-logo', [WelcomeController::class, 'getLogo'])->name('welcome.getLogo');
 Route::post('welcome/get-scenografia', [WelcomeController::class, 'getScenografia'])->name('welcome.getScenografia');
 Route::post('welcome/get-videos', [WelcomeController::class, 'getVideos'])->name('welcome.getVideos');

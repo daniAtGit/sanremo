@@ -59,7 +59,7 @@
                                     <div class="col-12 ml-1">
                                         <div class="border-top mt-2 pt-2">
                                             <i class="fa fa-calendar-days" title="Edizioni"></i> {{$artista->getPartecipazioni()}}
-                                            | <i class="fa fa-trophy text-warning" title="Vincite"></i> {{$artista->getVittorie()}}
+                                            | <i class="fa fa-trophy text-warning" title="Vittorie"></i> {{$artista->getVittorie()}}
                                             | <i class="fa fa-2"></i> {{$artista->getSecondiPosto()}}
                                             | <i class="fa fa-3"></i> {{$artista->getTerziPosto()}}
                                             | <i class="fa fa-award text-info" title="Premi"></i> {{$artista->getPremi()}}
