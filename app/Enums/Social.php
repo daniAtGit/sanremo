@@ -30,7 +30,7 @@ enum Social: string
         return match ($this) {
             self::FACEBOOK => '<i class="fa-brands fa-sm fa-facebook text-primary px-1" title="'.$this->description().'"></i>',
             self::INSTAGRAM  => '<i class="fa-brands fa-sm fa-instagram text-warning px-1" title="'.$this->description().'"></i>',
-            self::X  => '<i class="fa-brands fa-sm fa-x-twitter text-info px-1" title="'.$this->description().'"></i>',
+            self::X  => '<i class="fa-brands fa-sm fa-x-twitter px-1" title="'.$this->description().'"></i>',
             self::YOUTUBE  => '<i class="fa-brands fa-sm fa-youtube text-danger px-1" title="'.$this->description().'"></i>',
             self::SPOTIFY  => '<i class="fa-brands fa-sm fa-spotify text-success px-1" title="'.$this->description().'"></i>',
             self::VIDEO  => '<i class="fa fa-sm fa-video px-1" title="'.$this->description().'"></i>',
