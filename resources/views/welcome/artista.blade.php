@@ -100,7 +100,7 @@
 
                                             </td>
                                             <td style="font-size:10px;">
-                                                {{$evento['ruolo']}}
+                                                {{$evento['ruolo']}} {{$evento['titolo']}}
                                                 <p class="text-info">{{$evento['anno']}}</p>
                                             </td>
                                             @if($artista->isCantante())
