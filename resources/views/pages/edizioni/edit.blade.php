@@ -105,7 +105,7 @@
 
                         <div class="mb-3">
                             <label for="note" class="form-label">Note</label>
-                            <textarea name="note" class="form-control" rows="3"></textarea>
+                            <textarea name="note" class="form-control" rows="3">{{$edizione->note}}</textarea>
                         </div>
 
                         <div class="mb-3">
