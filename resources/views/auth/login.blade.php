@@ -10,7 +10,8 @@
                     <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
                         <div class="flex lg:justify-center lg:col-start-2">
                             <a href="{{url('/')}}">
-                                <div id="divLogo">Caricamento...</div>
+{{--                                <div id="divLogo">Caricamento...</div>--}}
+                                <img src="{{asset('images/icons/icon-72x72.png')}}" alt="">
                             </a>
                         </div>
 
@@ -82,21 +83,21 @@
     @section('script')
         <script>
             $(document).ready(function() {
-                $.ajax({
-                    type: 'post',
-                    url: '{{ route('welcome.getLogo') }}',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                    },
-                    success: function (url) {
-                        $('#divLogo').empty();
+                {{--$.ajax({--}}
+                {{--    type: 'post',--}}
+                {{--    url: '{{ route('welcome.getLogo') }}',--}}
+                {{--    data: {--}}
+                {{--        "_token": "{{ csrf_token() }}",--}}
+                {{--    },--}}
+                {{--    success: function (url) {--}}
+                {{--        $('#divLogo').empty();--}}
 
-                        var image = document.createElement("img");
-                        var imageParent = document.getElementById("divLogo");
-                        image.src = url;
-                        imageParent.appendChild(image);
-                    }
-                });
+                {{--        var image = document.createElement("img");--}}
+                {{--        var imageParent = document.getElementById("divLogo");--}}
+                {{--        image.src = url;--}}
+                {{--        imageParent.appendChild(image);--}}
+                {{--    }--}}
+                {{--});--}}
             });
         </script>
     @endsection
