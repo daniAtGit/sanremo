@@ -9,6 +9,8 @@ use App\Models\Edizione;
 use App\Models\Social;
 use Drnxloc\LaravelHtmlDom\HtmlDomParser;
 use Illuminate\Http\Request;
+use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Support\Facades\Http;
 
 class WelcomeController extends Controller
 {
@@ -42,17 +44,127 @@ class WelcomeController extends Controller
     public function getLogo()
     {
         $file = "https://www.google.com/search?q=logo+sanremo+".today()->format('Y')."&tbm=isch";
-        $dom = HtmlDomParser::file_get_html($file);
-        $elems = $dom->find('img');
-        return $elems[env('INDICE_LOGO',1)]->src;
+        return $this->extractImageUrlFromGoogle($file, (int) env('INDICE_LOGO', 1));
     }
 
     public function getScenografia(Request $request)
     {
-        $file = "https://www.google.com/search?q=sanremo+scenografia+".$request->anno."&tbm=isch";
-        $dom = HtmlDomParser::file_get_html($file);
-        $elems = $dom->find('img');
-        return $elems[env('INDICE_FOTO_SCENOGRAFIA',1)]->src;
+        return $this->getSanremoImageFromWikimedia((int) $request->anno);
+    }
+
+    private function getSanremoImageFromWikimedia(int $anno): string
+    {
+        $fromWikipedia = $this->getWikipediaPageImage($anno);
+        if (!empty($fromWikipedia)) {
+            return $fromWikipedia;
+        }
+
+        return $this->getCommonsFileImage($anno);
+    }
+
+    private function getWikipediaPageImage(int $anno): string
+    {
+        $titles = [
+            "Festival di Sanremo {$anno}",
+            "Festival della canzone italiana {$anno}",
+        ];
+
+        foreach ($titles as $title) {
+            try {
+                $response = $this->wikiHttp()->get('https://it.wikipedia.org/w/api.php', [
+                    'action' => 'query',
+                    'format' => 'json',
+                    'redirects' => 1,
+                    'prop' => 'pageimages',
+                    'piprop' => 'original|thumbnail',
+                    'pithumbsize' => 1200,
+                    'titles' => $title,
+                ]);
+
+                if (!$response->ok()) {
+                    continue;
+                }
+
+                $pages = $response->json('query.pages', []);
+                foreach ($pages as $page) {
+                    $source = $page['original']['source'] ?? $page['thumbnail']['source'] ?? '';
+                    if (!empty($source)) {
+                        return $source;
+                    }
+                }
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
+
+        return '';
+    }
+
+    private function getCommonsFileImage(int $anno): string
+    {
+        $queries = [
+            "\"Festival di Sanremo {$anno}\" Teatro Ariston",
+            "\"Festival di Sanremo {$anno}\"",
+            "\"Sanremo {$anno}\"",
+        ];
+
+        foreach ($queries as $query) {
+            try {
+                $search = $this->wikiHttp()->get('https://commons.wikimedia.org/w/api.php', [
+                    'action' => 'query',
+                    'format' => 'json',
+                    'list' => 'search',
+                    'srsearch' => $query,
+                    'srnamespace' => 6, // File namespace
+                    'srlimit' => 5,
+                ]);
+
+                if (!$search->ok()) {
+                    continue;
+                }
+
+                $title = data_get($search->json(), 'query.search.0.title');
+                if (empty($title)) {
+                    continue;
+                }
+
+                $imageInfo = $this->wikiHttp()->get('https://commons.wikimedia.org/w/api.php', [
+                    'action' => 'query',
+                    'format' => 'json',
+                    'prop' => 'imageinfo',
+                    'iiprop' => 'url',
+                    'titles' => $title,
+                ]);
+
+                if (!$imageInfo->ok()) {
+                    continue;
+                }
+
+                $pages = $imageInfo->json('query.pages', []);
+                foreach ($pages as $page) {
+                    $url = $page['imageinfo'][0]['url'] ?? '';
+                    if (!empty($url)) {
+                        return $url;
+                    }
+                }
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
+
+        return '';
+    }
+
+    private function wikiHttp(): PendingRequest
+    {
+        $userAgent = env('WIKIMEDIA_USER_AGENT', 'SanremoArchivioBot/1.0 (https://localhost; mailto:admin@example.com)');
+
+        return Http::timeout(8)
+            ->retry(2, 250)
+            ->withHeaders([
+                'Accept' => 'application/json',
+            ])
+            ->withUserAgent($userAgent);
     }
 
     public function getVideos(Request $request)

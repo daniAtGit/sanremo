@@ -182,10 +182,24 @@
                     success: function (url) {
                         $('#divScenografia').empty();
 
+                        if (!url) {
+                            $('#divScenografia').text('Immagine non disponibile');
+                            return;
+                        }
+
                         var image = document.createElement("img");
                         var imageParent = document.getElementById("divScenografia");
                         image.src = url;
+                        image.alt = "Scenografia Sanremo";
+                        image.style.width = "200px";
+                        image.style.height = "auto";
+                        image.onerror = function () {
+                            $('#divScenografia').text('Immagine non disponibile');
+                        };
                         imageParent.appendChild(image);
+                    },
+                    error: function () {
+                        $('#divScenografia').text('Immagine non disponibile');
                     }
                 });
 

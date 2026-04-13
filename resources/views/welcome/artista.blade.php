@@ -20,7 +20,7 @@
                         <div class="card mb-2">
                             <div class="row">
                                 <div class="col-3 ml-3">
-                                    <img src="{{$artista->getImgArtistaFromGoogle($artista->tipoArtista->tipo)}}" class="my-2">
+                                    <img src="{{$artista->getImgArtistaFromGoogle($artista->tipoArtista->tipo)}}" class="my-2" style="max-height:200px;width:auto;height:auto;max-width:100%;">
                                 </div>
                                 <div class="col-5">
                                     <p class="h3 pt-2">{{$artista->nome}}</p>
@@ -175,10 +175,22 @@
                     success: function (url) {
                         $('#divLogo').empty();
 
+                        if (!url) {
+                            $('#divLogo').html('<img src="{{ asset('images/icons/icon-72x72.png') }}" alt="Logo">');
+                            return;
+                        }
+
                         var image = document.createElement("img");
                         var imageParent = document.getElementById("divLogo");
                         image.src = url;
+                        image.alt = "Logo Sanremo";
+                        image.onerror = function () {
+                            $('#divLogo').html('<img src="{{ asset('images/icons/icon-72x72.png') }}" alt="Logo">');
+                        };
                         imageParent.appendChild(image);
+                    },
+                    error: function () {
+                        $('#divLogo').html('<img src="{{ asset('images/icons/icon-72x72.png') }}" alt="Logo">');
                     }
                 });
             });
